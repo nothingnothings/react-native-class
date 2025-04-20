@@ -1,0 +1,105 @@
+
+
+
+
+
+
+
+
+
+
+TODAS AS VIEWS, POR DEFAULT,
+
+NO REACT NATIVE,
+USAM FLEXBOX...
+
+
+
+--> FLEXBOX DE TIPO 'COLUMN'...
+
+
+
+
+
+
+
+
+PODEMOS DEFINIR TAMANHOS FIXOS, EM PIXELS,
+
+PARA CADA ELEMENTO, MAS ISSO É RUIM...
+
+
+
+
+
+
+
+-> PARA TER TAMANHOS BONS,
+
+DEVEMOS USAR 'flex: 1'...
+
+
+
+
+
+
+
+
+PODEMOS DIZER A CADA CHILD ITEM
+
+
+''QUANTO ESPAÇO VC PODE TER, 
+
+ALOMNG THE MAIN AXIS''...
+
+
+
+
+
+
+
+
+
+'flex: '' ---> 
+
+
+
+
+É UMA PROPRIEDADE QUE 
+
+É APLICADA A ITEMS QUE EXISTEM DENTRO DE 1 FLEXBOX (dentro 
+de 1 view, nesse caso)...
+
+
+
+
+
+
+
+ISSO PODE SER 1 VIEW EM SI,
+
+MAS PODE SER 
+
+DENTRO 
+
+DE 1 OUTRO COMPONENT...
+
+
+
+
+
+'Flex: 1',
+
+
+'flex: 2',
+
+
+
+ISSO SERVE PARA PEGAR ESPAÇOS MAIORES 
+
+(2 é 2x maior)...
+
+
+
+
+

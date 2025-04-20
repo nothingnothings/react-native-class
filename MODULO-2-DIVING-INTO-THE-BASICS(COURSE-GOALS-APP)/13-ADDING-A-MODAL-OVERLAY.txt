@@ -1,0 +1,343 @@
+
+
+
+
+
+
+
+agora que aprendemos os basics,
+
+
+
+o professor mostra outro component built-in do 
+
+react-native...
+
+
+
+
+
+
+
+
+--> O COMPONENT É O 'Modal'...
+
+
+
+
+
+--> O MODAL É UM COMPONENT QUE 
+TE DEIXA 
+
+ADICIONAR UM FULLSCREEN OVERLAY COM POUCO ESFORÇO...
+
+
+
+
+
+
+
+
+--> VAMOS WRAPPAR O 'GoalInput'
+
+em 1 modal,
+
+
+TIPO ASSIM:
+
+
+
+
+
+
+import React, { useState } from 'react';
+import { Button, StyleSheet, TextInput, Modal } from 'react-native';
+import { View } from 'react-native-reanimated/lib/typescript/Animated';
+
+type GoalInputProps = {
+  goalInputHandler: (text: string) => void;
+  onAddGoal: (text: string) => void;
+  //   enteredGoalText: string;
+};
+
+const GoalInput = (props: GoalInputProps) => {
+  const [enteredGoalText, setEnteredGoalText] = useState('');
+
+  return (
+    <Modal>
+      <View style={styles.inputContainer}>
+        <TextInput
+          onChangeText={(text) => props.goalInputHandler(text)}
+          value={enteredGoalText}
+          style={styles.textInput}
+          placeholder="Your course goal!"
+        />
+        <Button
+          title="Add Goal"
+          onPress={() => props.onAddGoal(enteredGoalText)}
+        />
+      </View>
+    </Modal>
+  );
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ISSO QUEBROU NOSSO STYLING...
+
+
+
+
+
+
+
+
+
+--> PARA O MODAL COMPONENT,
+
+
+TEMOS O PROP DE 'visible'...
+
+
+
+
+
+--> É UM BOOLEAN...
+
+
+
+
+
+--> QUEREMOS DEIXAR ISSO DINÂMICO...
+
+
+
+
+
+
+
+--> QUEREMOS TER 1 BUTTON QUE VAI ABRIR ESSE MODAL,
+POR ISSO ESCREVEMOS ASSIM:
+
+
+
+
+
+
+import {
+  DarkTheme,
+  DefaultTheme,
+  ThemeProvider,
+} from '@react-navigation/native';
+import * as SplashScreen from 'expo-splash-screen';
+import 'react-native-reanimated';
+
+import { useState } from 'react';
+
+import { StyleSheet, FlatList, View, Button } from 'react-native';
+
+import GoalInput from './components/GoalInput';
+import GoalItem from './components/GoalItem';
+
+// Prevent the splash screen from auto-hiding before asset loading is complete.
+SplashScreen.preventAutoHideAsync();
+
+export default function RootLayout() {
+  const [enteredGoalText, setEnteredGoalText] = useState('');
+  const [goalList, setGoalList] = useState<{ id: string; text: string }[]>([]);
+  const [modalVisible, setModalVisible] = useState(false);
+
+  function goalInputHandler(enteredGoal: string) {
+    setEnteredGoalText(enteredGoal);
+  }
+
+  const addGoalHandler = () => {
+    setGoalList((currentGoals) => [
+      ...currentGoals,
+      {
+        id: Math.random().toString(),
+        text: enteredGoalText,
+      },
+    ]);
+  };
+
+  const deleteGoalHandler = (id: string) => {
+    setGoalList((currentGoals) =>
+      currentGoals.filter((goal) => goal.id !== id)
+    );
+  };
+
+  return (
+    <View style={styles.appContainer}>
+      <Button title="Add New Goal" onPress={() => setModalVisible(true)} />
+      <GoalInput
+        goalInputHandler={goalInputHandler}
+        onAddGoal={addGoalHandler}
+        modalVisible={modalVisible}
+      />
+      <FlatList
+        data={goalList}
+        renderItem={({ item }) => (
+          <GoalItem
+            goalText={item.text}
+            key={item.id}
+            onDelete={() => deleteGoalHandler(item.id)}
+          />
+        )}
+      />
+    </View>
+  );
+}
+
+
+
+
+
+
+
+
+
+
+E O MODAL:
+
+
+
+
+
+import React, { useState } from 'react';
+import { Button, StyleSheet, TextInput, Modal } from 'react-native';
+import { View } from 'react-native-reanimated/lib/typescript/Animated';
+
+type GoalInputProps = {
+  goalInputHandler: (text: string) => void;
+  onAddGoal: (text: string) => void;
+  modalVisible: boolean;
+  //   enteredGoalText: string;
+};
+
+const GoalInput = (props: GoalInputProps) => {
+  const [enteredGoalText, setEnteredGoalText] = useState('');
+
+  return (
+    <Modal visible={props.modalVisible} transparent>
+      <View style={styles.inputContainer}>
+        <TextInput
+          onChangeText={(text) => props.goalInputHandler(text)}
+          value={enteredGoalText}
+          style={styles.textInput}
+          placeholder="Your course goal!"
+        />
+        <Button
+          title="Add Goal"
+          onPress={() => props.onAddGoal(enteredGoalText)}
+        />
+      </View>
+    </Modal>
+  );
+};
+
+
+
+
+
+
+
+
+
+
+
+
+CERTO...
+
+
+
+
+
+
+
+MAS O STYLING ESTÁ ERRADO...
+
+
+
+
+
+--> TAMBÉM SERIA BOM TER 1 ANIMATION,
+
+POR ISSO COLOCAMOS 
+
+'animationType="slide"' 
+
+
+
+
+
+CERTo..
+
+
+
+
+
+
+import React, { useState } from 'react';
+import { Button, StyleSheet, TextInput, Modal } from 'react-native';
+import { View } from 'react-native-reanimated/lib/typescript/Animated';
+
+type GoalInputProps = {
+  goalInputHandler: (text: string) => void;
+  onAddGoal: (text: string) => void;
+  modalVisible: boolean;
+  //   enteredGoalText: string;
+};
+
+const GoalInput = (props: GoalInputProps) => {
+  const [enteredGoalText, setEnteredGoalText] = useState('');
+
+  return (
+    <Modal visible={props.modalVisible} transparent animationType="slide">
+      <View style={styles.inputContainer}>
+        <TextInput
+          onChangeText={(text) => props.goalInputHandler(text)}
+          value={enteredGoalText}
+          style={styles.textInput}
+          placeholder="Your course goal!"
+        />
+        <Button
+          title="Add Goal"
+          onPress={() => props.onAddGoal(enteredGoalText)}
+        />
+      </View>
+    </Modal>
+  );
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+O PRÓXIMO PASSO É GARANTIR QUE 
+
+O CONTEÚDO DO MODAL 
+
+
+FIQUE 
+
+CENTRALIZADO NO MEIO DO MODAL...

@@ -8,7 +8,7 @@ import 'react-native-reanimated';
 
 import { useState } from 'react';
 
-import { StyleSheet, FlatList, View } from 'react-native';
+import { StyleSheet, FlatList, View, Button } from 'react-native';
 
 import GoalInput from './components/GoalInput';
 import GoalItem from './components/GoalItem';
@@ -19,6 +19,7 @@ SplashScreen.preventAutoHideAsync();
 export default function RootLayout() {
   const [enteredGoalText, setEnteredGoalText] = useState('');
   const [goalList, setGoalList] = useState<{ id: string; text: string }[]>([]);
+  const [modalVisible, setModalVisible] = useState(false);
 
   function goalInputHandler(enteredGoal: string) {
     setEnteredGoalText(enteredGoal);
@@ -42,9 +43,11 @@ export default function RootLayout() {
 
   return (
     <View style={styles.appContainer}>
+      <Button title="Add New Goal" onPress={() => setModalVisible(true)} />
       <GoalInput
         goalInputHandler={goalInputHandler}
         onAddGoal={addGoalHandler}
+        modalVisible={modalVisible}
       />
       <FlatList
         data={goalList}

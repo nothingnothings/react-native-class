@@ -4,6 +4,8 @@ import { useNavigation } from '@react-navigation/native';
 import { TextInput } from 'react-native-gesture-handler';
 import Card from '@/components/Card';
 
+import Colors from '@/constants/Colors';
+
 const StartGameScreen = () => {
   const navigation = useNavigation();
 
@@ -15,10 +17,10 @@ const StartGameScreen = () => {
         <TextInput placeholder="Enter a number" />
         <View style={styles.buttonContainer}>
           <View style={[styles.button, styles.resetButton]}>
-            <Button title="Reset" onPress={() => {}} />
+            <Button title="Reset" onPress={() => {}} color={Colors.accent} />
           </View>
           <View style={[styles.button, styles.confirmButton]}>
-            <Button title="Confirm" onPress={() => {}} />
+            <Button title="Confirm" onPress={() => {}} color={Colors.primary} />
           </View>
         </View>
       </Card>

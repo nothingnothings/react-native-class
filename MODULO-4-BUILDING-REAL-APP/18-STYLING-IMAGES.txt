@@ -1,0 +1,334 @@
+
+
+A BOA NOTÍCIA É QUE PODEMOS ESTILIZAR NOSSA IMAGE,
+
+
+REDUZIR SEU TAMANHO..
+
+
+
+
+
+
+
+
+
+basta escrever assim:
+
+
+
+
+image: {
+    width: '80%',
+    height: 300,
+}
+
+
+
+
+
+
+ex:
+
+
+
+
+
+
+
+import React from 'react';
+import { StyleSheet, Text, View, Button, Image } from 'react-native';
+
+import BodyText from '@/components/BodyText';
+import Card from '@/components/Card';
+
+import SomeImage from '@/assets/images/some-image.png';
+
+type GameOverScreenProps = {
+  onRestartGame: () => void;
+};
+
+const GameOverScreen = (props: GameOverScreenProps) => {
+  return (
+    <View style={styles.screen}>
+      <TitleText>Game Over!</TitleText>
+      <Image source={SomeImage} style={styles.image} />
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  screen: {
+    flex: 1,
+    padding: 10,
+    alignItems: 'center',
+  },
+  card: {
+    width: 300,
+    maxWidth: '80%',
+  },
+  image: {
+    width: '80%',
+    height: 300,
+    maxWidth: '80%',
+    marginTop: 20,
+  },
+});
+
+export default GameOverScreen;
+
+
+
+
+
+
+
+
+
+
+
+
+TAMBÉM PODEMOS DEFINIR A MANEIRA PELA QUAL A IMAGE VAI ESCALAR,
+
+
+NO SEU APP..
+
+
+
+
+
+--> PARA ISSO, TEMOS 'resizeMode',
+
+
+QUE TE DEIXA DEFINIR O ASPECT RATIO A SER UTILIZADO...
+
+
+
+'resizeMode: cover' --> TENTA 
+                        MANTER O ASPECT RATIO,
+                        E TENTA 
+
+
+                        CABER NA CAIXA...
+
+
+
+
+
+'contain' --> O SEU APP 
+
+                VAI DIMINUIR A IMAGE,
+
+                PARA QUE 
+
+                ELA NÃO EXCEDA O HEIGHT E WIDTH 
+
+                DO SEU PARENT COMPONENT..
+
+
+
+
+
+'cover' é a mesma coisa, mas CROPPA 
+
+    a image,
+
+    se ela excede os axis...
+
+
+
+
+
+
+
+
+'cover' --> é o default...
+
+
+
+
+
+-> MAS SE VC NÃO QUER QUE A IMAGE SEJA CROPPED 
+DE MANEIRA ALGUMA,
+VC PODE USAR O 'contain'...
+
+
+
+
+
+
+--> ISSO TE DEIXA ADICIONAR 1 IMAGE NA TELA...
+
+
+
+
+
+--> PODEMOS ADICIIONAR ROUNDED COURNERS,
+
+
+COM 
+
+'borderRadius'...
+
+
+
+
+
+
+-> MAS ISSO FICA ESQUISITO,
+
+SEMPRE É MELHOR 
+
+
+WRAPPAR A IMAGE EM 1 SURROUNDING VIEW,
+
+E AÍ 
+
+ESTILIZAR 
+
+A VIEW EM SI...
+
+
+
+
+  imageContainer: {
+    width: '80%',
+    height: 300,
+    borderRadius: 200,
+    borderWidth: 3,
+    borderColor: 'black',
+  },
+  image: {
+    width: '100%',
+    height: '100%',
+  },
+
+
+
+
+
+
+
+
+--> MAS A IMAGE ESTÁ FAZENDO OVERLAP DO CONTAINER...
+
+
+
+
+
+-> PARA CONSERTAR ISSO,
+
+DEVEMOS 
+
+ADICIONAR A PROPERTY DE 'overflow: hidden'
+ 
+
+
+ NO IMAGE CONTAINER,
+
+
+ TIPO ASSIM:
+
+
+
+
+
+
+ import React from 'react';
+import { StyleSheet, Text, View, Button, Image } from 'react-native';
+
+import BodyText from '@/components/BodyText';
+import Card from '@/components/Card';
+
+import SomeImage from '@/assets/images/some-image.png';
+
+type GameOverScreenProps = {
+  onRestartGame: () => void;
+};
+
+const GameOverScreen = (props: GameOverScreenProps) => {
+  return (
+    <View style={styles.screen}>
+      <TitleText>Game Over!</TitleText>
+      <View style={styles.imageContainer}>
+        <Image source={SomeImage} style={styles.image} />
+      </View>
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  screen: {
+    flex: 1,
+    padding: 10,
+    alignItems: 'center',
+  },
+  card: {
+    width: 300,
+    maxWidth: '80%',
+  },
+  imageContainer: {
+    width: '80%',
+    height: 300,
+    borderRadius: 200,
+    borderWidth: 3,
+    borderColor: 'black',
+    overflow: 'hidden',
+    marginVertical: 20,
+  },
+  image: {
+    width: '100%',
+    height: '100%',
+  },
+});
+
+export default GameOverScreen;
+
+
+
+
+
+
+
+
+
+
+
+
+
+MAS, NO ANDROID,
+
+O FORMATO DA IMAGE ESTÁ ESQUISITO...
+
+
+
+--> O FIX PARA ISSO É 
+
+    DEIXAR O 'BORDER RADIUS'
+
+    COMO 
+
+    METADE DO VALUE DO WIDTH E HEIGHT...
+
+
+
+
+
+
+MAIS TARDE VEREMOS COMO PODEMOS AJUSTAR NOSSAS IMAGES 
+
+
+A TAMANHOS VARIÁVEIS DE DEVICES,
+
+
+MAIS TARDE...
+
+
+
+
+
+
+
+
+
+OK... E COMO PODEMOS FAZER ISSO TUDO, SE A IMAGE VEM DA WEB?

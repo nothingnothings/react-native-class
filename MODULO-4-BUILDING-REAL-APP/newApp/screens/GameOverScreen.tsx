@@ -14,7 +14,9 @@ const GameOverScreen = (props: GameOverScreenProps) => {
   return (
     <View style={styles.screen}>
       <TitleText>Game Over!</TitleText>
-      <Image source={SomeImage} style={styles.image} />
+      <View style={styles.imageContainer}>
+        <Image source={SomeImage} style={styles.image} />
+      </View>
     </View>
   );
 };
@@ -29,11 +31,18 @@ const styles = StyleSheet.create({
     width: 300,
     maxWidth: '80%',
   },
-  image: {
+  imageContainer: {
     width: 300,
-    maxWidth: '80%',
     height: 300,
-    marginTop: 20,
+    borderRadius: 150,
+    borderWidth: 3,
+    borderColor: 'black',
+    overflow: 'hidden',
+    marginVertical: 20,
+  },
+  image: {
+    width: '100%',
+    height: '100%',
   },
 });
 

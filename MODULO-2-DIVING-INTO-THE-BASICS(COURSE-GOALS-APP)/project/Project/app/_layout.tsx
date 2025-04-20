@@ -8,16 +8,7 @@ import 'react-native-reanimated';
 
 import { useState } from 'react';
 
-import { useColorScheme } from '@/hooks/useColorScheme';
-import {
-  Button,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TextInput,
-  FlatList,
-  View,
-} from 'react-native';
+import { StyleSheet, FlatList, View } from 'react-native';
 
 import GoalInput from './components/GoalInput';
 import GoalItem from './components/GoalItem';
@@ -43,6 +34,12 @@ export default function RootLayout() {
     ]);
   };
 
+  const deleteGoalHandler = (id: string) => {
+    setGoalList((currentGoals) =>
+      currentGoals.filter((goal) => goal.id !== id)
+    );
+  };
+
   return (
     <View style={styles.appContainer}>
       <GoalInput
@@ -52,7 +49,11 @@ export default function RootLayout() {
       <FlatList
         data={goalList}
         renderItem={({ item }) => (
-          <GoalItem goalText={item.text} key={item.id} />
+          <GoalItem
+            goalText={item.text}
+            key={item.id}
+            onDelete={() => deleteGoalHandler(item.id)}
+          />
         )}
       />
     </View>

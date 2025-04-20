@@ -1,15 +1,27 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  TouchableHighlight,
+} from 'react-native';
 
 type GoalItemProps = {
   goalText: string;
+  onDelete: (id: string) => void;
 };
 
 const GoalItem = (props: GoalItemProps) => {
   return (
-    <View style={styles.container}>
-      <Text style={styles.text}>{props.goalText}</Text>
-    </View>
+    <TouchableOpacity
+      activeOpacity={0.8}
+      onPress={() => props.onDelete(props.goalText)}
+    >
+      <View style={styles.container}>
+        <Text style={styles.text}>{props.goalText}</Text>
+      </View>
+    </TouchableOpacity>
   );
 };
 

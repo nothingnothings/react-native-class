@@ -1,0 +1,512 @@
+
+
+
+
+
+ok... podemos adicionar nossos elements,
+
+mas ainda não conseguimos os deletar...
+
+
+
+
+
+
+--> QUEREMOS SER CAPAZES DE CLICAR EM 1 LIST ITEM
+
+E AÍ 
+
+REMOVER ELE DA LIST...
+
+
+
+
+
+
+
+
+
+-> COMO CADA ITEM TEM 1 ID,
+
+PODEMOS 
+
+
+
+USAR ESSE ID PARA DELETAR CADA 1 DELES...
+
+
+
+
+
+--> PRECISAMOS DE UM WRAPPER DE 'TouchableOpacity',
+
+
+COM UM PROP DE 'onPress()',
+
+
+PARA CONSEGUIRMOS RODAR FUNCTIONS DE DELETE...
+
+
+
+
+
+
+
+-> TIPO ASSIM:
+
+
+
+
+'Touchable'...
+
+
+
+
+
+
+
+TIPO ASSIM:
+
+
+import React from 'react';
+import { StyleSheet, Text, View, Touchable } from 'react-native';
+
+type GoalItemProps = {
+  goalText: string;
+};
+
+const GoalItem = (props: GoalItemProps) => {
+  return (
+    <Touchable>
+      <View style={styles.container}>
+        <Text style={styles.text}>{props.goalText}</Text>
+      </View>
+    </Touchable>
+  );
+
+
+}
+
+
+
+
+
+
+
+
+  A MORAL DO TOUCHABLE É QUE ELE __ NÃO É VISÍVEL...
+
+
+
+
+MAS ELE REGISTRA O EVENT DE 'TOUCH'
+
+
+
+NO ELEMENT QUE VC WRAPPA....
+
+
+
+
+
+
+
+--> 'Touchable' 
+
+
+AGE MAIS COMO UMA 'PARENT CLASS'...
+
+
+
+
+
+
+
+--> EXISTEM VÁRIAS VERSIONS DIFERENTES 
+
+    DE 'Touchable' QUE VC PODE USAR...
+
+
+
+
+
+
+-> A VERSION MAIS USADA É 'TouchableOpacity'...
+
+
+
+
+
+
+tipo assim:
+
+
+
+
+
+
+
+import React from 'react';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+
+type GoalItemProps = {
+  goalText: string;
+};
+
+const GoalItem = (props: GoalItemProps) => {
+  return (
+    <TouchableOpacity>
+      <View style={styles.container}>
+        <Text style={styles.text}>{props.goalText}</Text>
+      </View>
+    </TouchableOpacity>
+  );
+};
+
+
+
+
+
+
+
+
+
+
+
+OK....
+
+
+
+
+
+com 'on',
+
+temos 
+
+
+VÁRIOS TOUCH EVENTS HIGH-LEVEL A QUE PODEMOS FAZER LISTEN TO,
+
+
+COMO 'onPress'
+
+e 'onLongPress'...
+
+
+
+
+
+
+
+
+
+
+
+--> TIPO ASSIM:
+
+
+
+
+import React from 'react';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+
+type GoalItemProps = {
+  goalText: string;
+};
+
+const GoalItem = (props: GoalItemProps) => {
+  return (
+    <TouchableOpacity onPress={props.onDelete}>
+      <View style={styles.container}>
+        <Text style={styles.text}>{props.goalText}</Text>
+      </View>
+    </TouchableOpacity>
+  );
+};
+
+
+
+
+
+
+
+
+
+
+
+
+AGORA PODEMOS PASSAR ESSE PROP,
+
+
+
+TIPO ASSIM:
+
+
+
+import React from 'react';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+
+type GoalItemProps = {
+  goalText: string;
+  onDelete: (id: string) => void;
+};
+
+const GoalItem = (props: GoalItemProps) => {
+  return (
+    <TouchableOpacity onPress={() => props.onDelete(props.goalText)}>
+      <View style={styles.container}>
+        <Text style={styles.text}>{props.goalText}</Text>
+      </View>
+    </TouchableOpacity>
+  );
+};
+
+
+
+
+
+
+
+
+
+
+
+E ASSIM:
+
+
+
+
+
+
+
+  return (
+    <View style={styles.appContainer}>
+      <GoalInput
+        goalInputHandler={goalInputHandler}
+        onAddGoal={addGoalHandler}
+      />
+      <FlatList
+        data={goalList}
+        renderItem={({ item }) => (
+          <GoalItem
+            goalText={item.text}
+            key={item.id}
+            onDelete={() => deleteGoalHandler(item.id)}
+          />
+        )}
+      />
+    </View>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+O BOM É QUE 'TouchableOpacity'
+
+
+
+NOS DÁ 
+
+UM FEEDBACK VISUAL DO ELEMENT QUE TOCAMOS...
+
+
+
+
+
+
+
+
+
+
+VC TAMBÉM PODE CONTROLAR ESSA OPACITY,
+
+
+POR MEIO DO 
+
+PROP DE 'activeOpacity',
+
+
+QUE PODE SER DEFINIDO COMO '0.8',
+por exemplo...
+
+
+
+
+
+
+
+EX;
+
+
+
+
+
+
+
+    <TouchableOpacity
+      activeOpacity={0.8}
+      onPress={() => props.onDelete(props.goalText)}
+    >
+      <View style={styles.container}>
+        <Text style={styles.text}>{props.goalText}</Text>
+      </View>
+    </TouchableOpacity>
+
+
+
+
+
+
+
+
+
+
+COM ISSO, PODEMOS DEIXAR O ELEMENT ATIVO MENOS TRANSPARENTE...
+
+
+
+
+
+
+
+
+--> TAMBÉM 
+
+TEMOS OUTROS COMPONENTS QUE PODEMOS USAR, DE TIPO 'TOUCHABLE',
+
+
+
+COMO 
+
+
+
+'TouchableHighlight'...
+
+
+
+
+
+
+
+
+
+'TouchableHighlight' --> FAZ A MESMA COISA,
+
+                        MAS O VISUAL FEEDBACK SERÁ DIFERENTE,
+
+
+                        O BACKGROUND COLOR VAI MUDAR...
+
+
+                        ( o background color ficou PRETO)....
+
+
+
+
+
+-->  podemos trocar o 'underlayColor'
+
+para outra cor,
+
+em vez de preto...
+
+
+
+
+
+
+
+
+
+TEMOS TAMBÉM 'TouchableNativeFeedback'...
+
+
+
+
+
+-->  MAS 'TouchableNativeFeedback'
+
+
+
+FUNCIONA __ APENAS __ NO ANDROID...
+
+
+
+
+
+
+--> PODEMOS DETERMINAR QUAL APARELHO ESTÁ SENDO USADO POR MEIO 
+DE 'expo-device'...
+
+
+
+
+
+
+
+'TouchableNativeFeedback' --> te dá um efeito de RIPPLE
+ 
+ quando o elemento é tocado...
+
+
+
+
+
+
+
+ -> temos vários props que podem ser definidos, nesse component...
+
+
+
+
+
+
+
+
+
+
+ --> temos também 'TouchableWithoutFeedback'... --> 
+    ele te deixa registrar esses events,
+
+
+    mas sem feedback visual algum... (pode ser bom, dependendo do case)...
+
+
+
+    --> ESSES TOUCHABLE COMPONENTS SÃO MT IMPORTANTES, NO RN,
+
+    PQ TE DEIXAM ATTACHEAR ESSES LISTENERS NORMAIS 
+
+
+    'HIGH-LEVEL',
+
+    COMO 
+
+
+    onPress, longPress, etc,
+
+    em QUAISQUER COMPONENTS...
+
+
+
+
+
+--> TE DÁ GRANDE FLEXIBILIDADE...
+
+
+
+
+
+
+
+'TouchableOpacity' --> O professor gosta desse component...
+

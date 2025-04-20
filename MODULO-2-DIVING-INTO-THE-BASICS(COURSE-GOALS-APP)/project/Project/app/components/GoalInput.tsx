@@ -35,8 +35,18 @@ const GoalInput = (props: GoalInputProps) => {
           style={styles.textInput}
           placeholder="Your course goal!"
         />
-        <Button title="CANCEL" color="red" onPress={() => cancelHandler()} />
-        <Button title="ADD" onPress={() => addGoalHandler()} />
+        <View style={styles.buttonContainer}>
+          <View style={styles.button}>
+            <Button
+              title="CANCEL"
+              color="red"
+              onPress={() => cancelHandler()}
+            />
+          </View>
+          <View style={styles.button}>
+            <Button title="ADD" onPress={() => addGoalHandler()} />
+          </View>
+        </View>
       </View>
     </Modal>
   );
@@ -49,7 +59,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderBottomColor: '#cccccc',
   },
-
+  buttonContainer: {
+    width: '60%',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+  },
+  button: {
+    width: '40%',
+  },
   textInput: {
     borderWidth: 1,
     borderColor: '#cccccc',

@@ -1,0 +1,137 @@
+
+
+
+
+
+
+error messages/app crashes 
+
+
+
+
+
+LOGICAL ERRORS
+
+
+
+
+
+styling, layout e UX ...
+
+
+
+
+
+
+COMO CONSERTAR ESSES 3 TIPOS DE ERRORS?
+
+
+
+
+
+
+
+
+ERROR MESSAGES - APP CRASHES
+
+
+
+
+SÃO CAUSADOS POR SYNTAX ERRORS,
+
+BUGS NO CODE (undefined values, wrong types)..
+
+
+
+
+UNAVOIDABLE ERRORS --> ''EX: FAILING NETWORK REQUESTS''..
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+logical errors --> UNDESIRED OR UNEXPECTED APP BEHAVIOR..
+
+
+
+UNEXPECTED/UNHANDLED USER BEHAVIOR...
+
+
+
+
+
+
+SEQUENCE OF STEPS LEADS TO ERRORS...
+
+
+
+
+
+
+
+
+
+
+STYLING --> 
+
+
+WRONG STYLING OR LAYOUT 
+
+ 
+ INCONSISTENT RESULTS ON DIFFERENT DEVICES 
+
+
+
+
+
+
+
+
+
+ LAYOUT DOES NOT WORK ON CERTAIN DEVICES OR ORIENTATIONS...
+
+
+
+
+
+
+
+
+
+ HOW TO DEBUG:
+
+
+
+
+
+
+
+
+
+1) READ THE ERROR MESSAGES (seriously)...
+
+
+
+
+2) console.log()
+
+
+
+
+
+3) CHROME DEBUGGER (+breakpoints)...
+

@@ -1,3 +1,35 @@
+
+
+
+
+
+
+
+--> PARA CENTRALIZAR O CONTEÚDO NO MODAL,
+
+    PODEMOS ESTILIZAR USANDO FLEXBOX...
+
+
+
+
+
+
+
+
+--> NO MODAL,
+
+TEMOS AQUELA VIEW,
+
+A ROOT VIEW...
+
+
+-> AÍ TEMOS OUTROS CHILD ELEMENTS,
+
+
+COMO a view:
+
+
+
 import React, { useState } from 'react';
 import { Button, StyleSheet, TextInput, Modal } from 'react-native';
 import { View } from 'react-native-reanimated/lib/typescript/Animated';
@@ -33,6 +65,41 @@ const GoalInput = (props: GoalInputProps) => {
 const styles = StyleSheet.create({
   inputContainer: {
     flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 24,
+    borderBottomWidth: 1,
+    borderBottomColor: '#cccccc',
+  },
+
+  textInput: {
+    borderWidth: 1,
+    borderColor: '#cccccc',
+    width: '70%',
+    marginRight: 8,
+    padding: 8,
+  },
+});
+
+export default GoalInput;
+
+
+
+
+
+
+
+
+
+TIPO ASSIM:
+
+
+
+
+const styles = StyleSheet.create({
+  inputContainer: {
+    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     borderBottomColor: '#cccccc',
@@ -43,9 +110,23 @@ const styles = StyleSheet.create({
     borderColor: '#cccccc',
     width: '70%',
     marginRight: 8,
-    marginBottom: 10,
     padding: 8,
   },
 });
 
 export default GoalInput;
+
+
+
+
+
+
+
+
+
+
+
+
+ISSO VAI CENTRALIZAR O CONTEÚDO...
+
+

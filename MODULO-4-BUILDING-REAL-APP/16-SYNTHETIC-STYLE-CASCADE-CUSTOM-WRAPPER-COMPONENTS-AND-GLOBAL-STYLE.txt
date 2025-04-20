@@ -1,0 +1,241 @@
+
+
+
+
+
+
+
+--> o professor adciiona a fontFamily em mais alguns outros 
+
+locais...
+
+
+
+
+
+
+
+
+
+MAS O PROFESSOR QUER USAR A FONTE DE 'openSans'
+
+
+
+EM TODOS OS OUTROS LOCAIS DO CÓDIGO...
+
+
+
+
+
+
+
+-> PARA ISSO, PRECISAMOS DE UM WRAPPER GLOBAL...
+
+
+
+
+--> MAS COMO PODEMOS FAZER ISSO?
+
+
+
+
+
+
+não adianta inheritance...
+
+
+
+
+
+
+
+
+
+HÁ 2 'WORKAROUNDS' PARA ISSO...
+
+
+
+
+QUAIS SÃO ESSAS MANEIRAS?
+
+
+
+
+
+
+
+1) CRIAR 1 COMPONENT SEPARADO,
+
+DE NOME 'BodyText',
+
+
+ou qualquer nome assim...
+
+
+
+
+
+
+SERÁ 1 COMPONENT SIMPLES, COM ESTA SINTAXE:
+
+
+
+
+
+
+
+import React from 'react';
+import { StyleSheet, Text } from 'react-native';
+
+type BodyTextProps = {
+  children: React.ReactNode;
+  style?: any;
+};
+
+const BodyText = (props: BodyTextProps) => {
+  return <Text style={[styles.bodyText, props.style]}>{props.children}</Text>;
+};
+
+const styles = StyleSheet.create({
+  bodyText: {
+    fontSize: 16,
+    fontFamily: 'open-sans',
+  },
+});
+
+export default BodyText;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+--> ESSE É 1 COMPONENT SUPER SIMPLES,
+    1 WRAPPER AO REDOR DO TEXT,
+
+
+    MAS 1 WRAPPER QUE SEMPRE VAI APLICAR ESSA FONTFAMILY...
+
+
+
+
+
+--> AÍ, EM VEZ DE VC USAR O '<Text>'
+
+
+COMUM, DO REACT-NATIVE,
+
+
+VC 
+VAI USAR 
+
+ESSE 
+
+CUSTOM TEXT COMPONENT,
+
+
+
+TIPO 
+
+
+'import BodyText from @/components/BodyText'...
+
+
+
+
+
+
+
+OK... FAZ SENTIDO...    
+
+
+
+
+E QUAL O SEGUNDO APPROACH?
+
+
+
+
+
+
+
+
+
+A ALTERNATIVA É 
+
+IR LÁ 
+
+
+NO FOLDER DE 'constants'
+
+
+
+E CRIAR UM ARQUIVO,
+
+
+como 'defaultStyle.ts' ,
+
+
+
+E AÍ ESCREVER ASSIM:
+
+
+
+
+
+
+
+import { StyleSheet } from 'react-native';
+
+export default StyleSheet.create({
+  bodyText: {
+    fontFamily: 'open-sans',
+    color: 'red',
+  },
+});
+
+
+
+
+
+
+
+
+
+AÍ VC IMPORTA ISSO 
+
+
+
+NAS SUAS PAGES/COMPONENTS,
+
+E AÍ ESCREVE ASSIM:
+
+
+
+
+<Text style={DefaultStyles.bodyText}>Some Text</Text>
+
+
+
+
+
+
+MAS ESSE APPROACH TAMBÉM É UMA PORCARIA...
+
+
+
+
+É MELHOR O APPROACH DO COMPONENT,
+
+
+APESAR DE SER CLUNKY...
+
+

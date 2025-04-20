@@ -1,0 +1,449 @@
+
+
+
+
+VC SEMPRE DEVE VALIDAR O INPUT DO USER...
+
+
+
+
+
+
+
+
+--> PRECISAMOS WIRE NOSSOS BUTTONS...
+
+
+
+
+
+
+
+
+-> PARA ISSO, O PROFESSOR ESCREVE ASSIM:
+
+
+
+
+
+
+
+import React from 'react';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Button,
+  TouchableWithoutFeedback,
+  Keyboard,
+} from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+
+import Card from '@/components/Card';
+import Input from '@/components/Input';
+
+import Colors from '@/constants/Colors';
+
+const StartGameScreen = () => {
+  const [enteredValue, setEnteredValue] = React.useState('');
+  const [confirmed, setConfirmed] = React.useState(false);
+  const [selectedNumber, setSelectedNumber] = React.useState();
+
+  const numberInputHandler = (enteredNumber: string) => {
+    setEnteredValue(enteredNumber.replace(/[^0-9]/g, ''));
+  };
+
+  const resetInputHandler = () => {
+    setEnteredValue('');
+    setConfirmed(false);
+  };
+
+  const confirmInputHandler = () => {
+    const chosenNumber = parseInt(enteredValue);
+    if (chosenNumber === NaN || chosenNumber <= 0 || chosenNumber > 99) {
+      return;
+    }
+    setConfirmed(true);
+    setSelectedNumber(parseInt(chosenNumber));
+    setEnteredValue('');
+  };
+
+  return (
+    <TouchableWithoutFeedback
+      onPress={() => {
+        Keyboard.dismiss(); // Hides the keyboard when the user taps outside the input field
+      }}
+    >
+      <View style={styles.screen}>
+        <Text style={styles.title}>Start a New Game!</Text>
+        <Card style={styles.inputContainer}>
+          <Text>Select a Number!</Text>
+          <Input
+            style={styles.input}
+            keyboardType="number-pad"
+            blurOnSubmit
+            autoCapitalize="none"
+            autoCorrect={false}
+            maxLength={2}
+            onChangeText={(text) => numberInputHandler(text)}
+            value={enteredValue}
+          />
+          <View style={styles.buttonContainer}>
+            <View style={[styles.button, styles.resetButton]}>
+              <Button
+                title="Reset"
+                onPress={resetInputHandler}
+                color={Colors.accent}
+              />
+            </View>
+            <View style={[styles.button, styles.confirmButton]}>
+              <Button
+                title="Confirm"
+                onPress={confirmInputHandler}
+                color={Colors.primary}
+              />
+            </View>
+          </View>
+        </Card>
+      </View>
+    </TouchableWithoutFeedback>
+  );
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+AGORA PRECISAMOS DE UM VISUAL FEEDBACK...
+
+
+
+ALÉM DE UM 'return',
+
+
+DEVEMOS TER 1 VISUAL FEEDBACK...
+
+
+
+
+
+--> PARA O VISUAL FEEDBACK,
+
+
+
+
+vamos colocar 1 condition especial 
+
+no componnet,
+
+
+tipo assim:
+
+
+
+
+
+
+
+
+import React from 'react';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Button,
+  TouchableWithoutFeedback,
+  Keyboard,
+} from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+
+import Card from '@/components/Card';
+import Input from '@/components/Input';
+
+import Colors from '@/constants/Colors';
+
+const StartGameScreen = () => {
+  const [enteredValue, setEnteredValue] = React.useState('');
+  const [confirmed, setConfirmed] = React.useState(false);
+  const [selectedNumber, setSelectedNumber] = React.useState();
+
+  const numberInputHandler = (enteredNumber: string) => {
+    setEnteredValue(enteredNumber.replace(/[^0-9]/g, ''));
+  };
+
+  const resetInputHandler = () => {
+    setEnteredValue('');
+    setConfirmed(false);
+  };
+
+  const confirmInputHandler = () => {
+    const chosenNumber = parseInt(enteredValue);
+    if (chosenNumber === NaN || chosenNumber <= 0 || chosenNumber > 99) {
+      return;
+    }
+    setConfirmed(true);
+    setSelectedNumber(parseInt(chosenNumber));
+    setEnteredValue('');
+  };
+
+  let confirmedOutput;
+
+  if (confirmed) {
+    confirmedOutput = <Text>Chosen Number: {selectedNumber}</Text>;
+  }
+
+  return (
+    <TouchableWithoutFeedback
+      onPress={() => {
+        Keyboard.dismiss(); // Hides the keyboard when the user taps outside the input field
+      }}
+    >
+      <View style={styles.screen}>
+        <Text style={styles.title}>Start a New Game!</Text>
+        <Card style={styles.inputContainer}>
+          <Text>Select a Number!</Text>
+          <Input
+            style={styles.input}
+            keyboardType="number-pad"
+            blurOnSubmit
+            autoCapitalize="none"
+            autoCorrect={false}
+            maxLength={2}
+            onChangeText={(text) => numberInputHandler(text)}
+            value={enteredValue}
+          />
+          <View style={styles.buttonContainer}>
+            <View style={[styles.button, styles.resetButton]}>
+              <Button
+                title="Reset"
+                onPress={resetInputHandler}
+                color={Colors.accent}
+              />
+            </View>
+            <View style={[styles.button, styles.confirmButton]}>
+              <Button
+                title="Confirm"
+                onPress={confirmInputHandler}
+                color={Colors.primary}
+              />
+            </View>
+          </View>
+        </Card>
+        {confirmedOutput}
+      </View>
+    </TouchableWithoutFeedback>
+  );
+};
+
+const styles = StyleSheet.create({
+  screen: {
+    flex: 1,
+    padding: 10,
+    alignItems: 'center',
+  },
+  title: {
+    fontSize: 20,
+    marginVertical: 10,
+  },
+  inputContainer: {
+    width: 300,
+    maxWidth: '80%',
+    alignItems: 'center',
+  },
+  input: {
+    width: 50,
+    textAlign: 'center',
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%',
+    marginTop: 20,
+    flex: 1,
+    paddingHorizontal: 15,
+  },
+  button: {
+    width: '40%',
+  },
+  confirmButton: {
+    backgroundColor: '#f7287b',
+    borderRadius: 10,
+    padding: 10,
+    margin: 10,
+  },
+  resetButton: {
+    backgroundColor: '#cccccc',
+    borderRadius: 10,
+    padding: 10,
+    margin: 10,
+  },
+});
+
+export default StartGameScreen;
+
+
+
+
+
+
+
+
+Ex;
+
+
+
+
+
+
+
+import React from 'react';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Button,
+  TouchableWithoutFeedback,
+  Keyboard,
+} from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+
+import Card from '@/components/Card';
+import Input from '@/components/Input';
+
+import Colors from '@/constants/Colors';
+
+const StartGameScreen = () => {
+  const [enteredValue, setEnteredValue]: any = React.useState(null);
+  const [confirmed, setConfirmed] = React.useState(false);
+  const [selectedNumber, setSelectedNumber] = React.useState(0);
+
+  const numberInputHandler = (enteredNumber: string) => {
+    setEnteredValue(parseInt(enteredNumber.replace(/[^0-9]/g, '')));
+  };
+
+  const resetInputHandler = () => {
+    setEnteredValue(null);
+    setConfirmed(false);
+  };
+
+  const confirmInputHandler = () => {
+    const chosenNumber = parseInt(enteredValue);
+    if (chosenNumber <= 0 || chosenNumber > 99) {
+      return;
+    }
+    setConfirmed(true);
+    setSelectedNumber(chosenNumber);
+    setEnteredValue('');
+  };
+
+  let confirmedOutput;
+
+  if (confirmed) {
+    confirmedOutput = <Text>Chosen Number: {selectedNumber}</Text>;
+  }
+
+  return (
+    <TouchableWithoutFeedback
+      onPress={() => {
+        Keyboard.dismiss(); // Hides the keyboard when the user taps outside the input field
+      }}
+    >
+      <View style={styles.screen}>
+        <Text style={styles.title}>Start a New Game!</Text>
+        <Card style={styles.inputContainer}>
+          <Text>Select a Number!</Text>
+          <Input
+            style={styles.input}
+            keyboardType="number-pad"
+            blurOnSubmit
+            autoCapitalize="none"
+            autoCorrect={false}
+            maxLength={2}
+            onChangeText={(text) => numberInputHandler(text)}
+            value={enteredValue}
+          />
+          <View style={styles.buttonContainer}>
+            <View style={[styles.button, styles.resetButton]}>
+              <Button
+                title="Reset"
+                onPress={resetInputHandler}
+                color={Colors.accent}
+              />
+            </View>
+            <View style={[styles.button, styles.confirmButton]}>
+              <Button
+                title="Confirm"
+                onPress={confirmInputHandler}
+                color={Colors.primary}
+              />
+            </View>
+          </View>
+        </Card>
+        {confirmedOutput}
+      </View>
+    </TouchableWithoutFeedback>
+  );
+};
+
+const styles = StyleSheet.create({
+  screen: {
+    flex: 1,
+    padding: 10,
+    alignItems: 'center',
+  },
+  title: {
+    fontSize: 20,
+    marginVertical: 10,
+  },
+  inputContainer: {
+    width: 300,
+    maxWidth: '80%',
+    alignItems: 'center',
+  },
+  input: {
+    width: 50,
+    textAlign: 'center',
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%',
+    marginTop: 20,
+    flex: 1,
+    paddingHorizontal: 15,
+  },
+  button: {
+    width: '40%',
+  },
+  confirmButton: {
+    backgroundColor: '#f7287b',
+    borderRadius: 10,
+    padding: 10,
+    margin: 10,
+  },
+  resetButton: {
+    backgroundColor: '#cccccc',
+    borderRadius: 10,
+    padding: 10,
+    margin: 10,
+  },
+});
+
+export default StartGameScreen;
+
+
+
+
+
+
+
+

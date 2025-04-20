@@ -1,0 +1,29 @@
+
+
+
+
+
+
+SE VC QUER CONSTRUIR 1 iOs app,
+
+
+isso não é possivel localmente, 
+
+
+MAS COM A AJUDA DO EXPO, VC PODE CONSTRUIR ISSO REMOTAMENTE...
+
+
+
+
+MAS SEM EXPO,
+
+VC NÃO CONSEGUE BUILDAR iOs apps no windows... isso é uma 
+restrição da apple... mesma coisa no linux...
+
+
+
+
+
+--> android apps podem ser construídos 
+
+    em qualquer plataforma...

@@ -1,0 +1,46 @@
+
+
+
+
+
+
+
+podemos outputtar uma lista de 2 maneiras:
+
+
+1) map 
+
+
+2) FlatList...
+
+
+
+
+
+
+
+EX:
+
+
+
+
+
+
+      <View style={styles.goalsContainer}>
+        {goalList.map((goal, index) => (
+          <Text key={index}>{goal}</Text>
+        ))}
+      </View>
+
+
+
+
+
+
+
+
+
+    
+
+
+

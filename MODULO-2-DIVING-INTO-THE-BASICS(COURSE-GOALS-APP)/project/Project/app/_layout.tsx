@@ -38,7 +38,9 @@ export default function RootLayout() {
         <Button title="Add Goal" onPress={addGoalHandler} />
       </View>
       <View style={styles.goalsContainer}>
-        <Text>List of goals...</Text>
+        {goalList.map((goal, index) => (
+          <Text key={index}>{goal}</Text>
+        ))}
       </View>
     </View>
   );

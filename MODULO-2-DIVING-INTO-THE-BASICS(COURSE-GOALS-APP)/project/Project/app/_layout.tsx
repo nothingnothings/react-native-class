@@ -21,10 +21,6 @@ export default function RootLayout() {
   const [goalList, setGoalList] = useState<{ id: string; text: string }[]>([]);
   const [modalVisible, setModalVisible] = useState(false);
 
-  function goalInputHandler(enteredGoal: string) {
-    setEnteredGoalText(enteredGoal);
-  }
-
   const addGoalHandler = () => {
     setGoalList((currentGoals) => [
       ...currentGoals,
@@ -33,6 +29,8 @@ export default function RootLayout() {
         text: enteredGoalText,
       },
     ]);
+    setModalVisible(false);
+    setEnteredGoalText('');
   };
 
   const deleteGoalHandler = (id: string) => {
@@ -45,9 +43,9 @@ export default function RootLayout() {
     <View style={styles.appContainer}>
       <Button title="Add New Goal" onPress={() => setModalVisible(true)} />
       <GoalInput
-        goalInputHandler={goalInputHandler}
         onAddGoal={addGoalHandler}
         modalVisible={modalVisible}
+        setModalVisible={setModalVisible}
       />
       <FlatList
         data={goalList}

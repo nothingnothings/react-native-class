@@ -1,0 +1,294 @@
+
+
+
+
+
+
+
+CERTO...
+
+
+
+AGORA QUEREMOS QUE O BUTTON DE 'ADD'
+
+
+adicione o goal,
+
+
+
+
+MAS QUEREMOS QUE 
+
+
+O MODAL DE 
+
+'addGoal'
+
+TAMBÉM SEJA HIDDEN...
+
+
+
+
+
+--> POR ISSO PRECISAMOS PASSAR OUTRA FUNCTION,
+
+TIPO ASSIM:
+
+
+
+
+
+
+
+  const addGoalHandler = () => {
+    setGoalList((currentGoals) => [
+      ...currentGoals,
+      {
+        id: Math.random().toString(),
+        text: enteredGoalText,
+      },
+    ]);
+    setModalVisible(false);
+  };
+
+
+
+
+
+
+
+
+  ISSO FUNCIONA,
+
+
+  O REACT NATIVE 
+
+  VAI RE-RENDER 
+
+  APENAS 1 ÚNICA VEZ (é uma boa optimização)...
+
+
+
+
+  MAS QUEREMOS LIMPAR O INPUT FIELD,
+
+
+  E TAMBÉM QUEREMOS ADICIONAR 1 CANCEL BUTTON..
+
+
+
+
+
+-> POR ISSO O PROFESSOR ESCREVE ASSIM:
+
+
+
+
+
+ const addGoalHandler = () => {
+    setGoalList((currentGoals) => [
+      ...currentGoals,
+      {
+        id: Math.random().toString(),
+        text: enteredGoalText,
+      },
+    ]);
+    setModalVisible(false);
+    setEnteredGoalText('');
+  };
+
+
+
+
+
+
+
+
+  MAS O PROFESSOR ADICIONA 1 FUNCITON, DENTRO 
+
+
+  DO GOALINPUT,
+
+  PARA FAZER ISSO...
+
+
+
+
+  TIPO ASSIM:
+
+
+
+
+
+
+
+
+  import React, { useState } from 'react';
+import { Button, StyleSheet, TextInput, Modal } from 'react-native';
+import { View } from 'react-native-reanimated/lib/typescript/Animated';
+
+type GoalInputProps = {
+  onAddGoal: (text: string) => void;
+  modalVisible: boolean;
+  //   enteredGoalText: string;
+};
+
+const GoalInput = (props: GoalInputProps) => {
+  const [enteredGoalText, setEnteredGoalText] = useState('');
+
+  const goalInputHandler = (enteredGoal: string) => {
+    setEnteredGoalText(enteredGoal);
+  };
+
+  const addGoalHandler = () => {
+    props.onAddGoal(enteredGoalText);
+    setEnteredGoalText('');
+  };
+
+  return (
+    <Modal visible={props.modalVisible} transparent animationType="slide">
+      <View style={styles.inputContainer}>
+        <TextInput
+          onChangeText={(text) => goalInputHandler(text)}
+          value={enteredGoalText}
+          style={styles.textInput}
+          placeholder="Your course goal!"
+        />
+        <Button title="Add Goal" onPress={() => addGoalHandler()} />
+      </View>
+    </Modal>
+  );
+};
+
+
+
+
+
+
+
+
+
+
+CERTO...
+
+
+
+
+import React, { useState } from 'react';
+import { Button, StyleSheet, TextInput, Modal } from 'react-native';
+import { View } from 'react-native-reanimated/lib/typescript/Animated';
+
+type GoalInputProps = {
+  onAddGoal: (text: string) => void;
+  modalVisible: boolean;
+  setModalVisible: (visible: boolean) => void;
+  //   enteredGoalText: string;
+};
+
+const GoalInput = (props: GoalInputProps) => {
+  const [enteredGoalText, setEnteredGoalText] = useState('');
+
+  const goalInputHandler = (enteredGoal: string) => {
+    setEnteredGoalText(enteredGoal);
+  };
+
+  const addGoalHandler = () => {
+    props.onAddGoal(enteredGoalText);
+    setEnteredGoalText('');
+  };
+
+  const cancelHandler = () => {
+    setEnteredGoalText('');
+    props.setModalVisible(false);
+  };
+
+  return (
+    <Modal visible={props.modalVisible} transparent animationType="slide">
+      <View style={styles.inputContainer}>
+        <TextInput
+          onChangeText={(text) => goalInputHandler(text)}
+          value={enteredGoalText}
+          style={styles.textInput}
+          placeholder="Your course goal!"
+        />
+        <Button title="CANCEL" color="red" onPress={() => cancelHandler()} />
+        <Button title="ADD" onPress={() => addGoalHandler()} />
+      </View>
+    </Modal>
+  );
+};
+
+
+
+
+
+EX:
+
+
+
+
+
+
+
+import {
+  DarkTheme,
+  DefaultTheme,
+  ThemeProvider,
+} from '@react-navigation/native';
+import * as SplashScreen from 'expo-splash-screen';
+import 'react-native-reanimated';
+
+import { useState } from 'react';
+
+import { StyleSheet, FlatList, View, Button } from 'react-native';
+
+import GoalInput from './components/GoalInput';
+import GoalItem from './components/GoalItem';
+
+// Prevent the splash screen from auto-hiding before asset loading is complete.
+SplashScreen.preventAutoHideAsync();
+
+export default function RootLayout() {
+  const [enteredGoalText, setEnteredGoalText] = useState('');
+  const [goalList, setGoalList] = useState<{ id: string; text: string }[]>([]);
+  const [modalVisible, setModalVisible] = useState(false);
+
+  const addGoalHandler = () => {
+    setGoalList((currentGoals) => [
+      ...currentGoals,
+      {
+        id: Math.random().toString(),
+        text: enteredGoalText,
+      },
+    ]);
+    setModalVisible(false);
+    setEnteredGoalText('');
+  };
+
+  const deleteGoalHandler = (id: string) => {
+    setGoalList((currentGoals) =>
+      currentGoals.filter((goal) => goal.id !== id)
+    );
+  };
+
+  return (
+    <View style={styles.appContainer}>
+      <Button title="Add New Goal" onPress={() => setModalVisible(true)} />
+      <GoalInput
+        onAddGoal={addGoalHandler}
+        modalVisible={modalVisible}
+        setModalVisible={setModalVisible}
+      />
+      <FlatList
+        data={goalList}
+        renderItem={({ item }) => (
+          <GoalItem
+            goalText={item.text}
+            key={item.id}
+            onDelete={() => deleteGoalHandler(item.id)}
+          />
+        )}
+      />
+    </View>
+  );
+}

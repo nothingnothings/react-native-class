@@ -19,6 +19,9 @@ import {
   View,
 } from 'react-native';
 
+import GoalInput from './components/GoalInput';
+import GoalItem from './components/GoalItem';
+
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
@@ -42,26 +45,14 @@ export default function RootLayout() {
 
   return (
     <View style={styles.appContainer}>
-      <View style={styles.inputContainer}>
-        <TextInput
-          onChangeText={(text) => goalInputHandler(text)}
-          value={enteredGoalText}
-          style={styles.textInput}
-          placeholder="Your course goal!"
-        />
-        <Button title="Add Goal" onPress={addGoalHandler} />
-      </View>
-      {/* <ScrollView style={styles.goalsContainer}>
-        {goalList.map((goal, index) => (
-          <Text key={index}>{goal}</Text>
-        ))}
-      </ScrollView> */}
+      <GoalInput
+        goalInputHandler={goalInputHandler}
+        onAddGoal={addGoalHandler}
+      />
       <FlatList
         data={goalList}
-        renderItem={(itemData) => (
-          <View style={styles.listItem}>
-            <Text>{itemData.item.text}</Text>
-          </View>
+        renderItem={({ item }) => (
+          <GoalItem goalText={item.text} key={item.id} />
         )}
       />
     </View>

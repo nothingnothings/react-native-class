@@ -1,0 +1,461 @@
+
+
+
+
+
+
+
+
+
+
+
+--> O PROFESSOR NOS MOSTROU A SCROLLVIEW,
+
+    MAS AGORA DEVEMOS NOS LIVRAR DA SCROLLVIEW...
+
+
+
+
+
+
+
+
+
+--> A SCROLLVIEW É ÓTIMA PARA CASES EM QUE:
+
+1) VC TEM 1 SCROLLABLE AREA ON YOUR SCREEN 
+
+
+
+
+
+
+MAS NÃO É BOA PARA:
+
+
+
+1) CASES EM QUE VC  
+    TEM LISTAS IMENSAS,
+
+    CASES EM QUE VC NÃO SABE O TAMANHO EXATO DA SUA TELA...
+
+
+
+
+
+--> ''THIS WILL PROBABLY EXCEED, BUT WON'T BE MORE THAN 
+
+15-20 ITEMS''.. --> EM CASOS COMO ESSES
+
+                    É ACEITÁVEL USAR 1 SCROLLVIEW...
+
+
+
+
+
+
+
+--> MAS SE VC TEM LISTS MT GRANDES,
+
+    A SCROLLVIEW PODE SER MT 
+
+
+INEFICIENTE,
+
+  
+  ISSO PQ 
+
+  ELA SEMPRE VAI 
+
+
+
+  '''LOAD ALL THE ELEMENTS IN ADVANCE,
+    EVEN THE ONES __ NOT __ IN THE SCREEN''
+
+    (até mesmo os items que 
+    não estão inicialmente visíveis)...
+
+
+
+
+
+-> E ISSO PODE LEVAR A SLOWDOWNS,
+
+BASICAMENTE...
+
+
+
+
+
+
+
+
+--> PARA ACELERAR ISSO TUDO,
+
+HÁ O COMPONENT 'FlatList'..
+
+
+
+
+
+
+
+---> PODEMOS USÁ-LO ASSIM:
+
+
+
+
+
+import {
+  DarkTheme,
+  DefaultTheme,
+  ThemeProvider,
+} from '@react-navigation/native';
+import * as SplashScreen from 'expo-splash-screen';
+import 'react-native-reanimated';
+
+import { useState } from 'react';
+
+import { useColorScheme } from '@/hooks/useColorScheme';
+import {
+  Button,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  FlatList,
+  View,
+} from 'react-native';
+
+// Prevent the splash screen from auto-hiding before asset loading is complete.
+SplashScreen.preventAutoHideAsync();
+
+export default function RootLayout() {
+  const [enteredGoal, setEnteredGoal] = useState('');
+  const [goalList, setGoalList] = useState<string[]>([]);
+
+  function goalInputHandler(enteredGoal: string) {
+    setEnteredGoal(enteredGoal);
+  }
+
+  const addGoalHandler = () => {
+    setGoalList((currentGoals) => [...currentGoals, enteredGoal]);
+  };
+
+  return (
+    <View style={styles.appContainer}>
+      <View style={styles.inputContainer}>
+        <TextInput
+          onChangeText={(text) => goalInputHandler(text)}
+          value={enteredGoal}
+          style={styles.textInput}
+          placeholder="Your course goal!"
+        />
+        <Button title="Add Goal" onPress={addGoalHandler} />
+      </View>
+      {/* <ScrollView style={styles.goalsContainer}>
+        {goalList.map((goal, index) => (
+          <Text key={index}>{goal}</Text>
+        ))}
+      </ScrollView> */}
+      <FlatList />
+    </View>
+  );
+
+
+
+
+
+
+
+
+
+
+
+
+PRECISAMOS DO PROP 'data',
+
+
+QUE PRECISA APONTAR A SUA LISTA DE DATA (array)....
+
+
+
+
+
+
+
+--> DEPOIS TEMOS 'renderItem',
+
+QUE ATUA COMO O 'map'...
+
+
+
+
+
+
+TIPO ASSIM:
+
+
+
+      <FlatList
+        data={goalList}
+        renderItem={({ item }) => <Text>{item}</Text>}
+      />
+
+
+
+
+
+
+
+
+
+
+
+NÃO PRECISAMOS ADICIONAR 1 KEY, AQUI...
+
+
+
+
+--> DEPOIS VEREMOS COMO ISSO É 'KEY-ED'...
+
+
+
+
+
+--> O PROFESSOR VAI ESCREVER TIPO ASSIM:
+
+
+
+
+
+
+      <FlatList
+        data={goalList}
+        renderItem={(itemData) => (
+          <View style={styles.listItem}>
+            <Text>{itemData.item}</Text>
+          </View>
+        )}
+      />
+
+
+
+
+
+
+
+
+
+
+
+
+
+--> COM ISSO, PODEREMOS SCROLLAR,
+
+
+MAS RECEBEREMOS 1 ERROR:
+
+'virtualized items missing key'...
+
+
+
+
+
+
+
+--> isso aconteceu pq 
+
+
+o 'FlatList'
+
+
+
+
+AUTOMATICAMENTE ADICIONA 
+
+
+'keys'
+
+
+a seus items,
+
+MAS APENAS SE SUA DATA TEM 1 CERTO SHAPE...
+
+
+
+
+
+--> E NOSSO SHAPE ATUAL,
+
+EM QUE TEMOS SIMPLESMENTE 1 ARRAY DE STRINGS,
+
+
+NÃO É SUPORTADO...
+
+
+
+
+
+
+
+
+--> O SHAPE SUPORTADO É 
+
+
+
+
+TER GOALS QUE NÃO SÃO APENAS STRINGS,
+
+E SIM 
+
+
+GOALS QUE SÃO OBJECTS...
+
+
+
+
+
+
+ok...
+
+
+E, NESSES OBJECTS,
+
+
+PRECISAMOS TER 1 PROPERTY DE NOME 
+
+'key',
+
+
+TIPO ASSIM:
+
+
+
+
+
+
+
+export default function RootLayout() {
+  const [enteredGoalText, setEnteredGoalText] = useState('');
+  const [goalList, setGoalList] = useState<{ id: string; text: string }[]>([]);
+
+  function goalInputHandler(enteredGoal: string) {
+    setEnteredGoalText(enteredGoal);
+  }
+
+  const addGoalHandler = () => {
+    setGoalList((currentGoals) => [
+      ...currentGoals,
+      {
+        id: Math.random().toString(),
+        text: enteredGoalText,
+      },
+    ]);
+  };
+
+  return (
+    <View style={styles.appContainer}>
+      <View style={styles.inputContainer}>
+        <TextInput
+          onChangeText={(text) => goalInputHandler(text)}
+          value={enteredGoalText}
+          style={styles.textInput}
+          placeholder="Your course goal!"
+        />
+        <Button title="Add Goal" onPress={addGoalHandler} />
+      </View>
+      {/* <ScrollView style={styles.goalsContainer}>
+        {goalList.map((goal, index) => (
+          <Text key={index}>{goal}</Text>
+        ))}
+      </ScrollView> */}
+      <FlatList
+        data={goalList}
+        renderItem={(itemData) => (
+          <View style={styles.listItem}>
+            <Text>{itemData.item.text}</Text>
+          </View>
+        )}
+      />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+mas digamos que temos data com 1 property de 'id',
+
+e não de 'key'...
+
+
+
+
+
+
+
+
+
+--> BEM, MAS SE VC USA 'id',
+
+hoje em dia,
+
+
+o react native compreende que deve usar isso como 
+
+key...
+
+
+
+
+
+--> MAS SE VC TEM 1 propriedade que serve como 'id'
+    diferente,
+
+
+    VC PODE 
+
+    USAR O PROP 
+
+
+    'keyExtractor={}',
+
+
+
+
+
+
+E PASSAR COISAS COMO 
+
+
+'keyExtractor(
+    (item, index) => item.key
+)'
+
+
+
+
+--> VC DEVE RETORNAR A KEY QUE VC QUER USAR...
+
+
+--> O DEFAULT É 'item.key' e 'item.id'..
+
+
+
+
+
+
+CERTO...
+
+
+
+
+ATÉ AÍ, TUDO BEM...

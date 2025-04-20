@@ -1,0 +1,94 @@
+
+
+
+digamos que queremos usar 1 image da web....
+
+
+FICA TIPO ASSIM:
+
+
+
+
+const GameOverScreen = (props: GameOverScreenProps) => {
+  return (
+    <View style={styles.screen}>
+      <TitleText>Game Over!</TitleText>
+      <View style={styles.imageContainer}>
+        <Image source={{
+            uri: 'yoururl.com'
+        }} style={styles.image} />
+      </View>
+    </View>
+  );
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+--> OK... MAS, AQUI, TEMOS 1 DETALHE:
+
+
+
+
+''FOR LOCAL IMAGES,
+
+RN IS CAPABLE OF DETERMINING THE DEFAULT 
+WIDTH AND HEIGHT 
+OF THE IAMGE''...
+
+
+
+
+
+
+--> MAS SE VC TEM 1 IMAGE TIRADA DA WEB,
+    O REACT NATIVE NÃO É CAPAZ DE DETERMINAR 
+
+    A WIDTH E HEIGHT 
+
+    DA IMAGE, POR ISSO VC 
+
+    PRECISA DEFINIR O TAMANHO __ MANUALMENTE__...
+
+    NÃO EXISTE DEFAULT, BASICAMENTE..
+
+
+
+
+
+
+
+
+
+
+
+    NETWORK IMAGES FAZEM UM 'fade-in',
+
+
+    quando são baixadas...
+
+
+
+
+é um efeito built-in do react native...
+
+
+VC TAMBÉM PODE CONTROLAR ISSO, COM 
+
+
+O PROP DE 'fadeDuration={}'...
+
+
+
+OS LOADS DA IMAGE SÃO CACHEADOS...

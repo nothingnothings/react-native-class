@@ -1,0 +1,322 @@
+
+
+começamos escrevendo assim:
+
+
+
+import {
+  DarkTheme,
+  DefaultTheme,
+  ThemeProvider,
+} from '@react-navigation/native';
+import { useFonts } from 'expo-font';
+import { Stack } from 'expo-router';
+import * as SplashScreen from 'expo-splash-screen';
+import { StatusBar } from 'expo-status-bar';
+import { useEffect } from 'react';
+import 'react-native-reanimated';
+
+import { useColorScheme } from '@/hooks/useColorScheme';
+import { StyleSheet, View } from 'react-native';
+
+// Prevent the splash screen from auto-hiding before asset loading is complete.
+SplashScreen.preventAutoHideAsync();
+
+export default function RootLayout() {
+  return <View></View>;
+}
+
+const styles = StyleSheet.create({
+  appContainer: {
+    flex: 1,
+    paddingTop: 50,
+    paddingHorizontal: 16,
+  },
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+CERTO...
+
+
+
+
+
+
+VAMOS CRIAR ESSE HEADER 
+
+
+EM 1 COMPONENT SEAPRADO,
+
+
+
+TIPO ASSIM:
+
+
+
+
+]import React from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+
+type HeaderProps = {
+  title: string;
+};
+
+const Header = (props: HeaderProps) => {
+  return (
+    <View style={styles.header}>
+      <Text style={styles.title}>{props.title}</Text>
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: 16,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+  },
+});
+
+export default Header;
+
+
+
+
+
+
+
+
+
+certo...
+
+
+
+
+
+
+
+E A VIEW, EM VOLTA DO TEXT,
+
+SERÁ USADA PARA POSITIONING o TEXT,
+
+e para 
+
+DAR ALGUM STYLING AO HEADER...
+
+
+
+
+
+
+ISSO PQ 
+
+TEXT ELEMENTS, POR CONTA PRÓPRIA,
+
+SÃO STYLABLE,
+
+MAS NÃO TANTO COMO VIEWS...
+
+
+
+
+
+
+EX:
+
+
+
+
+
+
+
+import React from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+
+type HeaderProps = {
+  title: string;
+};
+
+const Header = (props: HeaderProps) => {
+  return (
+    <View style={styles.header}>
+      <Text style={styles.headerTitle}>{props.title}</Text>
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: 16,
+  },
+  headerTitle: {
+    fontSize: 24,
+    fontWeight: 'bold',
+  },
+});
+
+export default Header;
+
+
+
+
+
+
+
+EX:
+
+
+
+
+
+
+import React from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+
+type HeaderProps = {
+  title: string;
+};
+
+const Header = (props: HeaderProps) => {
+  return (
+    <View style={styles.header}>
+      <Text style={styles.headerTitle}>{props.title}</Text>
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%',
+    height: 90,
+    alignItems: 'center',
+    padding: 16,
+  },
+  headerTitle: {
+    fontSize: 24,
+    fontWeight: 'bold',
+  },
+});
+
+export default Header;
+
+
+
+
+
+
+
+
+
+
+
+
+VEREMOS COMO PODEMOS AJUSTAR 
+
+O TAMANHO DE NOSSAS VIEWS/CÓDIGO 
+
+PARA DIFERENTES DEVICES (Quanto ao tamanho e plataformas)...
+
+
+
+
+
+
+EX:
+
+
+
+
+
+import React from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+
+type HeaderProps = {
+  title: string;
+};
+
+const Header = (props: HeaderProps) => {
+  return (
+    <View style={styles.header}>
+      <Text style={styles.headerTitle}>{props.title}</Text>
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  header: {
+    width: '100%',
+    height: 90,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingTop: 36,
+    backgroundColor: '#f7287b',
+  },
+  headerTitle: {
+    fontSize: 24,
+    fontWeight: 'bold',
+  },
+});
+
+export default Header;
+
+
+
+
+
+
+
+
+
+EX:
+
+
+
+
+
+
+
+import * as SplashScreen from 'expo-splash-screen';
+
+import 'react-native-reanimated';
+
+import { StyleSheet, View } from 'react-native';
+import Header from '@/components/Header';
+
+// Prevent the splash screen from auto-hiding before asset loading is complete.
+SplashScreen.preventAutoHideAsync();
+
+export default function RootLayout() {
+  return (
+    <View style={styles.appContainer}>
+      <Header title="Welcome to the newApp" />
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  appContainer: {
+    flex: 1,
+  },
+});

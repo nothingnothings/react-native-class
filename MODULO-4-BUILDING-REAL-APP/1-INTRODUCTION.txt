@@ -1,0 +1,103 @@
+
+
+
+
+
+
+
+
+components 
+
+VIEW, TEXT, IMAGE...
+
+
+
+CUSTOM COMPONENTS...
+
+
+
+
+
+
+
+
+
+STYLES E LAYOUT 
+
+
+
+
+component styles 
+
+(borders, colors, shadows, custom fonts)...
+
+
+
+
+
+
+LAYOUT, WITH FLEXBOX...
+
+
+
+
+
+TAMBÉM VEREMOS:
+
+
+
+
+1) NATIVE API MODULES...
+
+
+
+
+
+MAPS, CAMERA...
+
+
+
+TODOS ESSES SÃO IMPORTANTES..
+
+
+
+
+
+
+MTOS MOBILE APPS PRECISAM DISSO...
+
+
+
+
+
+--> O PROFESSOR MOSTRARÁ ISSO 1 MONTE NO CURSO,
+
+MAS MAIS TARDE..
+
+
+
+
+
+
+
+
+
+
+
+VAMOS CRIAR 1 APP,
+
+
+COM HEADER 
+
+NO TOPO (que mostra o title),
+
+
+
+QUE SERÁ 
+
+
+
+'GUESS A NUMBER'..
+
+
+

@@ -1,0 +1,309 @@
+
+
+
+
+
+
+
+REACT NATIVE É SUPER INÉDITO... 
+
+
+
+FAST-MOVING TARGET...
+
+
+
+
+
+
+--> BREAKING CHANGES ACONTECEM TODOS OS MESES...
+
+
+
+
+
+
+--> NOVAS VERSOES SÃO LANÇADAS A CADA MêS...
+
+
+
+
+
+
+
+--> àS VEZES VC PRECISA VOLTAR A APPS ANTIGOS
+ 
+ E ATUALIZÁ-LOS,
+ PQ ELES NÃO VÃO MAIS FUNCIONAR...
+
+
+
+
+
+
+
+
+ --> isso tudo é normal...
+
+
+
+
+
+
+
+
+ --> também, em react native,
+ vc tbm tem uma alta dependência em THIRD PARTY PACKAGES...
+
+
+
+
+
+
+
+
+
+
+ --> A BOA NOTÍCIA, COM O EXPO,
+    É QUE ELE JÁ É UM WRAPPER COM UM 
+    MONTE DE FEATURES JÁ BUILT-IN...
+
+
+
+
+--> O EXPO JÁ TE DÁ VÁRIAS COISAS,
+    SEM PRECISAR DE OUTRAS TPPs,
+
+    COMO 
+
+    O TRABALHO COM CAMERA,
+    BLUETOOTH, ETC...
+
+
+
+
+
+--> SE VC CONSTRÓI 1 APP DO ZERO,
+    AÍ A HISTÓRIA É DIFERENTE,
+
+    VC FICA COM 1 CONJUNTO BÁSICO DE FEATURES,
+
+
+    MAS A MAIOR PARTE DAS COISAS DEVE SER IMPLMENTADA 
+
+    POR CONTA PRÓPRIA... (bluetooth, camera) 
+
+
+
+
+
+
+
+
+
+
+-> MESMO COM EXPO, PRECISAREMOS DE TPPs
+    para adicionar coisas que quisermos...
+
+
+
+    as packages podem mudar com o tempo,
+
+ e devemos ter isso em mente...
+
+
+
+
+
+
+
+
+
+--> BUGS/WORKAROUNDS REQUIRED...
+
+
+
+
+
+
+--> MTAS VEZES AS COISAS NÃO FUNCIONAM EXATAMENTE COMO VC QUER,
+    E AÍ VC PRECISA WORK AROUND...
+
+
+
+
+
+
+--> VC DEVE SEMPRE FICAR UPDATED,
+    ENTRAR NO GOOGLE,
+    ENTRAR EM DISCUSSIONS, ETC..
+
+
+
+
+
+--> TUDO ISSO PODE PARECER RUIM, MAS AS ALTERNATIVAS:
+
+
+
+
+
+1) BUILD REAL NATIVE APPS 
+
+
+
+    (java/android for android) (kotlin)...
+
+
+    ISSO É 'SWIFT' e 'ObjectiveC',
+
+    para iOs...
+
+
+--> a vantagem disso, é claro, é que 
+há maior compatibilidade específica,
+
+
+mas vc perde a capacidade de poder 'share your 
+code across multiple devices'...
+
+
+
+
+
+--> EM APPS REACT NATIVE,
+    VC PROVAVELMENTE TERÁ QUE AJUSTAR SEU CÓDIGO 
+
+    PARA A PLATAFORMA EM QUE ELE SERÁ RODADO, 
+
+
+    MAS VC AINDA PODERÁ EXECUTAR A MAIOR PARTE DO CÓDIGO 
+    
+    EM OUTRA PLATAFORMA..
+
+
+    SE VC USAR AS PLATFORMS NATIVAS,
+
+    VC TRABALHARÁ EM 2 PROJECTS TOTALMENTE DIFERENTES,
+
+
+    E NÃO PODERÁ REUSAR 1 MONTE DE CÓDIGO...
+
+
+
+
+
+
+
+
+ALTERNATIVE 2:
+
+
+'''PROGRESSIVE WEB APP''' --> ESCREVER 
+
+
+                            1 APP DE BROWSER,
+
+
+                            QUE SE PARECE COM 1 WEB APP,
+
+                            MAS QUE NÃO É DISTRIBUÍDO PELAS 
+
+                            APP STORES...
+
+
+
+
+
+--> ISSO DEPENDE DOS USERS 
+
+UTILIZAR 
+
+1 BROWSER EM QUE AS FEATURES NECESSÁRIAS EXISTEM...
+
+
+
+
+
+
+
+
+
+
+
+
+ALTERNATIVE 3:
+
+
+
+
+
+''IONIC''  ou outro framework similar --> 
+
+
+
+O IONIC TE DEIXA CONSTRUIR APPS NATIVE REAIS, QUE VC 
+DISTRIBUI 
+
+
+NAS APP STORES... 
+
+
+'''IONIC TAKES A NORMAL WEB APP AND WRAPS 
+IT INTO A NATIVE APP ''
+
+
+(não compila nada, apenas faz o wrap)...
+
+
+
+
+
+
+
+--> O PROFESSOR GOSTA DO IONIC,
+PODE SER BOM PARA VÁRIOS APPS,
+
+
+
+MAS A DESVANTAGEM É QUE 
+
+A PERFORMANCE PODE SER PIOR,
+
+PQ VC FICA COM 1 WRAPPED ___ WEB APP__,
+
+E NENHUM NATIVE APP COMPILADO...
+
+
+
+
+
+
+
+--> E COMO NÓS TEMOS TOOLS E PODEMOS OBTER 
+CONHECIMENTO para acabar com essas desvantagens...
+
+
+
+
+
+
+--> outras alternatives:
+
+
+
+
+FLUTTER...
+
+
+NATIVE SCRIPT...
+
+
+
+ESSES 2 POSSUEM 1 APPROACH SIMIILAR AO REACT,
+
+VC TBM FICA COM 1 APP COMPILADO,
+
+MAS ELES SIMPLESMENTE 
+
+USAM DIFERENTES LINGUAGENS DE PROGRAMAÇÃO E FRAMEWORKS...

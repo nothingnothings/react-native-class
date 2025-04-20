@@ -1,0 +1,197 @@
+
+
+
+
+
+
+
+
+listItem: {
+    borderColor: 'black',
+    padding: 15,
+    marginVertical: 10,
+    backgroundColor: 'white',
+    borderWidth: 1,
+    flexDirection: 'row',
+    width: '80%',
+}
+
+
+
+
+
+
+
+
+
+
+
+PARA WRAPPAR 1 LIST ADEQADAMENTE,
+
+SEMPRE É MELHOR WRAPPAR A LIST EM 1 VIEW,
+
+
+
+E AÍ ESTILIZAR A VIEW,
+
+TIPO ASSIM:
+
+
+
+
+
+list: {
+        width: '80%',
+}
+
+listItem: {
+    borderColor: 'black',
+    padding: 15,
+    marginVertical: 10,
+    backgroundColor: 'white',
+    borderWidth: 1,
+    flexDirection: 'row',
+}
+
+
+
+
+
+
+
+
+
+
+ISSO É ALGO QUE VC DEVE TER EM MENTE...
+
+
+
+
+
+SE VC QUER CONTROLAR A WIDTH E HEIGHT 
+
+DE SUAS LISTS,
+
+
+
+FAÇA TIPO ASSIM:
+
+
+<View style={styles.list}>
+    <ScrollView>
+        {pastGuesses.map(guess => renderListItem(guess))}
+    </ScrollView>
+</View>
+
+
+
+list: {
+        width: '80%',
+}
+
+listItem: {
+    borderColor: 'black',
+    padding: 15,
+    marginVertical: 10,
+    backgroundColor: 'white',
+    borderWidth: 1,
+    flexDirection: 'row',
+}
+
+
+
+
+
+
+OU SEJA,
+
+
+NÃO ADICIONE OS STYLES DIRETAMENTE NA SCROLLVIEW,
+
+
+E SIM 
+
+
+ADICIONE NA WRAPPING '<View>'
+
+DA 
+
+SCROLLVIEW...
+
+
+
+
+list: {
+        width: '80%',
+}
+
+listItem: {
+    borderColor: 'black',
+    padding: 15,
+    marginVertical: 10,
+    backgroundColor: 'white',
+    borderWidth: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-around'
+}
+
+
+
+
+
+
+
+MAS FICAMOS COM 1 BUG NO ANDROID...
+
+A LIST ACABA NÃO SENDO SCROLLABLE...
+
+
+--> PARA CONSEERTAR ISSO,
+
+
+DEVEMOS DEIXAR 'flex: 1' 
+
+NA WRAPPING VIEW,
+
+DO 'ScrollView',
+
+TIPO ASSIM:
+
+
+
+list: {
+        width: '80%',
+        flex: 1
+}
+
+listItem: {
+    borderColor: 'black',
+    padding: 15,
+    marginVertical: 10,
+    backgroundColor: 'white',
+    borderWidth: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-around'
+}
+
+
+
+<View style={styles.list}>
+    <ScrollView>
+        {pastGuesses.map(guess => renderListItem(guess))}
+    </ScrollView>
+</View>
+
+
+
+
+
+
+
+
+
+
+
+COM ISSO, TEMOS A SCROLLVIEW FUNCIONANDO,
+
+TANTO NO ANDROID COMO NO IOS...

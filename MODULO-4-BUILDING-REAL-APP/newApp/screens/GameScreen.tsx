@@ -1,6 +1,13 @@
 import React, { useState } from 'react';
 
-import { StyleSheet, Text, View, Button, Alert } from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Button,
+  Alert,
+  ScrollView,
+} from 'react-native';
 
 import NumberContainer from '@/components/NumberContainer';
 import Card from '@/components/Card';
@@ -72,6 +79,12 @@ const GameScreen = (props: GameScreenProps) => {
             nextGuessHandler('greater');
           }}
         />
+
+        <View style={styles.list}>
+          <ScrollView>
+            {pastGuesses.map((guess) => renderListItem(guess))}
+          </ScrollView>
+        </View>
       </Card>
     </View>
   );

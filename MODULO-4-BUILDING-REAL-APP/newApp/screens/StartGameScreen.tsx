@@ -1,8 +1,9 @@
 import React from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { TextInput } from 'react-native-gesture-handler';
+
 import Card from '@/components/Card';
+import Input from '@/components/Input';
 
 import Colors from '@/constants/Colors';
 
@@ -14,7 +15,14 @@ const StartGameScreen = () => {
       <Text style={styles.title}>Start a New Game!</Text>
       <Card style={styles.inputContainer}>
         <Text>Select a Number!</Text>
-        <TextInput placeholder="Enter a number" />
+        <Input
+          style={styles.input}
+          keyboardType="number-pad"
+          blurOnSubmit
+          autoCapitalize="none"
+          autoCorrect={false}
+          maxLength={2}
+        />
         <View style={styles.buttonContainer}>
           <View style={[styles.button, styles.resetButton]}>
             <Button title="Reset" onPress={() => {}} color={Colors.accent} />
@@ -42,6 +50,10 @@ const styles = StyleSheet.create({
     width: 300,
     maxWidth: '80%',
     alignItems: 'center',
+  },
+  input: {
+    width: 50,
+    textAlign: 'center',
   },
   buttonContainer: {
     flexDirection: 'row',

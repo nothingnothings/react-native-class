@@ -1,0 +1,492 @@
+
+
+
+
+o app funciona em geral...
+
+
+
+
+
+
+
+
+
+DEVEMOS TERMINAR COM O STYLING...
+
+
+
+
+
+
+
+--> QUEREMOS 
+
+
+
+VER O TRABALHO COM 
+
+FONTS E IMAGES...
+
+
+
+
+
+--> RARAMENTE VC VAI QUERER USAR AS FONTS DEFAULT..
+
+
+
+
+
+
+
+
+--> REACT-NATIVE APPS,
+
+
+
+ADICIONAR FONTS É SUPER TRIVIAL...
+
+
+
+
+
+
+
+--> FOLDER DE NOME 'fonts'...
+
+
+
+OpenSans-Bold.tff
+
+
+
+
+
+
+
+
+
+para adicionar suas fonts,
+
+
+vc precisa escrever, em 'App.js',
+
+
+tipo assim:
+
+
+
+
+import * as SplashScreen from 'expo-splash-screen';
+
+import 'react-native-reanimated';
+
+import { StyleSheet, View } from 'react-native';
+import Header from '@/components/Header';
+
+import StartGameScreen from '@/screens/StartGameScreen';
+import GameScreen from '@/screens/GameScreen';
+import React from 'react';
+
+import * as Font from 'expo-font';
+
+// Prevent the splash screen from auto-hiding before asset loading is complete.
+SplashScreen.preventAutoHideAsync();
+
+const fetchFonts = () => {
+  return Font.loadAsync({
+    'Inter-Regular': require('../assets/fonts/Inter-Regular.ttf'),
+    'Inter-Bold': require('../assets/fonts/Inter-Bold.ttf'),
+  });
+};
+
+export default function RootLayout() {
+  const [userNumber, setUserNumber] = React.useState(0);
+
+  const startGameHandler = (selectedNumber: number) => {
+    setUserNumber(selectedNumber);
+  };
+
+  let content = <StartGameScreen onStartGame={startGameHandler} />;
+
+  if (userNumber) {
+    content = <GameScreen userChoice={userNumber} />;
+  }
+
+  return (
+    <View style={styles.appContainer}>
+      <Header title="Guess a Number" />
+      {content}
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  appContainer: {
+    flex: 1,
+  },
+});
+
+
+
+
+
+
+
+
+
+
+
+CERTO...
+
+
+
+
+
+
+
+
+
+NESSE OBJECT,
+
+VC FALA AO EXPO QUAIS 
+
+
+FONTS VC QUER CARREGAR...
+
+
+
+
+EX:
+
+
+
+
+
+
+
+
+const fetchFonts = () => {
+  return Font.loadAsync({
+    'open-sans': require('../assets/fonts/OpenSans-Regular.ttf'),
+    'open-sans-bold': require('../assets/fonts/OpenSans-Bold.ttf'),
+  });
+};
+
+
+
+
+
+
+
+ISSO FEITO,
+
+
+PROVAVELMENTE 
+
+VAMOS 
+
+EXECUTAR
+
+
+
+ISSO 
+
+
+
+DENTRO DE UM USE EFFECT...
+
+
+
+
+
+
+
+EX:
+
+
+
+
+
+
+
+import * as SplashScreen from 'expo-splash-screen';
+
+import 'react-native-reanimated';
+
+import { StyleSheet, View } from 'react-native';
+import Header from '@/components/Header';
+
+import StartGameScreen from '@/screens/StartGameScreen';
+import GameScreen from '@/screens/GameScreen';
+import React from 'react';
+
+import * as Font from 'expo-font';
+
+// Prevent the splash screen from auto-hiding before asset loading is complete.
+SplashScreen.preventAutoHideAsync();
+
+const fetchFonts = () => {
+  return Font.loadAsync({
+    'open-sans': require('../assets/fonts/OpenSans-Regular.ttf'),
+    'open-sans-bold': require('../assets/fonts/OpenSans-Bold.ttf'),
+  });
+};
+
+export default function RootLayout() {
+  const [userNumber, setUserNumber] = React.useState(0);
+
+  React.useEffect(() => {
+    fetchFonts();
+  }, []);
+
+  const startGameHandler = (selectedNumber: number) => {
+    setUserNumber(selectedNumber);
+  };
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+MAS O PROFESSOR MOSTRA UMA OUTRA MANEIRA, MELHOR,
+
+QUE 
+
+USA O COMPONENT 'AppLoading'....
+
+
+
+
+--> esse COMPONENT VAI BASICAMENTE _ PROLONGAR A 
+
+SPLASH SCREEN DO APP,
+
+PARA QUE 
+
+ELA FIQUE ATIVA ATÉ QUE 
+1 CERTA 
+
+ETAPA TENHA ACABADO (NO CASO, O LOAD DE FONTES)....
+
+
+
+
+
+--> PARA ISSO,
+
+
+DEVEMOS ESCREVER TIPO ASSIM:
+
+
+
+
+
+
+
+import * as SplashScreen from 'expo-splash-screen';
+
+import 'react-native-reanimated';
+
+import { StyleSheet, View } from 'react-native';
+import Header from '@/components/Header';
+
+import StartGameScreen from '@/screens/StartGameScreen';
+import GameScreen from '@/screens/GameScreen';
+import React from 'react';
+
+import * as Font from 'expo-font';
+import AppLoading from 'expo-app-loading';
+
+
+// Prevent the splash screen from auto-hiding before asset loading is complete.
+SplashScreen.preventAutoHideAsync();
+
+const fetchFonts = () => {
+  return Font.loadAsync({
+    'open-sans': require('../assets/fonts/OpenSans-Regular.ttf'),
+    'open-sans-bold': require('../assets/fonts/OpenSans-Bold.ttf'),
+  });
+};
+
+export default function RootLayout() {
+  const [userNumber, setUserNumber] = React.useState(0);
+
+  const [dataLoaded, setDataLoaded] = React.useState(false);
+
+  if (!dataLoaded) {
+    return <AppLoading />;
+  }
+
+  const startGameHandler = (selectedNumber: number) => {
+    setUserNumber(selectedNumber);
+  };
+
+  let content = <StartGameScreen onStartGame={startGameHandler} />;
+
+  if (userNumber) {
+    content = <GameScreen userChoice={userNumber} />;
+  }
+
+  return (
+    <View style={styles.appContainer}>
+      <Header title="Guess a Number" />
+      {content}
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  appContainer: {
+    flex: 1,
+  },
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+AppLoading
+
+
+É UM COMPONENT QUE EXIGE 1 PROP DE 
+
+'startAsync',
+
+
+
+
+
+EM QUE DEVEMOS POINT 
+
+À OPERATION QUE QUEREMOS EXECUTAR,
+
+ASSIM QUE 
+
+
+NOSSO COMPONENT É RENDERIZADO PELA PRIMEIRA VEZ...
+
+
+
+
+
+--> QUEREMOS QUE ISSO SEJA 'fetchFonts'... 
+
+
+essa function, que deve ser passada a esse component,
+
+deve:
+
+
+1) SER UMA FUNCTION 
+
+
+2) SER UMA FUNCTION QUE RETORNA UMA __ PROMISE...
+
+
+
+
+
+
+ELA PRECISA RETORNAR 1 PROMISE PQ O 
+
+ __ EXPO __ VAI AUTOMATICAMENTE FAZER LISTEN TO A ESSA PROMISE...
+
+
+ ASSIM QUE DETECTAR QUE ESSA PROMISE FOI RESOLVED,
+
+
+
+ ELE SABERÁ QUE ESTÁ 'done',
+
+ E AÍ 
+
+
+
+ VAI RODAR O HOOK DE 'onFinish' (no nosso caso,
+ 
+ 
+ vai fazer o nosso app de verdade carregar)...
+
+
+
+
+
+
+ TIPO ASSIM:
+
+
+
+
+
+ export default function RootLayout() {
+  const [userNumber, setUserNumber] = React.useState(0);
+
+  const [dataLoaded, setDataLoaded] = React.useState(false);
+
+  if (!dataLoaded) {
+    return (
+      <AppLoading
+        startAsync={fetchFonts}
+        onFinish={() => setDataLoaded(true)}
+        onError={console.warn}
+      />
+    );
+  }
+
+
+
+
+
+
+  PARECE QUE ESSE CÓDIGO ESTÁ MEIO DEPRECADO...
+
+
+
+
+
+
+
+  mas ainda funciona, eu acho...
+
+
+
+
+
+
+
+AS FONTS FORAM CARREGADAS...
+
+
+AGORA DEVEMOS USAR AS FONTS..
+
+
+
+
+
+--> VAMOS ATÉ O StartGameScreen,
+
+
+
+E AÍ ESCREVEMOS ASSIM:
+
+

@@ -36,12 +36,21 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   inputContainer: {
-    flex: 1,
     width: 300,
     maxWidth: '80%',
     justifyContent: 'center',
     alignItems: 'center',
-    borderBottomColor: '#cccccc',
+    shadowColor: 'black',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowRadius: 6, // ONLY ON IOS
+    shadowOpacity: 0.26,
+    elevation: 6, // ONLY ON ANDROID (same as shadow properties, but simpler)...
+    padding: 20,
+    borderRadius: 10,
+    backgroundColor: 'white',
   },
   buttonContainer: {
     flexDirection: 'row',

@@ -1,0 +1,249 @@
+
+
+
+
+
+
+
+
+
+
+
+OK... O PROFESSOR QUER TER 1 CARD LOOK,
+
+
+PARA FICAR MELHOR A APARÊNCIA 
+
+
+DE NOSSA PAGE...
+
+
+
+
+
+
+
+--> PARA ISSO,
+
+ELE USA 
+
+AS PROPERTIES 
+
+DE 
+
+SHADOW,
+
+
+QUE SÃO:
+
+'shadowColor' 
+
+
+'shadowOffset'
+
+
+'shadowOpacity'
+
+
+'shadowRadius'...
+
+
+
+
+
+
+EX;
+
+
+
+  inputContainer: {
+    width: 300,
+    maxWidth: '80%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    shadowColor: 'black',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowRadius: 6,
+    shadowOpacity: 0.26,
+    backgroundColor: 'white',
+  },
+
+
+
+
+
+
+
+
+
+
+
+OK... MAS AO COLOCARMOS TUDO ISSO,
+
+FICAMOS COM 1 PROBLEMA:
+
+
+
+
+'''AS SHADOWS FICAM VISÍVEIS __ APENAS NO iOs''...
+
+
+
+
+
+NO ANDROID, ESSA SHADOW NÃO APARECE...
+
+
+
+
+
+
+
+
+
+--> MAS É IMPOSSÍVEL FAZER ESSA SHADOW APARECER NO 
+ANDROID?
+
+
+
+É POSSÍVEL,
+
+MAS PRECISAMOS DE UM 
+
+PROP ESPECIAL, CHAMADO 
+
+
+DE 
+
+'elevation'...
+
+
+
+
+
+RESUMINDO:
+
+
+
+
+1) properties de 'shadowXXXX' funcionam 
+
+    APENAS __ NO IOS...
+
+
+
+2) properties de 'elevation' funcionaM 
+
+    __ APENAS __ NO ANDROID...
+
+
+
+
+
+
+
+'elevation: 5'...
+
+
+
+
+
+
+
+
+
+
+
+
+--> NO ANDROID,
+
+    TEMOS MENOS CONTROLE DO QUE NO IOS,
+
+    mas o android já usa os looks do 'material design',
+
+
+
+    COM O QUAL OS USERS JÁ ESTÃO ACOSTUMADOS...
+
+
+
+
+
+
+
+--> 'shadowRadius'
+    te ajuda, no IOS,
+
+    a ter 1 
+
+
+    shadow mais natural...
+
+
+
+
+
+elevation: 8...
+
+
+
+
+
+
+
+--> MAS O PROFESSOR TAMBÉM QUER TER 1 POUCO DE PADDING,
+
+
+POR ISSO ESCREVE ASSIM:
+
+
+
+
+
+
+
+
+  inputContainer: {
+    width: 300,
+    maxWidth: '80%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    shadowColor: 'black',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowRadius: 6, // ONLY ON IOS
+    shadowOpacity: 0.26,
+    elevation: 6, // ONLY ON ANDROID (same as shadow properties, but simpler)...
+    padding: 20,
+    borderRadius: 10,
+    backgroundColor: 'white',
+  },
+
+
+
+
+
+
+
+
+
+
+
+
+  certo...
+
+
+
+
+
+
+
+
+
+
+

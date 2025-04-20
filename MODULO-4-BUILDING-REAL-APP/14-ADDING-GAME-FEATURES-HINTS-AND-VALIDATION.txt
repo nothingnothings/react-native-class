@@ -1,3 +1,37 @@
+
+PODEMOS CHEGAR NA TELA DE 'GAMESCREEN'...
+
+
+
+
+
+
+
+
+
+
+
+
+--> AGORA PRECISAMOS GARANTIR QUE PRESSES SUBSEQUENTES 
+    NO BUTTON DE 'LOWER' E 'HIGHER'
+
+    CONSIGAM 
+
+
+
+
+AFETAR O RE-RENDER DO GAMESCREEN...
+
+
+
+
+
+
+
+
+
+--> PODEMOS ESCREVER ASSIM:
+
 import React, { useState } from 'react';
 
 import { StyleSheet, Text, View, Button, Alert } from 'react-native';
@@ -94,3 +128,15 @@ const styles = StyleSheet.create({
 });
 
 export default GameScreen;
+
+
+
+
+
+
+
+
+
+AGORA PRECISAMOS DE ALGO QUE CHEQUE SE 
+
+O QUE O COMPUTADOR 'CHUTOU' ESTÁ CORRETO OU NÃO...

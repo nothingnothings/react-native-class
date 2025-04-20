@@ -1,0 +1,55 @@
+
+
+
+
+
+
+
+O COMPONENT DE TEXT SUPORTA MENOS 
+
+FEATURES DE STYLING DO QUE 
+
+
+A VIEW...
+
+
+
+
+
+
+
+
+-_> POR ISSO WRAPPAMOS 
+
+O 'text'
+
+
+em 1 VIEW,
+
+
+TIPO ASSIM:
+
+
+
+
+
+      <View style={styles.goalsContainer}>
+        {goalList.map((goal, index) => (
+          <Text key={index}>{goal}</Text>
+        ))}
+      </View>
+
+
+
+
+
+
+
+
+
+A KEY SEMPRE DEVE EXISTIR NO ELEMENTO QUE ESTAMOS REPETINDO (no caso,
+
+a view inteira)...
+
+
+

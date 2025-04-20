@@ -1,0 +1,263 @@
+
+
+
+
+AQUI ESTAMOS USANDO 1 SCROLLVIEW...
+
+
+
+
+
+
+
+-> MAS É BOM USAR FLATLIST,
+
+SE VC 
+
+NÃO SABE QUANTOS 
+
+ITEMS VC TERÁ...
+
+
+
+
+
+
+--> TIPICAMENTE,
+ NOSSA LIST NÃO VAI TER MAIS DO QUE 15-20 ITEMS... É POR ISSO QUE 
+ 1 SCROLLVIEW BASTA, NESSE NOSSO CASO...
+
+
+
+
+
+
+--> FLATLIST DEVE SER USADA SE VC TIVER MUUUUITOS ITEMS...
+
+
+
+
+SE VC QUER USAR 1 FLATLIST,
+
+
+
+
+VC DEIXARIA ISTO:
+
+
+
+
+listContainer: {
+        width: '80%',
+        flex: 1
+},
+
+list: {
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    flex: 1, 
+},
+
+listItem: {
+    borderColor: 'black',
+    padding: 15,
+    marginVertical: 10,
+    backgroundColor: 'white',
+    borderWidth: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-around'
+}
+
+
+
+<View style={styles.listContainer}>
+    <ScrollView contentContainerStyle={styles.list}>
+        {pastGuesses.map(guess => renderListItem(guess))}
+    </ScrollView>
+</View>
+
+
+
+
+E ESCREVERIA ASSIM:
+
+
+
+
+
+<View style={styles.listContainer}>
+    <FlatList 
+    data={pastGuesses} 
+    renderItem={renderListItem}/>
+</View>
+
+
+
+
+
+
+
+
+
+
+
+mas isso não funcionará, por várias razões:
+
+
+
+
+
+1) a falta da key, de cada list item...
+
+
+2) a estrutura de 'renderItem'...
+
+
+
+
+
+
+
+
+
+
+
+
+-> PARA CONSEGUIR TER A KEY,
+
+PODEMOS USAR O PROP DE 'keyExtractor',
+
+
+TIPO ASSIM:
+
+
+
+
+
+
+<View style={styles.listContainer}>
+    <FlatList
+    keyExtractor={(item) => item}
+    data={pastGuesses} 
+    renderItem={() => { renderListItem(pastGuesses.length) } }
+    
+    
+    />
+</View>
+
+
+
+
+PARA ESTILIZAR O CONTEÚDO DENTRO DA LIST,
+
+USE O 
+ 
+
+ PROP 'contentContainerStyle',
+
+ EXATAMENTE COMO FIZEMOS COM O 'ScrollView':
+
+
+
+
+
+
+listContainer: {
+        width: '80%',
+        flex: 1
+},
+
+list: {
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    flex: 1, 
+},
+
+listItem: {
+    borderColor: 'black',
+    padding: 15,
+    marginVertical: 10,
+    backgroundColor: 'white',
+    borderWidth: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-around'
+}
+
+
+
+ <View style={styles.listContainer}>
+    <FlatList
+    keyExtractor={(item) => item}
+    data={pastGuesses} 
+    renderItem={() => { renderListItem(pastGuesses.length) } }
+    contentContainerStyle={styles.list}
+    
+    />
+</View>
+
+
+
+
+
+
+
+
+
+ISSO FUNCIONOU, EM GERAL,
+
+COM 1 PEQUENO BUG DE STYLING...
+
+
+
+
+
+COMO PODEMOS RESOLVER ESSE PROBLEMA?
+
+
+
+--> OS LIST ITEMS 
+
+ESTÃO MAIORES DO QUE O NORMAL...
+
+
+--> ISSO FOI CAUSADO POR CONTA De 
+
+
+'lisContainer',
+
+esse style...
+
+
+
+--> 
+FICA TIPO ASSIM,
+
+O STYLE CONSERTADO:
+
+
+
+
+
+listContainer: {
+        width: '60%',
+        flex: 1
+},
+
+list: {
+    justifyContent: 'flex-end',
+    flex: 1, 
+},
+
+listItem: {
+    borderColor: 'black',
+    padding: 15,
+    marginVertical: 10,
+    backgroundColor: 'white',
+    borderWidth: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    width: '100%',
+}
+
+
+ok.... quer dizer que isso funciona, também...

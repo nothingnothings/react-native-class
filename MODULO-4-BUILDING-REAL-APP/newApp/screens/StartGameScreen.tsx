@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { TextInput } from 'react-native-gesture-handler';
+import Card from '@/components/Card';
 
 const StartGameScreen = () => {
   const navigation = useNavigation();
@@ -9,7 +10,7 @@ const StartGameScreen = () => {
   return (
     <View style={styles.screen}>
       <Text style={styles.title}>Start a New Game!</Text>
-      <View style={styles.inputContainer}>
+      <Card style={styles.inputContainer}>
         <Text>Select a Number!</Text>
         <TextInput placeholder="Enter a number" />
         <View style={styles.buttonContainer}>
@@ -20,7 +21,7 @@ const StartGameScreen = () => {
             <Button title="Confirm" onPress={() => {}} />
           </View>
         </View>
-      </View>
+      </Card>
     </View>
   );
 };
@@ -38,19 +39,7 @@ const styles = StyleSheet.create({
   inputContainer: {
     width: 300,
     maxWidth: '80%',
-    justifyContent: 'center',
     alignItems: 'center',
-    shadowColor: 'black',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowRadius: 6, // ONLY ON IOS
-    shadowOpacity: 0.26,
-    elevation: 6, // ONLY ON ANDROID (same as shadow properties, but simpler)...
-    padding: 20,
-    borderRadius: 10,
-    backgroundColor: 'white',
   },
   buttonContainer: {
     flexDirection: 'row',

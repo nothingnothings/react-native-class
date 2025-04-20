@@ -9,7 +9,14 @@ import 'react-native-reanimated';
 import { useState } from 'react';
 
 import { useColorScheme } from '@/hooks/useColorScheme';
-import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
+import {
+  Button,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from 'react-native';
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -37,11 +44,11 @@ export default function RootLayout() {
         />
         <Button title="Add Goal" onPress={addGoalHandler} />
       </View>
-      <View style={styles.goalsContainer}>
+      <ScrollView style={styles.goalsContainer}>
         {goalList.map((goal, index) => (
           <Text key={index}>{goal}</Text>
         ))}
-      </View>
+      </ScrollView>
     </View>
   );
 }

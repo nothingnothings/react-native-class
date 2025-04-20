@@ -1,0 +1,264 @@
+
+
+
+
+
+
+OK... MAS HÁ UMA COISA QUE VAMOS PERCEBER..
+
+
+
+
+
+
+
+
+
+--> SE ADICIONAMOS VÁRIOS GOALS,
+
+SEM PARAR,
+
+EVENTUALMENTE OS ELEMENTOS VÃO EXCEDER OS BOUNDARIES 
+
+DA SCREEN... E, POR DEFAULT,
+
+NÃO PODEREMOS 'SCROLL'...
+
+
+
+
+
+
+
+
+--> PARA CONSERTAR ISSO,
+
+    PRECISAMOS TROCAR 'View' por 'ScrollView'...
+
+
+
+
+
+
+
+
+
+--> VC NÃO GANHA SCROLLING SÓ PQ 
+
+SEU CÓDIGO ATINGIU A BORDA DA TELA...
+
+
+
+--> QUEREMOS TER SCROLLABLE CONTENT...
+
+
+
+
+
+
+--> PRECISAMOS SER EXPLÍCITOS 
+
+SOBRE A PARTE DA TELA QUE DEVE SER 'SCROLLABLE'..
+
+
+
+
+
+
+
+
+
+--> PARA ISSO, DEVEMOS USAR 'ScrollView'...
+
+
+
+
+
+
+TIPO ASSIM:
+
+
+
+
+
+
+
+
+ return (
+    <View style={styles.appContainer}>
+      <View style={styles.inputContainer}>
+        <TextInput
+          onChangeText={(text) => goalInputHandler(text)}
+          value={enteredGoal}
+          style={styles.textInput}
+          placeholder="Your course goal!"
+        />
+        <Button title="Add Goal" onPress={addGoalHandler} />
+      </View>
+      <ScrollView style={styles.goalsContainer}>
+        {goalList.map((goal, index) => (
+          <Text key={index}>{goal}</Text>
+        ))}
+      </ScrollView>
+    </View>
+  );
+
+
+
+
+
+
+
+
+
+
+
+
+
+EM SCROLLVIEW,
+
+TEMOS VÁRIAS PROPERTIES QUE TE DEIXAM CUSTOMIZAR 
+
+O COMPORTAMENTO...
+
+
+
+
+
+
+
+
+--> PODEMOS DEFINIR 'horizontal',
+
+1 boolean prop,
+
+para deixar que scrolle 
+
+horizontalmente...
+
+
+
+
+
+
+--> mas usamos o comportamento default,
+
+e isso já nos deixa fazer scroll 
+
+do content... apenas a parte 
+
+
+que deixamos dentro do ScrollView...
+
+
+
+
+
+
+
+-> PODERÍAMOS ADICIONAR O SCROLLVIEW
+
+NA PAGE INTEIRA,
+
+
+PARA QUE TODA A PAGE SEJA SCROLLABLE,
+
+OU ENTÃO APENAS 1 PARTE DO CONTEÚDO...
+
+
+
+E HÁ UMA GRANDE DIFERENÇA ENTRE OS 2,
+
+BASICAMENTE...
+
+
+
+
+
+
+
+
+PQ SE WRAPPARMOS APENAS A LIST COM O 'ScrollView',
+
+
+O RESTO DA PAGE  VAI FICAR NO MESMO LUGAR 
+
+(o input field e etc)...
+
+
+
+
+
+
+
+
+
+
+SCROLLVIEW É UM COMPONENT SUPER IMPORTANTE 
+PARA TODO COMPONENT QUE 
+
+
+
+VC NAO TEM CERTEZA DE QUE 
+
+VAI CABER NA TELA...
+
+
+
+
+
+--> ''VC PODE PENSAR QUE, COM TODOS 
+
+DEVICE SIZES DISPONÍVEIS, 
+
+
+VC NUNCA PODERÁ CABER TODOS ELEMENTOS NA TELA...
+
+
+MAS EXISTEM CERTOS ELEMENTOS, COMO BUTTONS,
+
+QUE SEMPRE PODEM CABER EM TELAS,
+
+POR MEIO DE RESIZING, TAMBÉM...''
+
+
+
+
+--> MAS EXISTEM OUTROS TIPOS DE CONTEÚDO,
+    COMO LISTS DE DATA,
+
+    QUE VC SABE QUE 
+
+    VÃO CERTAMENTE ESTOURAR,
+
+
+    QUE SERÃO O CONTEÚDO QUE VC VAI QUERER WRAPPAR 
+
+    EM UMA 'ScrollView'...
+
+
+
+
+--> JÁ OUTROS CONTEÚDOS,
+
+COMO INPUTS, BUTTONS,
+
+HARDCODED STATIC TEXT,
+
+
+TODO CONTEÚDO QUE VC
+
+
+''KNOW HOW MANY ITEMS YOU HAVE, IN ADVANCE'',
+
+VC CONSEGUE 
+
+
+___COMPRIMIR em 1 única tela,
+
+tipicamente com flexbox... MAS PARA CONTEÚDO GERADO 
+
+DINAMICAMENTE, COMO ESSE, 
+
+
+VC DEFINITIVAMENTE VAI QUERER USAR 1 SCROLLVIEW...

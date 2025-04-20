@@ -1,0 +1,504 @@
+
+
+
+
+NA LIST QUE ESTAMOS RENDERIZANDO ( com 'ScrollView'),
+
+
+
+os nossos listItems 
+
+SÃO TÃO GRANDES COMO NOSSA LIST...
+
+
+
+
+
+
+
+TIPO ASSIM:
+
+
+
+
+list: {
+        width: '80%',
+        flex: 1
+}
+
+listItem: {
+    borderColor: 'black',
+    padding: 15,
+    marginVertical: 10,
+    backgroundColor: 'white',
+    borderWidth: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-around'
+}
+
+
+
+<View style={styles.list}>
+    <ScrollView>
+        {pastGuesses.map(guess => renderListItem(guess))}
+    </ScrollView>
+</View>
+
+
+
+
+
+
+MAS DIGAMOS QUE A WIDTH DE 1 LIST ITEM DEVE SER APENAS 
+
+
+DE 60%...
+
+
+TIPO ASSIM:
+
+
+
+
+
+
+
+list: {
+        width: '80%',
+        flex: 1
+}
+
+listItem: {
+    borderColor: 'black',
+    padding: 15,
+    marginVertical: 10,
+    backgroundColor: 'white',
+    borderWidth: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-around'
+    width: '60%'
+}
+
+
+
+<View style={styles.list}>
+    <ScrollView>
+        {pastGuesses.map(guess => renderListItem(guess))}
+    </ScrollView>
+</View>
+
+
+
+
+
+
+
+
+
+ISSO FAZ COM QUE O LIST ITEM FIQUE POSICIONADO NA ESQUERDA,
+
+PQ 
+
+ESSE É O COMPORTAMENTO DEFAULT... ISSO PQ O SCROLLVIEW 
+
+AINDA USA FLEXBOX,
+
+APESAR DE EXISTIREM ALGUMAS DIFERENÇAS EM RELAÇÃO AO BEHAVIOR DO FLEXBOX 
+
+DAS VIEW COMUNS...
+
+
+
+--> MAS O DEFAULT DE STRETCHING É OVERWRITTEN, POR CONTA DO 
+
+'width: 60%'...
+
+
+
+
+--> MAS DIGAMOS QUE AINDA QUEREMOS CENTRALIZRA ESSES LIST ITEM...
+
+
+
+
+
+
+
+
+-> PARA FAZER ISSO,
+
+DEVEMOS IR ATÉ O 
+
+'<ScrollView>',
+
+
+E AÍ APLICAR UNS STYLES ESPECIAIS,
+
+POR MEIO DE 1 PROP ESPECIAL,
+
+
+
+CHAMADO DE 'contentContainerStyle={}'...
+
+
+
+
+
+
+ESSE PROP ESPECIAL, DE STYLING, EXISTE 
+
+
+TANTO NO SCROLLVIEW, COMO NAS FLATLIST...
+
+
+
+
+TIPO ASSIM:
+
+
+
+
+
+list: {
+        width: '80%',
+        flex: 1
+}
+
+listItem: {
+    borderColor: 'black',
+    padding: 15,
+    marginVertical: 10,
+    backgroundColor: 'white',
+    borderWidth: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-around'
+}
+
+
+
+<View style={styles.list}>
+    <ScrollView contentContainerStyle={}>
+        {pastGuesses.map(guess => renderListItem(guess))}
+    </ScrollView>
+</View>
+
+
+
+
+
+
+
+
+VC USA ISSO PARA CONTROLAR O LAYOUT DENTRO DA SCROLLVIEW...
+
+
+
+
+
+
+-> AÍ PODEMOS ESCREVER ALGO COMO 
+
+
+
+
+
+
+listContainer: {
+        width: '80%',
+        flex: 1
+},
+
+list: {
+    alignItems: 'center',
+},
+
+listItem: {
+    borderColor: 'black',
+    padding: 15,
+    marginVertical: 10,
+    backgroundColor: 'white',
+    borderWidth: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-around'
+}
+
+
+
+<View style={styles.listContainer}>
+    <ScrollView contentContainerStyle={styles.list}>
+        {pastGuesses.map(guess => renderListItem(guess))}
+    </ScrollView>
+</View>
+
+
+
+
+
+
+
+
+E ISSO VAI GARANTIR O CENTERING DE NOSSOS LIST ITEM...
+
+
+
+
+
+
+
+
+--> PODEMOS CONTROLAR O LAYOUT E CENTERING,  
+    DENTRO DE SCROLLVIEW/FLATLISTS,
+
+    COM ISSO...
+
+
+
+
+
+
+
+--> MAS DIGAMOS QUE QUEREMOS CONTROLAR O FLEXBOX TAMBÉM 
+
+''ALONG THE MAIN AXIS''...
+
+
+
+
+
+
+
+DIGAMOS QUE A LIST NÃO DEVE COMEÇAR ABAIXO DA BOX DOS CONTROLS,
+
+E SIM 
+
+DEVE COMEÇAR _ LÁ DO FINAL DA TELA....
+
+
+
+
+
+
+
+-> PARA ISSO, DEVEMOS USAR 'justifyContent: flex-end',
+
+
+LÁ NA PROPERTY 'list',
+
+
+
+DO 'ScrollView',
+
+TIPO ASSIM:
+
+
+
+
+
+
+
+listContainer: {
+        width: '80%',
+        flex: 1
+},
+
+list: {
+    alignItems: 'center',
+    justifyContent: 'flex-end'
+},
+
+listItem: {
+    borderColor: 'black',
+    padding: 15,
+    marginVertical: 10,
+    backgroundColor: 'white',
+    borderWidth: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-around'
+}
+
+
+
+<View style={styles.listContainer}>
+    <ScrollView contentContainerStyle={styles.list}>
+        {pastGuesses.map(guess => renderListItem(guess))}
+    </ScrollView>
+</View>
+
+
+
+
+
+
+
+
+
+
+MAS PARECE QUE ISSO NÃO FUNCIONOU...
+
+
+
+
+
+
+
+--> ISSO ACONTECEU PQ 
+
+
+_ ''THE SCROLLVIEW 
+
+    ONLY GROWS THIS INTERNAL VIEW, WHICH IT WRAPS,
+
+    WHEN NEW ITEMS ARE ADDED''...
+
+
+
+
+
+
+--> E QUEREMOS QUE ESSA INTERNAL VIEW CRESCA AUTOMATICAMENTE...
+
+
+
+
+--> SE colocamos 'flex: 1',
+
+NA LIST,
+
+
+PERCEBEMOS QUE ISSO FUNCIONA...
+
+
+
+
+
+
+listContainer: {
+        width: '80%',
+        flex: 1
+},
+
+list: {
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    flex: 1, 
+},
+
+listItem: {
+    borderColor: 'black',
+    padding: 15,
+    marginVertical: 10,
+    backgroundColor: 'white',
+    borderWidth: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-around'
+}
+
+
+
+<View style={styles.listContainer}>
+    <ScrollView contentContainerStyle={styles.list}>
+        {pastGuesses.map(guess => renderListItem(guess))}
+    </ScrollView>
+</View>
+
+
+
+
+
+
+
+AGORA OS ITEMS 
+
+
+SÃO ADICIONADOS NO FINAL,
+
+E AÍ VÃO CRESCENDO PARA CIMA, E TEMOS SCROLL BEHAVIOR..
+
+
+
+
+MAS O BEHAVIOR ESTÁ MEIO BUGADO,
+
+E NÃO FUNCIONA 
+
+
+NO ANDROID..
+
+
+
+--> O 'flex: 1'
+
+não basta, portanto...
+
+
+
+--> PARA CONSERTAR ISSO, PODEMOS USAR 'flexGrow: 1',
+
+lá em 'list,'
+
+
+
+TIPO ASSIM:
+
+
+
+
+
+
+
+listContainer: {
+        width: '80%',
+        flex: 1
+},
+
+list: {
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    flexGrow: 1, 
+},
+
+listItem: {
+    borderColor: 'black',
+    padding: 15,
+    marginVertical: 10,
+    backgroundColor: 'white',
+    borderWidth: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-around'
+}
+
+
+
+<View style={styles.listContainer}>
+    <ScrollView contentContainerStyle={styles.list}>
+        {pastGuesses.map(guess => renderListItem(guess))}
+    </ScrollView>
+</View>
+
+
+
+
+
+
+
+
+
+'flexGrow'
+
+
+é mais flexível do que flex,
+
+
+e por isso funciona, aqui...
+
+
+
+
+
+
+'flexGrow' é bom de ser usado
+
+em 'ScrollView'....
+
+
+ok, agora isso funciona...

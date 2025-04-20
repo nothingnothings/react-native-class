@@ -1,0 +1,326 @@
+BEM, 
+
+GASTAMOS BASTANTE 
+
+TEMPO NA PRIMEIRA 
+
+
+
+TELA...
+
+
+
+
+
+
+
+
+
+--> AGORA DEVEMOS VER A PARTE DO BUTTON DE START GAME,
+
+QUE DEVE FUNCIONAR...
+
+
+
+--> ADICIONAMOS UMA NOVA TELA
+,
+
+SCREEN,
+
+
+DE NOME 
+
+
+'GameScreen'...
+
+
+
+ELA MOSTRA O 'GUESS' DO COMPUTADOR,
+
+
+
+E PERMITE AO USER DIZER AO COMPUTADOR 
+
+ 
+
+ SE O VALUE ESTÁ CORRETO OU ERRADO,
+
+ MAIOR OU MENOR..
+
+
+
+
+
+ TIPO ASSIM:
+
+
+
+
+
+
+
+ import React from 'react';
+
+import { StyleSheet, Text, View } from 'react-native';
+
+const GameScreen = () => {
+  return (
+    <View style={styles.screen}>
+      <Text>Game Screen</Text>
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  screen: {
+    flex: 1,
+    padding: 10,
+    alignItems: 'center',
+  },
+});
+
+export default GameScreen;
+
+
+
+
+
+
+
+
+
+
+
+
+MAS O QUE PRECISA ACONTECER, AQUI?
+
+
+
+
+
+
+
+--> O COMPUTADOR TEM QUE FAZER UM 'GUESS'
+
+
+NESSA TELA...
+
+
+
+
+
+-> MAS O COMPUTADOR TEM QUE FAZER ESSE GUESS TODA VEZ QUE 
+
+O USER APERTA NOS BOTOES DE 'THIS IS TOO LOW',
+
+'THIS IS TOO HIGH'...
+
+
+
+
+
+
+--> SEMPRE QUE ISSO ACONTECE,
+    DEVEMOS GERAR UM 'NEW GUESS'...
+
+
+
+
+
+
+
+--> PARA ISSO, DEVEMOS CRIAR 1 NOVA FUNCTION...
+
+
+
+
+
+
+TIPO ASSIM:
+
+
+
+
+const generateRandomBetween = (min: number, max: number, exclude: number) => {
+  return Math.floor(Math.random() * (max - min + 1) + min);
+};
+
+
+
+
+
+
+
+
+temos também o 'exclude',
+
+que será usado para 
+
+GARANTIR que o app nunca vai acertar o número do jogador na primeira tentativa...
+
+
+
+
+
+
+
+
+-> PARA ISSO,
+
+ESCREVEMOS ASSIM:
+
+
+
+
+
+
+
+import React from 'react';
+
+import { StyleSheet, Text, View } from 'react-native';
+
+const generateRandomBetween = (min: number, max: number, exclude: number) => {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+
+  const rndNum = Math.floor(Math.random() * (max - min)) + min;
+
+  if (rndNum === exclude) {
+    return generateRandomBetween(min, max, exclude);
+  } else {
+    return rndNum;
+  }
+};
+
+
+
+
+
+
+
+
+
+
+
+ESSA FUNCTION VAI REALMENTE RETORNAR 1 RANDOM NUMBER...
+
+
+
+
+
+
+
+
+--> VAMOS QUERER FAZER HANDLE DE 1 STATE,
+
+DE NOME 
+
+
+'currentGuess'...
+
+
+
+
+
+
+EX:
+
+
+
+
+
+
+
+import React from 'react';
+
+import { StyleSheet, Text, View } from 'react-native';
+
+const generateRandomBetween = (min: number, max: number, exclude: number) => {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+
+  const rndNum = Math.floor(Math.random() * (max - min)) + min;
+
+  if (rndNum === exclude) {
+    return generateRandomBetween(min, max, exclude);
+  } else {
+    return rndNum;
+  }
+};
+
+const GameScreen = () => {
+  const [currentGuess, setCurrentGuess] = React.useState(
+    generateRandomBetween(1, 99, 0)
+  );
+
+  return (
+    <View style={styles.screen}>
+      <Text>Game Screen</Text>
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  screen: {
+    flex: 1,
+    padding: 10,
+    alignItems: 'center',
+  },
+});
+
+export default GameScreen;
+
+
+
+
+
+
+EX:
+
+
+
+
+
+
+import React from 'react';
+
+import { StyleSheet, Text, View } from 'react-native';
+
+const generateRandomBetween = (min: number, max: number, exclude: number) => {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+
+  const rndNum = Math.floor(Math.random() * (max - min)) + min;
+
+  if (rndNum === exclude) {
+    return generateRandomBetween(min, max, exclude);
+  } else {
+    return rndNum;
+  }
+};
+
+type GameScreenProps = {
+  userChoice: number;
+};
+
+const GameScreen = (props: GameScreenProps) => {
+  const [currentGuess, setCurrentGuess] = React.useState(
+    generateRandomBetween(1, 100, props.userChoice)
+  );
+
+  return (
+    <View style={styles.screen}>
+      <Text>Game Screen</Text>
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  screen: {
+    flex: 1,
+    padding: 10,
+    alignItems: 'center',
+  },
+});
+
+export default GameScreen;

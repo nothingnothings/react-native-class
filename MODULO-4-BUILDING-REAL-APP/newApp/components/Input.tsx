@@ -10,6 +10,8 @@ type InputProps = {
   autoCapitalize?: 'none' | 'sentences' | 'words' | 'characters';
   autoCorrect?: boolean;
   maxLength?: number;
+  onChangeText?: (text: string) => void;
+  value?: string;
 };
 
 const Input = (props: InputProps) => {

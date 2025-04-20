@@ -1,0 +1,80 @@
+
+
+
+
+
+
+
+COM 
+
+
+
+import { } from '@expo/vector-icons';
+
+
+
+
+
+
+
+
+
+
+IonIcons...
+
+
+
+
+
+
+
+-> TEMOS VÁRIOS ICON SETS...
+
+
+
+
+
+
+EX:
+
+
+import { Ionicons } from '@expo/vector-icons';
+
+
+
+
+
+
+
+
+CERTO...
+
+TEMOS OUTROS ICON SETS,
+
+COMO 'EvilIcons'...
+
+
+
+
+escrevemos tipo assim:
+
+
+
+
+
+
+<MainButton onPress={nextGuessHandler('lower')}>
+    <IonIcons name="md-remove" size={24} color="white" />
+</MainButton>
+
+
+
+
+
+
+CERTO...
+
+NORMAL...
+
+
+GERALMENTE VC PRECISA USAR 1 ÚNICO SET DE ICONS...

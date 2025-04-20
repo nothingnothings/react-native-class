@@ -1,0 +1,44 @@
+
+
+
+
+
+é bem comum 
+
+
+
+
+ter de estilizar 1 monte de coisas 
+
+por conta própria...
+
+
+
+
+--> 
+
+
+
+
+mas o react native tem 1 comunidade ativa,
+
+e TPPs,
+
+COMO 
+
+
+'React Native Paper',
+
+
+
+'React Native Elements' 
+
+e etc...
+
+
+PARA CASES EM QUE VC NÃO PRECISA 
+
+SEGUIR 
+1 IDENTIDADE TOTALMENTE PRÓPRIA...
+
+

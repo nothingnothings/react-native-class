@@ -1,0 +1,366 @@
+
+
+
+
+
+
+
+
+
+AGORA TRABALHAREMOS COM STATE E EVENTS...
+
+
+
+
+
+
+
+
+-> DEVEMOS FAZER COM QUE O BUTTON FUNCIONE...
+
+
+
+
+--> O PROFESSOR USARÁ FUNCTIONAL COMPONENTS 
+
+    COM A FEATURE DE HOOKS...
+
+
+--> PARA ISSO,
+ 
+
+    USAREMOS USE STATE 
+
+
+    E 'onPress'...
+
+
+
+
+EX:
+
+
+
+
+
+
+import {
+  DarkTheme,
+  DefaultTheme,
+  ThemeProvider,
+} from '@react-navigation/native';
+import * as SplashScreen from 'expo-splash-screen';
+import 'react-native-reanimated';
+
+import { useState } from 'react';
+
+import { useColorScheme } from '@/hooks/useColorScheme';
+import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
+
+// Prevent the splash screen from auto-hiding before asset loading is complete.
+SplashScreen.preventAutoHideAsync();
+
+export default function RootLayout() {
+  const [enteredGoal, setEnteredGoal] = useState('');
+
+  return (
+    <View style={styles.appContainer}>
+      <View style={styles.inputContainer}>
+        <TextInput
+          onChangeText={(text) => setEnteredGoal(text)}
+          value={enteredGoal}
+          style={styles.textInput}
+          placeholder="Your course goal!"
+        />
+        <Button title="Add Goal" />
+      </View>
+      <View style={styles.goalsContainer}>
+        <Text>List of goals...</Text>
+      </View>
+    </View>
+  );
+}
+
+
+
+
+
+
+
+
+
+
+É UM TWO-WAY BINDING...
+
+
+
+
+
+
+É MELHOR USAR UMA FUNCTION PARA HANDLAR 
+
+
+O SET DO goal,
+
+TIPO ASSIM:
+
+
+
+
+
+
+
+
+import {
+  DarkTheme,
+  DefaultTheme,
+  ThemeProvider,
+} from '@react-navigation/native';
+import * as SplashScreen from 'expo-splash-screen';
+import 'react-native-reanimated';
+
+import { useState } from 'react';
+
+import { useColorScheme } from '@/hooks/useColorScheme';
+import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
+
+// Prevent the splash screen from auto-hiding before asset loading is complete.
+SplashScreen.preventAutoHideAsync();
+
+export default function RootLayout() {
+  const [enteredGoal, setEnteredGoal] = useState('');
+
+  function goalInputHandler(enteredGoal: string) {
+    console.log(enteredGoal);
+    setEnteredGoal(enteredGoal);
+  }
+
+  return (
+    <View style={styles.appContainer}>
+      <View style={styles.inputContainer}>
+        <TextInput
+          onChangeText={(text) => goalInputHandler(text)}
+          value={enteredGoal}
+          style={styles.textInput}
+          placeholder="Your course goal!"
+        />
+        <Button title="Add Goal" />
+      </View>
+      <View style={styles.goalsContainer}>
+        <Text>List of goals...</Text>
+      </View>
+    </View>
+  );
+}
+
+
+
+
+
+
+
+
+
+
+CERTO...
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+OUTRA FUNCTION,
+
+
+
+DE NOME 'addGoalHandler'...
+
+
+
+
+
+
+EX:
+
+
+
+
+
+
+
+
+
+export default function RootLayout() {
+  const [enteredGoal, setEnteredGoal] = useState('');
+  const [goalList, setGoalList] = useState([]);
+
+  function goalInputHandler(enteredGoal: string) {
+    setEnteredGoal(enteredGoal);
+  }
+
+  const addGoalHandler = () => {
+    console.log('add goal');
+  };
+
+  return (
+    <View style={styles.appContainer}>
+      <View style={styles.inputContainer}>
+        <TextInput
+          onChangeText={(text) => goalInputHandler(text)}
+          value={enteredGoal}
+          style={styles.textInput}
+          placeholder="Your course goal!"
+        />
+        <Button title="Add Goal" onPress={addGoalHandler} />
+      </View>
+      <View style={styles.goalsContainer}>
+        <Text>List of goals...</Text>
+      </View>
+    </View>
+  );
+}
+
+
+
+
+
+AGORA QUEREMOS TER 1 LISTA DE TODOS OS GOALS,
+
+
+TODOS OS GOALS ADDADOS...
+
+
+
+
+
+
+
+      <View style={styles.goalsContainer}>
+        <Text>List of goals...</Text>
+      </View>
+
+
+    
+
+
+
+
+
+
+
+
+
+
+EX:
+
+
+
+
+
+// Prevent the splash screen from auto-hiding before asset loading is complete.
+SplashScreen.preventAutoHideAsync();
+
+export default function RootLayout() {
+  const [enteredGoal, setEnteredGoal] = useState('');
+  const [goalList, setGoalList] = useState([]);
+
+  function goalInputHandler(enteredGoal: string) {
+    setEnteredGoal(enteredGoal);
+  }
+
+  const addGoalHandler = () => {
+    setGoalList([...goalList, enteredGoal]);
+  };
+
+  return (
+    <View style={styles.appContainer}>
+      <View style={styles.inputContainer}>
+        <TextInput
+          onChangeText={(text) => goalInputHandler(text)}
+          value={enteredGoal}
+          style={styles.textInput}
+          placeholder="Your course goal!"
+        />
+        <Button title="Add Goal" onPress={addGoalHandler} />
+      </View>
+      <View style={styles.goalsContainer}>
+        <Text>List of goals...</Text>
+      </View>
+    </View>
+  );
+}
+
+
+
+
+
+
+
+EX:
+
+
+
+
+
+
+
+
+import {
+  DarkTheme,
+  DefaultTheme,
+  ThemeProvider,
+} from '@react-navigation/native';
+import * as SplashScreen from 'expo-splash-screen';
+import 'react-native-reanimated';
+
+import { useState } from 'react';
+
+import { useColorScheme } from '@/hooks/useColorScheme';
+import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
+
+// Prevent the splash screen from auto-hiding before asset loading is complete.
+SplashScreen.preventAutoHideAsync();
+
+export default function RootLayout() {
+  const [enteredGoal, setEnteredGoal] = useState('');
+  const [goalList, setGoalList] = useState<string[]>([]);
+
+  function goalInputHandler(enteredGoal: string) {
+    setEnteredGoal(enteredGoal);
+  }
+
+  const addGoalHandler = () => {
+    setGoalList((currentGoals) => [...currentGoals, enteredGoal]);
+  };
+
+  return (
+    <View style={styles.appContainer}>
+      <View style={styles.inputContainer}>
+        <TextInput
+          onChangeText={(text) => goalInputHandler(text)}
+          value={enteredGoal}
+          style={styles.textInput}
+          placeholder="Your course goal!"
+        />
+        <Button title="Add Goal" onPress={addGoalHandler} />
+      </View>
+      <View style={styles.goalsContainer}>
+        <Text>List of goals...</Text>
+      </View>
+    </View>
+  );
+}
+
+
+
+
+QUEREMOS FAZER OUTPUT DISSO...

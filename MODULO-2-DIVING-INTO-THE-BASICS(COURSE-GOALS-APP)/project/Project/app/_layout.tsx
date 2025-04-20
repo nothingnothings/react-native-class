@@ -3,12 +3,10 @@ import {
   DefaultTheme,
   ThemeProvider,
 } from '@react-navigation/native';
-import { useFonts } from 'expo-font';
-import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
-import { StatusBar } from 'expo-status-bar';
-import { useEffect } from 'react';
 import 'react-native-reanimated';
+
+import { useState } from 'react';
 
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
@@ -17,11 +15,27 @@ import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
+  const [enteredGoal, setEnteredGoal] = useState('');
+  const [goalList, setGoalList] = useState<string[]>([]);
+
+  function goalInputHandler(enteredGoal: string) {
+    setEnteredGoal(enteredGoal);
+  }
+
+  const addGoalHandler = () => {
+    setGoalList((currentGoals) => [...currentGoals, enteredGoal]);
+  };
+
   return (
     <View style={styles.appContainer}>
       <View style={styles.inputContainer}>
-        <TextInput style={styles.textInput} placeholder="Your course goal!" />
-        <Button title="Add Goal" />
+        <TextInput
+          onChangeText={(text) => goalInputHandler(text)}
+          value={enteredGoal}
+          style={styles.textInput}
+          placeholder="Your course goal!"
+        />
+        <Button title="Add Goal" onPress={addGoalHandler} />
       </View>
       <View style={styles.goalsContainer}>
         <Text>List of goals...</Text>

@@ -1,0 +1,231 @@
+
+
+
+
+
+
+
+
+O PROFESSOR QUER CUSTOMIZAR O BUTTON DE 'Start Game'...
+
+
+
+
+
+
+
+
+---> ele quer ter controle total sobre a aparência desse button...
+
+
+
+
+-> em components,
+
+
+
+
+
+O PROFESSOR VAI USAR 'TouchableOpacity'
+
+PARA CRIAR ESSE BUTTON...
+
+
+
+
+EX:
+
+
+
+
+import React from 'react';
+import { Button, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { TextInput } from 'react-native-gesture-handler';
+
+type MainButtonProps = {};
+
+const MainButton = (props: MainButtonProps) => {
+  return <TouchableOpacity />;
+};
+
+const styles = StyleSheet.create({
+  input: {
+    height: 30,
+    borderWidth: 1,
+    borderBottomColor: 'grey',
+    borderBottomWidth: 1,
+    marginVertical: 10,
+  },
+});
+
+export default MainButton;
+
+
+
+
+
+
+
+
+
+CERTO...
+
+
+
+
+
+
+EX:
+
+
+
+import Colors from '@/constants/Colors';
+import React from 'react';
+import { Button, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { TextInput } from 'react-native-gesture-handler';
+
+type MainButtonProps = {
+  onPress: () => void;
+  children: string;
+};
+
+const MainButton = (props: MainButtonProps) => {
+  return (
+    <TouchableOpacity onPress={() => props.onPress()}>
+      <View style={styles.button}>
+        <Text style={styles.buttonText}>{props.children}</Text>
+      </View>
+    </TouchableOpacity>
+  );
+};
+
+const styles = StyleSheet.create({
+  button: {
+    backgroundColor: Colors.primary,
+    borderRadius: 10,
+    padding: 10,
+  },
+  buttonText: {
+    fontSize: 20,
+    fontFamily: 'open-sans-bold',
+  },
+});
+
+export default MainButton;
+
+
+
+
+
+
+EX;
+
+
+
+
+
+
+
+
+
+import Colors from '@/constants/Colors';
+import React from 'react';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+
+type MainButtonProps = {
+  onPress: () => void;
+  children: string;
+};
+
+const MainButton = (props: MainButtonProps) => {
+  return (
+    <TouchableOpacity onPress={() => props.onPress()}>
+      <View style={styles.button}>
+        <Text style={styles.buttonText}>{props.children}</Text>
+      </View>
+    </TouchableOpacity>
+  );
+};
+
+const styles = StyleSheet.create({
+  button: {
+    backgroundColor: Colors.primary,
+    borderRadius: 10,
+    paddingVertical: 12,
+    paddingHorizontal: 30,
+  },
+  buttonText: {
+    fontSize: 18,
+    color: 'white',
+    fontFamily: 'open-sans',
+  },
+});
+
+export default MainButton;
+
+
+
+
+
+
+
+
+
+
+CERTO...
+
+
+
+
+EX;
+
+
+
+
+
+
+import Colors from '@/constants/Colors';
+import React from 'react';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+
+type MainButtonProps = {
+  onPress: () => void;
+  children: string;
+};
+
+const MainButton = (props: MainButtonProps) => {
+  return (
+    <TouchableOpacity activeOpacity={0.6} onPress={() => props.onPress()}>
+      <View style={styles.button}>
+        <Text style={styles.buttonText}>{props.children}</Text>
+      </View>
+    </TouchableOpacity>
+  );
+};
+
+const styles = StyleSheet.create({
+  button: {
+    backgroundColor: Colors.primary,
+    borderRadius: 25,
+    paddingVertical: 12,
+    paddingHorizontal: 30,
+  },
+  buttonText: {
+    fontSize: 18,
+    color: 'white',
+    fontFamily: 'open-sans',
+  },
+});
+
+export default MainButton;
+
+
+
+
+
+agora usaremos icons...
+
+
+
+
+

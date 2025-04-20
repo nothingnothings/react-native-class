@@ -1,0 +1,24 @@
+
+
+
+
+
+
+
+AGORA DEVEMOS EXPLORAR 
+
+
+'HOW TO CREATE OUR OWN COMPONENTS'...
+
+
+
+
+
+
+
+--> ISSO É BEM FÁCIL,
+
+
+
+
+DEFINIMOS OS PROPS E PASSAMOS...

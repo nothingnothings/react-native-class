@@ -1,0 +1,117 @@
+
+
+
+queremos mostrar 1 alert 
+
+
+caso 
+
+
+o input seja inválido...
+
+
+
+
+
+
+
+-> PODEMOS IMPORTAR O 'Alert'
+
+DO REACT NATIVE...
+
+
+
+
+
+ISSO NÃO É UM COMPONENT QUE USAMOS,
+
+E SIM 
+
+
+UM OBJECT EM QUE 
+
+PODEMOS CHAMAR UMA NATIVE API/NATIVE FEATURE...
+
+
+
+
+
+
+
+
+--> O PROFESSOR ESCREVE ASSIM:
+
+
+ 
+
+
+
+
+
+   const confirmInputHandler = () => {
+    const chosenNumber = parseInt(enteredValue);
+    if (chosenNumber <= 0 || chosenNumber > 99) {
+      Alert.alert(
+        'Invalid number!',
+        'Number has to be a number between 1 and 99',
+        [
+          {
+            text: 'Okay',
+            style: 'destructive',
+            onPress: () => resetInputHandler,
+          },
+        ]
+      );
+      return;
+    }
+    setConfirmed(true);
+    setSelectedNumber(chosenNumber);
+    setEnteredValue('');
+  };
+
+
+
+
+
+
+
+
+
+
+  certo....
+
+
+
+
+
+
+  e isso funciona...
+
+
+
+
+
+
+
+
+
+  const confirmInputHandler = () => {
+    const chosenNumber = parseInt(enteredValue);
+    if (isNaN(chosenNumber) || chosenNumber < 1 || chosenNumber > 99) {
+      Alert.alert(
+        'Invalid number!',
+        'Number has to be a number between 1 and 99',
+        [
+          {
+            text: 'Okay',
+            style: 'destructive',
+            onPress: () => resetInputHandler,
+          },
+        ]
+      );
+      return;
+    }
+    setConfirmed(true);
+    setSelectedNumber(chosenNumber);
+    setEnteredValue('');
+  };

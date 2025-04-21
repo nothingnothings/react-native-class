@@ -1,0 +1,374 @@
+
+
+
+
+
+
+
+
+
+
+
+HÁ UMA COISA MAIS A SE TER EM MENTE, QUANDO 
+
+ESCREVEMOS MOBILE APPS...
+
+
+
+
+
+
+
+
+
+
+--> PODEMOS VER ISSO NO IPHONE...
+
+
+
+
+--> ELE TEM AQUELE 'NOTCH'... --> O NOTCH 
+
+PODE, ÀS VEZES, ESCONDER 
+
+SEU CONTENT...
+
+
+
+
+
+--> SÃO ELEMENTOS QUE FAZEM PARTE DO DEVICE, QUE 
+
+PODEM DISTORCER NOSSA INTERFACE...
+
+
+
+
+-> PARA CONSERTAR ESSE TIPO DE PROBLEMA,
+    PARA FAZER SEU APP PARECER LEGAL,
+
+
+    VC TEM 1 COMPONENT ESPECIAL,
+
+    QUE 
+
+
+    AUTOMATICAMENTE AJUSTA 
+
+    SEU 
+
+    CONTEÚDO AO TAMANHO DO DEVICE...
+
+
+
+
+
+
+
+    É O 'SafeAreaView'...
+
+
+
+
+
+--> TEM ESSE NOME PQ 
+    É UMA WRAPPING VIEW QUE 
+    PODEMOS COLOCAR AO REDOR DO NOSSO CONTEÚDO,
+
+    E QUE 
+
+    DENOTA A 'SAFE AREA WHERE WE CAN POSITION OUR CONTENT'..
+
+
+
+
+
+
+
+
+--> MAS COMO USAMOS ESSE SAFEAREAVIEW?
+
+
+
+
+
+-> DEVEMOS WRAPPÁ-LO EM VOLTA DO 'SCROLLVIEW',
+
+
+
+TIPO ASSIM:
+
+
+
+
+
+
+import { View, Image, Text, StyleSheet } from 'react-native';
+
+import Title from '../components/ui/Title';
+import PrimaryButton from '../components/ui/PrimaryButton';
+import Colors from '../constants/colors';
+
+function GameOverScreen({ roundsNumber, userNumber, onStartNewGame }) {
+  return (
+    <SafeAreaView>
+    <ScrollView>
+    <View style={styles.rootContainer}>
+      <Title>GAME OVER!</Title>
+      <View style={styles.imageContainer}>
+        <Image
+          style={styles.image}
+          source={require('../assets/images/success.png')}
+        />
+      </View>
+      <Text style={styles.summaryText}>
+        Your phone needed <Text style={styles.highlight}>{roundsNumber}</Text>{' '}
+        rounds to guess the number{' '}
+        <Text style={styles.highlight}>{userNumber}</Text>.
+      </Text>
+      <PrimaryButton onPress={onStartNewGame}>Start New Game</PrimaryButton>
+    </View>
+    </ScrollView>
+    </SafeAreaView>
+  );
+}
+
+export default GameOverScreen;
+
+const styles = StyleSheet.create({
+  rootContainer: {
+    flex: 1,
+    padding: 24,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  imageContainer: {
+    width: 300,
+    height: 300,
+    borderRadius: 150,
+    borderWidth: 3,
+    borderColor: Colors.primary800,
+    overflow: 'hidden',
+    margin: 36,
+  },
+  image: {
+    width: '100%',
+    height: '100%',
+  },
+  summaryText: {
+    fontFamily: 'open-sans',
+    fontSize: 24,
+    textAlign: 'center',
+    marginBottom: 24,
+  },
+  highlight: {
+    fontFamily: 'open-sans-bold',
+    color: Colors.primary500,
+  },
+});
+
+
+
+
+
+
+
+
+
+
+
+E ISSO É IMPORTANTE:
+
+
+
+''SAFE AREA VIEW 
+
+
+DEVE SEMPRE WRAP __ SUA TOPMOST VIEW... ''
+
+
+NO CASO, 
+
+VAMOS WRAPPAR O SCROLLVIEW
+
+
+
+
+
+
+
+
+
+
+--> O SAFEAREAVIEW VAI ADICIONAR 1 POUCO DE padding,
+    NA DIREITA E NA ESQUERDA,
+
+    PARA RESPEITAR O TAMANHO DO APARELHO...
+
+
+
+
+
+MAS FICAMOS COM 1 PROBLEMA...
+
+
+O LAYOUT ESTÁ BUGGADO...
+
+
+
+--> O PROBLEMA É QUE 
+
+    NÃO ESTAMOS 
+
+    USANDO A SAFEAREAVIEW
+
+
+    COMO A VIEW MAIS TOPMOST...
+
+
+
+--> PARA CONSERTAR ISSO, DEVEMOS IR ATÉ 'App.js',
+
+EM 
+
+QUE TEMOS A NOSSA 
+
+'''''TOPMOST VIEW''',
+
+
+
+
+QUE É BASICAMENTE AQUI:
+
+
+
+
+return (
+    <View style={styles.screen}>
+        <Header title="Guess a Number" />
+    {content}
+    </View>
+)
+
+
+
+
+
+--> O HEADER DEVE _ FAZER_ PARTE__ DA SAFEAREAVIEW...
+
+
+
+
+
+--> QUER DIZER QUE DEVEMOS WRAPPAR A VIEW INTEIRA COM ELE,
+
+TIPO ASSIM:
+
+
+
+
+
+
+return (
+    <SafeAreaView>
+    <View style={styles.screen}>
+        <Header title="Guess a Number" />
+    {content}
+    </View>
+    </SafeAreaView>
+)
+
+
+
+
+
+MAS FICAMOS COM 1 TELA VAZIA...
+
+
+
+
+
+ISSO ACONTECEU PQ __ DEVEMOS __ PASSAR O STYLE DE 'styles.screen'
+
+1 NÍVEL PARA CIMA,
+
+PARA O NÍVEL DA 'SafeAreaView' (e também nos livrar de '<View>'),
+
+TIPO ASSIM:
+
+
+
+return (
+    <SafeAreaView style={styles.screen}>
+    <Header title="Guess a Number" />
+    {content}
+    </SafeAreaView>
+)
+
+
+
+const styles = StyleSheet.create({
+  screen: {
+    flex: 1,
+  },
+});
+
+
+
+
+
+
+
+
+
+
+
+
+OK... AGORA FUNCIONOU...
+
+
+
+
+
+--> AGORA TEMOS 1 ESPAÇO ENTRE O FINAL DO APP 
+    E O APARELHO...
+
+
+
+
+
+
+--> MAS FICAMOS COM 1 GAP ENORME NO HEADER... 
+
+    VEREMOS ISSO, COMO REDUZIR ISSO, NO PRÓXIMO MÓDULO...
+
+
+
+
+--> A SAFEAREAVIEW GARANTE QUE SEU CONTEÚDO 
+    SEMPRE FICA VISÍVEL..
+
+
+
+
+
+--> MAS ISSO NÃO QUER DIZER QUE VC DEVE WRAPPAR SEU 
+    APP COM 1 SAFEAREAVIEW  
+
+    TODA HORA...
+
+
+
+
+--> ISSO PQ, COMO VEREMOS NO MODULO DE NAVIGATION,
+    EXISTE 1 LIBRARY QUE SE ENCARREGA DISSO,
+    DE MOSTRAR TODO CONTEÚDO PARA VOCê,
+
+    AUTOMATICAMENTE... A MAIOR PARTE DOS SEUS APPS TERÁ 
+    NAVIGATION, E AÍ VC NÃO PRECISARÁ CUIDAR DISSO...
+
+
+    MAS APPS SEM ESSA LIBRARY, SEM NAVIGATION,
+
+    É MELHOR VC USAR ESSE 'SafeAreaView' PARA WRAPPAR 
+    TODO SEU CONTEÚDO...

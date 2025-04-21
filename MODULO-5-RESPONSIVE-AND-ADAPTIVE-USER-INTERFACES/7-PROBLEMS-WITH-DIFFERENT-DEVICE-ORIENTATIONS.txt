@@ -1,0 +1,90 @@
+
+
+
+
+
+
+
+
+
+
+
+
+nosso app está fixo com o portrait mode...
+
+
+
+
+
+
+
+
+--> não existe landscape mode, por enquanto...
+
+
+
+
+
+
+
+
+-> ISSO ACONTECE PQ, EM EXPO APPS,
+
+
+
+PODEMOS FACILMENTE 'LOCK' 
+
+A DEVICE ORIENTATION,
+
+LÁ NO ARQUIVO 'app.json'...
+
+
+
+
+
+
+
+--> A PARTE IMPORTANTE É 
+
+
+"orientation: "portrait" " 
+
+
+
+
+
+--> ISSO É IMPORTANTE,
+    PQ TEM MTOS 
+
+    APPS QUE FUNCIONAM APENAS EM PORTRAIT MODE...
+
+
+
+
+
+
+
+--> PODERÍAMOS DEFINIR COMO 
+
+"orientation": "landscape" ",
+
+
+
+
+
+OU COMO "default",
+
+
+para suportar ambas orientações...
+
+
+
+
+
+
+
+
+
+-> NÃO ESTUDAREI ISSO, PQ ACHO QUE NÃO SERÁ NECESSÁRIO...
+
+

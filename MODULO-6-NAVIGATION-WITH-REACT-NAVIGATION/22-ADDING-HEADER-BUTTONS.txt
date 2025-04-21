@@ -1,0 +1,499 @@
+USE A PACKAGE 
+
+
+
+
+
+npm install --save react-navigation-header-buttons 
+
+
+
+
+PQ ELA DEIXA O POSITIONING BEM MAIS SIMPLES...
+
+
+
+
+
+ESCREVA TIPO ASSIM:
+
+
+
+
+
+import React from 'react';
+
+import { HeaderButton } from 'react-navigation-header-buttons';
+
+import { Ionicons } from '@expo/vector-icons';
+
+type HeaderButtonProps = {
+  title: string;
+  onPress: () => void;
+};
+
+const HeaderButton = (props: HeaderButtonProps) => {
+  return (
+    <HeaderButton {...props} title={props.title} onPress={props.onPress} />
+  );
+};
+
+export default HeaderButton;
+
+
+
+
+
+
+
+
+
+
+VC TEM QUE FAZER O FORWARD DE TODOS OS PROPS...
+
+
+
+
+
+
+
+
+--> depois 
+
+
+escreva 
+
+'IconComponent={IonIcons}'...
+
+
+
+
+
+EX:
+
+
+
+
+
+
+
+import React from 'react';
+
+import { HeaderButton } from 'react-navigation-header-buttons';
+
+import { Ionicons } from '@expo/vector-icons';
+
+type HeaderButtonProps = {
+  title: string;
+  onPress: () => void;
+};
+
+const HeaderButton = (props: HeaderButtonProps) => {
+  return (
+    <HeaderButton
+      {...props}
+      IconComponent={Ionicons}
+      iconSize={23}
+      color={Colors.primaryColor}
+    />
+  );
+};
+
+export default HeaderButton;
+
+
+
+
+
+
+
+
+
+
+O PROFESSOR TAMBÉM TESTA A PLATFORM,
+
+TIPO ASSIM:
+
+
+
+
+
+import React from 'react';
+
+import { HeaderButton } from 'react-navigation-header-buttons';
+
+import { Ionicons } from '@expo/vector-icons';
+import { Platform } from 'react-native';
+
+type HeaderButtonProps = {
+  title: string;
+  onPress: () => void;
+};
+
+const HeaderButton = (props: HeaderButtonProps) => {
+  return (
+    <HeaderButton
+      {...props}
+      IconComponent={Ionicons}
+      iconSize={23}
+      color={Platform.OS === 'android' ? 'white' : 'black'}
+    />
+  );
+};
+
+export default HeaderButton;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+DEPOIS DISSO, PRECISAMOS IMPORTAR 
+
+
+
+''import { HeaderButtons } from 'react-navigation-header-buttons';
+'',
+
+
+
+
+
+OU SEJA,
+
+
+'HeaderButtons'...
+
+
+
+
+
+
+
+
+DEPOIS DISSO, PODEMOS ADICIONAR ESSE COMPONENT 
+
+LÁ EM 'MealDetailsScreen',
+
+PARA ADICIONAR O BUTTON DE 'FAVORITE',
+
+
+
+tipo assim:
+
+
+
+MealDetailsScreen.navigationOptions = navigationData => {
+
+    const mealId = navigationData.navigation.getParam('mealId');
+    const selectedMeal = MEALS.find(meal => meal.id === mealId);
+
+    return {
+        headerTitle: selectedMeal.title,
+        headerRight: <HeaderButtons></HeaderButtons> /// EIS O CÓDIGO EM QUESTÃO.
+    }
+}
+
+
+
+
+
+
+PRECISAMOS DE OUTRO COMPONENT,
+
+CHAMADO DE '<Item>',
+
+TIPO ASSIM:
+
+
+
+
+
+
+
+MealDetailsScreen.navigationOptions = navigationData => {
+
+    const mealId = navigationData.navigation.getParam('mealId');
+    const selectedMeal = MEALS.find(meal => meal.id === mealId);
+
+    return {
+        headerTitle: selectedMeal.title,
+        headerRight: <HeaderButtons>
+              <Item />          /// EIS O CÓDIGO EM QUESTÃO.
+        </HeaderButtons> 
+    }
+}
+
+
+
+
+
+
+
+NÓS USAMOS '<Item>'
+
+PARA DESCREVER O ICON QUE VAMOS QUERER 
+
+RENDERIZAR...
+
+
+
+
+--> colocamos 'title',
+
+para ter 1 fallback,
+caso o icon não carregue...
+
+
+
+
+
+FINALMENTE,
+ESCREVEMOS 
+
+'iconName="ios-star" '....
+
+
+
+TIPO ASSIM:
+
+
+
+
+
+
+MealDetailsScreen.navigationOptions = navigationData => {
+
+    const mealId = navigationData.navigation.getParam('mealId');
+    const selectedMeal = MEALS.find(meal => meal.id === mealId);
+
+    return {
+        headerTitle: selectedMeal.title,
+        headerRight: <HeaderButtons>
+              <Item title="Favorite" iconName="ios-star"/>          /// EIS O CÓDIGO EM QUESTÃO.
+        </HeaderButtons> 
+    }
+}
+
+
+
+
+
+
+
+-> ISSO FEITO, PRECISAMOS DE 'onPress',
+
+PARA REGISTRAR A FUNCTION QUE DEVERÁ SER TRIGGADA 
+SEMPRE QUE 
+ESSE 
+ITEM FOR PRESSIONADO...
+
+
+
+TIPO ASSIM:
+
+
+
+
+
+
+
+MealDetailsScreen.navigationOptions = navigationData => {
+
+    const mealId = navigationData.navigation.getParam('mealId');
+    const selectedMeal = MEALS.find(meal => meal.id === mealId);
+
+    return {
+        headerTitle: selectedMeal.title,
+        headerRight: <HeaderButtons>
+              <Item title="Favorite" 
+              iconName="ios-star"
+              onPress={() => {console.log('MARK AS FAVORITE')} }   /// EIS O CÓDIGO EM QUESTÃO.
+              />        
+        </HeaderButtons> 
+    }
+}
+
+
+
+
+
+
+
+
+
+FINALMENTE, IMPORTAMOS O 'HeaderButton' ali,
+
+
+e colocamos dentro de 'HeaderButtons',
+
+
+TIPO ASSIM:
+
+
+
+
+
+
+
+import { HeaderButton } from 'react-navigation-header-buttons';
+
+
+MealDetailsScreen.navigationOptions = navigationData => {
+
+    const mealId = navigationData.navigation.getParam('mealId');
+    const selectedMeal = MEALS.find(meal => meal.id === mealId);
+
+    return {
+        headerTitle: selectedMeal.title,
+        headerRight: <HeaderButtons HeaderButtonComponent={HeaderButton} /// EIS O CÓDIGO EM QUESTÃO.
+        >
+              <Item title="Favorite" 
+              iconName="ios-star"
+              onPress={() => {console.log('MARK AS FAVORITE')} }   
+              />        
+        </HeaderButtons> 
+    }
+}
+
+
+
+
+
+
+ISSO É BEM CUMBERSOME, MAS É SÓ COPIA E COLA...
+
+
+
+
+
+
+
+
+
+
+
+
+COM TUDO ISSO SALVO,
+
+PERCEBEMOS QUE A ESTRELA APARECEU NO HEADER...
+
+
+
+
+
+-> E A LÓGICA FUNCIONOU...
+
+
+
+
+
+
+
+É CLARO QUE PODEMOS TER MÚLTIPLOS ITEMS DENTRO DE 'HeaderButtons',
+
+
+PODEMOS TER OUTROS,
+
+E AÍ VÃO FICAR TODOS ALINHADOS...
+
+
+
+--> mas não exagere, tenha apenas 1 ou 2 icons...
+
+
+
+
+
+
+FICOU TIPO ASSIM:
+
+
+
+
+import React from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+
+import Colors from '@/constants/Colors';
+import { Button } from 'react-native';
+
+import { HeaderButtons, Item } from 'react-navigation-header-buttons';
+import HeaderButton from '@/components/HeaderButton';
+
+
+type CategoriesScreenProps = {
+  onSelectCategory: (category: string) => void;
+  navigation: any;
+};
+
+const MealDetailScreen = (props: CategoriesScreenProps) => {
+  return (
+    <View style={styles.screen}>
+      <Button
+        title="Go to Categories"
+        onPress={() =>
+          // skip 2 screens, directly to the parent screen:
+          props.navigation.popToTop()
+        }
+      />
+    </View>
+  );
+};
+
+MealDetailsScreen.navigationOptions = (navigationData) => {
+  const mealId = navigationData.navigation.getParam('mealId');
+  const selectedMeal = MEALS.find((meal) => meal.id === mealId);
+
+  return {
+    headerTitle: selectedMeal.title,
+    headerRight: (
+      <HeaderButtons
+        HeaderButtonComponent={HeaderButton} /// EIS O CÓDIGO EM QUESTÃO.
+      >
+        <Item
+          title="Favorite"
+          iconName="ios-star"
+          onPress={() => {
+            console.log('MARK AS FAVORITE');
+          }}
+        />
+      </HeaderButtons>
+    ),
+  };
+};
+
+const styles = StyleSheet.create({
+  screen: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  title: {
+    fontSize: 20,
+    marginVertical: 10,
+    fontFamily: 'open-sans-bold',
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    width: '100%',
+    marginTop: 20,
+    flex: 1,
+    paddingHorizontal: 15,
+  },
+});
+
+export default MealDetailScreen;
+
+
+
+
+

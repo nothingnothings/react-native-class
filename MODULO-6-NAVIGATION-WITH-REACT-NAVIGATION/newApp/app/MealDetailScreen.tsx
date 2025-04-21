@@ -4,6 +4,10 @@ import { StyleSheet, Text, View } from 'react-native';
 import Colors from '@/constants/Colors';
 import { Button } from 'react-native';
 
+import { HeaderButtons, Item } from 'react-navigation-header-buttons';
+import HeaderButton from '@/components/HeaderButton';
+
+
 type CategoriesScreenProps = {
   onSelectCategory: (category: string) => void;
   navigation: any;
@@ -21,6 +25,28 @@ const MealDetailScreen = (props: CategoriesScreenProps) => {
       />
     </View>
   );
+};
+
+MealDetailsScreen.navigationOptions = (navigationData) => {
+  const mealId = navigationData.navigation.getParam('mealId');
+  const selectedMeal = MEALS.find((meal) => meal.id === mealId);
+
+  return {
+    headerTitle: selectedMeal.title,
+    headerRight: (
+      <HeaderButtons
+        HeaderButtonComponent={HeaderButton} /// EIS O CÓDIGO EM QUESTÃO.
+      >
+        <Item
+          title="Favorite"
+          iconName="ios-star"
+          onPress={() => {
+            console.log('MARK AS FAVORITE');
+          }}
+        />
+      </HeaderButtons>
+    ),
+  };
 };
 
 const styles = StyleSheet.create({

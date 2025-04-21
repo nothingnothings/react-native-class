@@ -1,14 +1,31 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Button, StyleSheet, Text, View } from 'react-native';
 
 import Colors from '@/constants/Colors';
 
 type CategoriesScreenProps = {
-  onSelectCategory: (category: string) => void;
+  onSelectCategory: () => void;
+  navigation: any;
 };
 
 const CategoriesScreen = (props: CategoriesScreenProps) => {
-  return <View style={styles.screen}></View>;
+  const { navigate } = props.navigation;
+
+  const onSelectCategory = () => {
+    navigate('CategoryMeals');
+  };
+
+  return (
+    <View style={styles.screen}>
+      <Text>Categories Screen</Text>
+      <Button
+        title="Go to Meals!"
+        onPress={() => {
+          onSelectCategory('breakfast');
+        }}
+      />
+    </View>
+  );
 };
 
 const styles = StyleSheet.create({

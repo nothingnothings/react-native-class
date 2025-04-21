@@ -1,0 +1,436 @@
+
+
+
+NOSSO CÓDIGO ATÉ AGORA:
+
+
+
+
+import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
+import { useFonts } from 'expo-font';
+// import { Stack } from 'expo-router';
+import * as SplashScreen from 'expo-splash-screen';
+// import { StatusBar } from 'expo-status-bar';
+import { useEffect } from 'react';
+import 'react-native-reanimated';
+
+import { useColorScheme } from '@/hooks/useColorScheme';
+import { MealsNavigator } from '@/navigation/MealsNavigator';
+
+// Prevent the splash screen from auto-hiding before asset loading is complete.
+SplashScreen.preventAutoHideAsync();
+
+export default function RootLayout() {
+  const colorScheme = useColorScheme();
+  const [loaded] = useFonts({
+    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
+  });
+
+  useEffect(() => {
+    if (loaded) {
+      SplashScreen.hideAsync();
+    }
+  }, [loaded]);
+
+  if (!loaded) {
+    return null;
+  }
+
+  return (
+    <MealsNavigator />
+  );
+}
+
+
+
+
+
+
+
+
+
+
+
+
+PARA ALCANÇAR AS OUTRAS TELAS,
+
+PRECISAMOS DE ALGO CLICÁVEL...
+
+
+
+
+
+
+
+
+
+--> MAIS TARDE TEREMOS A GRID DE CATEGORIES...
+
+
+
+
+
+
+
+
+--> MAS O PROFESSOR VAI COMEÇAR COM 1 BUTTON DE TESTE...
+
+
+
+
+--> TIPO ASSIM:
+
+
+
+
+
+import React from 'react';
+import { Button, StyleSheet, Text, View } from 'react-native';
+
+import Colors from '@/constants/Colors';
+
+type CategoriesScreenProps = {
+  onSelectCategory: (category: string) => void;
+};
+
+const CategoriesScreen = (props: CategoriesScreenProps) => {
+  return (
+    <View style={styles.screen}>
+      <Text>Categories Screen</Text>
+      <Button
+        title="Go to Meals!"
+        onPress={() => {}}
+      />
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  screen: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  title: {
+    fontSize: 20,
+    marginVertical: 10,
+    fontFamily: 'open-sans-bold',
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    width: '100%',
+    marginTop: 20,
+    flex: 1,
+    paddingHorizontal: 15,
+  },
+});
+
+export default CategoriesScreen;
+
+
+
+
+
+
+
+
+
+
+
+--> PRECISAMOS DISPARAR ALGUMA COISA,
+
+PARA IR ATÉ A PAGE DE 'CategoryMeals'...
+
+
+
+
+
+
+
+
+
+
+VC DEVE SABER:
+
+
+''EVERY COMPONENT
+    YOU LOAD WITH THE HELP OF REACT-NAVIGATION 
+    GETS A SPECIAL PROP PASSED DOWN AUTOMATICALLY...''
+
+
+
+
+--> SÓ OS TOP-LEVEL COMPONENTS RECEBEM ESSE PROP...
+
+    OU SEJA, APENAS 
+
+    OS COMPONENTS QUE SÃO AS 'SCREENS'...
+
+
+
+
+
+
+O NOME DO PROP É 'navigation'...
+
+
+
+--> PARA USAR ESSE PROP,
+
+BASTA ESCREVER ASSIM:
+
+
+
+
+
+
+
+
+
+
+
+
+import React from 'react';
+import { Button, StyleSheet, Text, View } from 'react-native';
+
+import Colors from '@/constants/Colors';
+
+type CategoriesScreenProps = {
+  onSelectCategory: (category: string) => void;
+  navigation: any;
+};
+
+const CategoriesScreen = (props: CategoriesScreenProps) => {
+  const { navigate } = props.navigation;
+
+  const onSelectCategory = (category: string) => {
+    navigate('CategoryMeals', { category });
+  };
+
+  return (
+    <View style={styles.screen}>
+      <Text>Categories Screen</Text>
+      <Button
+        title="Go to Meals!"
+        onPress={() => {
+          onSelectCategory('breakfast');
+        }}
+      />
+    </View>
+  );
+};
+
+
+
+
+
+
+
+
+
+
+BASICAMENTE,
+
+
+
+ISSO VAI NOS DEIXAR NAVIGATE ATÉ ESSA OUTRA PAGE...
+
+
+
+
+
+
+
+BASICAMENTE, A FORMA COMPLETA 
+
+É 
+
+
+'props.navigation.navigate()'...
+
+
+
+
+
+
+ESSE É O MAIN METHOD, O METHOD MAIS IMPORTANTE 
+
+
+DO REACT-NAVIGATION...
+
+
+
+
+
+
+
+--> O NAVIGATE EXIGE 1 OBJECT COMO PARAMETRO...
+
+
+
+
+DENTRO DESSE OBJECT,
+
+VC DEVE usar a property 'routeName'... antigamente... pq isso 
+
+
+foi deprecado...
+
+
+
+
+
+--> O FORMATO É ASSIM:
+
+
+
+
+
+
+  const onSelectCategory = (category: string) => {
+    navigate('CategoryMeals', { category });
+  };
+
+
+
+
+
+
+  Ex:
+
+
+
+
+
+
+
+
+  import React from 'react';
+import { Button, StyleSheet, Text, View } from 'react-native';
+
+import Colors from '@/constants/Colors';
+
+type CategoriesScreenProps = {
+  onSelectCategory: () => void;
+  navigation: any;
+};
+
+const CategoriesScreen = (props: CategoriesScreenProps) => {
+  const { navigate } = props.navigation;
+
+  const onSelectCategory = () => {
+    navigate('CategoryMeals');
+  };
+
+  return (
+    <View style={styles.screen}>
+      <Text>Categories Screen</Text>
+      <Button
+        title="Go to Meals!"
+        onPress={() => {
+          onSelectCategory('breakfast');
+        }}
+      />
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  screen: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  title: {
+    fontSize: 20,
+    marginVertical: 10,
+    fontFamily: 'open-sans-bold',
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    width: '100%',
+    marginTop: 20,
+    flex: 1,
+    paddingHorizontal: 15,
+  },
+});
+
+export default CategoriesScreen;
+
+
+
+
+
+
+
+
+
+
+CERTO...
+
+
+
+
+E TUDO ISSO FUNCIONA OUT OF THE BOX,
+
+SEM FAZER QUALQUER TRABALHO EXTRA...
+
+
+
+TUDO FUNCIONA OUT OF THE BOX,
+
+GRAÇAS à LIBRARY DE 'REACT-NAVIGATION'...
+
+
+
+
+
+
+
+
+A ANIMATION DO ANDROID E DO IOS 
+
+É UM POUCO DIFERENTE...
+
+
+
+
+É ASSIM QUE PODEMOS NAVIGATE ATÉ SCREENS DIFERENTES...
+
+
+
+
+
+--> É CLARO QUE 'navigate' NÃO DIZ 
+
+    NADA SOBRE A 'DIRECTION' DE ONDE 
+
+    DEVEMOS IR (não diz se devemos tocar a FORWARD 
+    ANIMATION ou a BACK ANIMATION)...
+
+
+    --> O REACT-NAVIGATION SABE O QUE FAZER, AQUI,
+        JUSTAMENTE PQ ELA MANTÉM AQUELE 'STACK' DE SCREENS,
+        POR TRÁS DAS CENAS...
+
+
+
+        TBM PQ ESSE É O COMPORTAMENTO DEFAULT...
+
+
+
+        -> ELE TAMBÉM ADICIONA O BOTÃO DE 'BACK' AUTOMATICAMENTE,
+           POR ISSO PODEMOS RECORRER A ISSO...
+
+
+
+
+
+--> QUER DIZER QUE O REACT NAVIGATION ESTÁ FAZENDO MANAGE DE TUDO 
+    ISSO PARA NÓS...
+
+
+NOSSA CHALLENGE É FAZER A MESMA COISA 
+    NA TELA DE 'CATEGORYMEALS'...

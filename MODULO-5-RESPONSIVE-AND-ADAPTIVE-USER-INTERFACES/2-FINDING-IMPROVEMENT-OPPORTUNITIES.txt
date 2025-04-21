@@ -1,0 +1,98 @@
+
+
+
+
+
+
+
+
+
+começamos com o TAMANHO DOS NOSSOS APPS...
+
+
+
+
+
+
+
+
+--> CRIAMOS 1 VIRTUAL DEVICE BEM MENOR DO QUE 
+    O QUE ESTAMOS USANDO AGORA...
+
+
+
+
+
+
+
+--> 3.7 INCH PHONE...
+
+
+
+
+
+
+
+--> ''NOT MANY USERS USE THOSE SMALL PHONES...''
+
+
+
+
+
+
+
+
+--> se vc está targettando países inteiros,
+
+    como países mais pobres,
+
+    é bom pegar telas menores...
+
+
+
+
+
+
+
+
+COM ISSO, VOLTAMOS AO NOSSO PROJECT...
+
+
+
+
+
+--> NOSSO APP NÃO ESTÁ OPTIMIZADO PARA TELAS MENORES...
+
+
+
+
+
+
+-> NOSSOS BOTÕES NÃO ESTÃO POSICIONADOS CORRETAMENTE...
+
+
+
+
+
+
+
+-> QUEREMOS REDUZIR MARGINS, TAMBÉM...
+
+
+
+
+
+--> A IMAGE TAMBÉM ESTÁ GIGANTE,
+    E NÃO CONSEGUIMOS ENXERGAR O BOTÃO QUE FICA 
+    LÁ EMBAIXO, POR CONTA DO TAMANHO DA IMAGE...
+
+
+
+
+
+
+--> NOSSO APP TAMBÉM NÃO PERMITE O ROTATE DO DEVICE 
+    (isso normalmente fica disabled, inicialmente)...
+
+
+    

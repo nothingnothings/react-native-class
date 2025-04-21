@@ -1,0 +1,391 @@
+ESTAMOS COM ESTE CÓDIGO:
+
+
+ import React from 'react';
+import { Button, StyleSheet, Text, View } from 'react-native';
+
+import Colors from '@/constants/Colors';
+
+import CATEGORIES from '@/data/dummy-data';
+
+type CategoriesScreenProps = {
+  onSelectCategory: () => void;
+  navigation: any;
+};
+
+const CategoryMealsScreen = (props: CategoriesScreenProps) => {
+  const categoryId = props.navigation.getParam('categoryId');
+
+  const categoryMealData = CATEGORIES.filter((item) => item.id === categoryId);
+
+  return (
+    // <View style={styles.screen}>
+    //   <Text>Category Meals Screen</Text>
+    //   <Button
+    //     title="Go to Meals!"
+    //     onPress={() => {
+    //       props.navigation.navigate('MealDetail');
+    //     }}
+    //   />
+    // </View>
+
+    <View>
+      <Text>{categoryMealData[0].title}</Text>
+      <Text>{categoryMealData[0].color}</Text>
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  screen: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  title: {
+    fontSize: 20,
+    marginVertical: 10,
+    fontFamily: 'open-sans-bold',
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    width: '100%',
+    marginTop: 20,
+    flex: 1,
+    paddingHorizontal: 15,
+  },
+});
+
+export default CategoryMealsScreen;
+
+
+
+
+
+
+
+
+
+ESTAMOS RECEBENDO o 
+
+
+ID 
+
+
+
+
+DO MEAL, POR CONTA DOS 
+
+NAVIGATION PROPS...
+
+
+
+
+
+
+
+
+
+
+--> ANTERIORMENTE,
+
+APRENDEMOS COMO 
+
+PODEMOS ALTERAR OS OBJECTS/COMPONENTS 
+
+DIRETAMENTE,
+
+COM AQUELE APPROACH HACKY 
+
+DE 
+
+
+
+''
+
+
+import React from 'react';
+import { Button, StyleSheet, Text, View } from 'react-native';
+
+import Colors from '@/constants/Colors';
+
+import CATEGORIES from '@/data/dummy-data';
+
+type CategoriesScreenProps = {
+  onSelectCategory: () => void;
+  navigation: any;
+};
+
+const CategoryMealsScreen = (props: CategoriesScreenProps) => {
+  const categoryId = props.navigation.getParam('categoryId');
+
+  const categoryMealData = CATEGORIES.filter((item) => item.id === categoryId);
+
+  return (
+    // <View style={styles.screen}>
+    //   <Text>Category Meals Screen</Text>
+    //   <Button
+    //     title="Go to Meals!"
+    //     onPress={() => {
+    //       props.navigation.navigate('MealDetail');
+    //     }}
+    //   />
+    // </View>
+
+    <View>
+      <Text>{categoryMealData[0].title}</Text>
+      <Text>{categoryMealData[0].color}</Text>
+    </View>
+  );
+};
+
+CategoryMealsScreen.navigationOptions = {
+  headerTitle: 
+};
+
+
+
+
+''
+
+
+
+
+
+MAS O PROBLEMA, AQUI,
+
+É QUE 
+
+
+DEFINIMOS O HEADER TITLE __ 
+
+DEPOIS _ DO RETRIEVE 
+
+DA DATA 
+
+
+
+
+DO NAVIGATION PROPS...
+
+
+
+
+
+--> MAS A BOA NOTÍCIA É QUE 
+
+PODEMOS ESCREVER O '.navigationOptions'
+
+
+COMO UMA FUNCTION,
+
+
+
+JUSTAMENTE PARA PEGARMOS VALUES QUE 
+
+SÓ SERÃO CARREGADOS EVENTUALMENTE/POSTERIORMENTE..
+
+
+
+
+
+
+--> PARA ISSO, ESCREVEMOS ASSIM:
+
+
+
+
+
+const CategoryMealsScreen = (props: CategoriesScreenProps) => {
+  const categoryId = props.navigation.getParam('categoryId');
+
+  const categoryMealData = CATEGORIES.filter((item) => item.id === categoryId);
+
+  return (
+
+    <View>
+      <Text>{categoryMealData[0].title}</Text>
+      <Text>{categoryMealData[0].color}</Text>
+    </View>
+  );
+};
+
+CategoryMealsScreen.navigationOptions = () => {
+  
+}
+
+
+
+
+
+
+
+
+
+--> ESSA FUNCTION,
+
+ SE VC ESTIVER PASSANDO 1 FUNCTION,
+
+
+ O REACT NAVIGATION VAI PASSAR 1 OBJECT COM 'navigationData'
+
+
+ COMO PARAMETER,
+
+ TIPO ASSIM:
+
+
+
+
+ CategoryMealsScreen.navigationOptions = (navigationData: any) => {
+  console.log(navigationData);
+};
+
+
+
+
+
+
+
+
+
+
+
+
+COM ISSO, 
+
+
+PODEMOS RETRIEVAR O NOME DE NOSSA 
+
+CATEGORY,
+
+
+PARA ENTÃO FAZER DISPLAY DELA,
+ 
+ NO HEADER,
+ TIPO ASSIM:
+
+
+
+
+
+
+
+ CategoryMealsScreen.navigationOptions = (navigationData: any) => {
+  const headerTitle = CATEGORIES.filter(
+    (item) => item.id === navigationData.categoryId
+  )[0].title;
+
+  return { headerTitle };
+};
+
+
+
+
+
+
+
+
+
+
+certo...
+
+
+
+
+
+
+
+
+
+E ERA EXATAMENTE ISSO QUE QUERÍAMOS...
+
+
+
+
+
+
+OK... É ASSIM QUE PODEMOS PEGAR NOSSA DATA DINAMICAMENTE...
+
+
+
+
+
+
+--> MAS UMA ISSUE:
+
+'''O HEADER NA NOVA TELA, QUE ESTAMOS CARREGANDO,
+    NÃO TEM O MESMO STYLE DA SCREEN ORIGINÁRIA...''
+
+
+
+--> PARA CONSERTAR ISSO, BASTA COPIAR 
+O 
+
+
+'headerStyle' 
+
+e o 'backgroundColor',
+
+
+TIPO ASSIM:
+
+
+
+
+
+
+
+
+import React from 'react';
+import { Button, Platform, StyleSheet, Text, View } from 'react-native';
+
+import Colors from '@/constants/Colors';
+
+import CATEGORIES from '@/data/dummy-data';
+
+type CategoriesScreenProps = {
+  onSelectCategory: () => void;
+  navigation: any;
+};
+
+const CategoryMealsScreen = (props: CategoriesScreenProps) => {
+  const categoryId = props.navigation.getParam('categoryId');
+
+  const categoryMealData = CATEGORIES.filter((item) => item.id === categoryId);
+
+  return (
+    <View>
+      <Text>{categoryMealData[0].title}</Text>
+      <Text>{categoryMealData[0].color}</Text>
+    </View>
+  );
+};
+
+CategoryMealsScreen.navigationOptions = (navigationData: any) => {
+  const headerTitle = CATEGORIES.filter(
+    (item) => item.id === navigationData.categoryId
+  )[0].title;
+
+  return {
+    headerTitle,
+    backgroundColor: Colors.primary,
+    headerTintColor: Platform.OS === 'android' ? 'white' : 'black',
+  };
+};
+
+
+
+
+
+
+
+
+
+MAS É CLARO QUE VC NAO VAI QUERER REPETIR ESSA CONFIGURATION EM 
+TODA SANTA TELA...
+
+VC VAI QUERER DEFINIR O HEADERSTYLE GLOBALMENTE...
+
+

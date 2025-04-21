@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, StyleSheet, Text, View } from 'react-native';
+import { Button, Platform, StyleSheet, Text, View } from 'react-native';
 
 import Colors from '@/constants/Colors';
 
@@ -31,6 +31,18 @@ const CategoryMealsScreen = (props: CategoriesScreenProps) => {
       <Text>{categoryMealData[0].color}</Text>
     </View>
   );
+};
+
+CategoryMealsScreen.navigationOptions = (navigationData: any) => {
+  const headerTitle = CATEGORIES.filter(
+    (item) => item.id === navigationData.categoryId
+  )[0].title;
+
+  return {
+    headerTitle,
+    backgroundColor: Colors.primary,
+    headerTintColor: Platform.OS === 'android' ? 'white' : 'black',
+  };
 };
 
 const styles = StyleSheet.create({

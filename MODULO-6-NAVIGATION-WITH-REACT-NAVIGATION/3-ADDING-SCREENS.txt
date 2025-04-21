@@ -26,3 +26,80 @@ DA SAFEAREAVIEW OUT OF THE BOX,
 POR ISSO NÃO PRECISAMOS UTILIZÁ-LA...
 
 
+
+
+
+
+
+
+
+
+
+-> MAS ANTES DE ADICIONARMOS ESSA TPP,
+
+    DEVEMOS CRIAR AS TELAS...
+
+
+
+
+
+--> SCREENS E COMPONENTS...
+
+
+
+
+
+
+
+
+
+
+QUAIS SCREENS TEREMOS?
+
+
+
+
+
+1) CATEGORIESSCREEN --> 1 GRID DE FOODS CATEGORIES...
+
+
+
+
+2) LIST OF MEALS --> 'CategoryMeals'...
+
+
+
+3) Favorites screen 
+
+
+4) Filters screen 
+
+
+5) meal details screen 
+
+
+
+
+
+
+
+--> VAMOS ADICIONAR OS COMPONENTS NECESSÁRIOS...
+
+
+
+
+
+
+
+
+
+---> VAMOS POPULAR NOSSAS SCREENS...
+
+
+
+
+
+
+
+-> CRIEI AS SCREENS...
+

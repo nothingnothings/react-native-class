@@ -1,0 +1,583 @@
+
+
+
+
+
+
+
+ok... já mexemos bastante com navigation...
+
+
+
+
+
+
+
+-> APRENDEMOS COMO:
+
+
+1) MOVE FORWARDS 
+
+2) MOVE BACKWARDS 
+
+3) ADD HEADERS 
+
+4) STYLE AND CONTROL THE HEADER 
+
+
+
+
+
+
+
+
+
+MAS ESSA NÃO É A ÚNICA FORMA DE NAVIGATION...
+
+
+
+
+-> PODEMOS ADICIONAR TABS, NA PARTE DE BAIXO,
+PARA CONSEGUIRMOS TROCAR ENTRE 
+DIFERENTES SECTIONS DO APP... ESSE É UM PATTERN 
+
+TÍPICO EM MOBILE APPS....
+
+
+
+
+
+--> QUEREMOS TER 2 TABS,
+
+1 PARA MEALS,
+
+E 1 PARA OS FAVORITE MEALS...
+
+
+
+
+
+--> MAS, ENTÃO, COMO PODEMOS ADICIONAR TABS,
+
+QUANDO TRABALHAMOS COM REACT NAVIGATION?
+
+
+
+
+--> BEM, LÁ NO FOLDER DE 'navigation',
+    TEMOS O NOSSO 'MealsNavigator'..
+
+
+
+
+
+
+
+
+--> NOSSO CÓDIGO ESTÁ ASSIM:
+
+
+
+
+
+
+import { createStackNavigator } from 'react-navigation';
+import { createAppContainer } from 'react-navigation';
+
+import CategoriesScreen from '@/app/CategoriesScreen';
+import CategoryMealsScreen from '@/app/CategoryMeals';
+import MealDetailScreen from '@/app/MealDetailScreen';
+import { Colors } from '@/constants/Colors';
+import { Platform } from 'react-native';
+
+const MealsNavigator = createStackNavigator(
+  {
+    Categories: CategoriesScreen,
+    CategoryMeals: {
+      screen: CategoryMealsScreen, // te deixa adicioar configurações extras.
+      navigationOptions: {
+        headerStyle: {
+          backgroundColor: Colors.dark,
+          borderBottomColor: Colors.dark,
+        },
+      },
+    },
+    MealDetail: MealDetailScreen,
+  },
+  {
+    // this is the stackConfig (things like header, headerTitle, etc.)
+    defaultNavigationOptions: {
+      headerStyle: {
+        backgroundColor: Platform.OS === 'android' ? '#3b3b3b' : '#2b2b2b',
+        borderBottomColor: Platform.OS === 'android' ? 'white' : 'black',
+      },
+    },
+  }
+);
+
+export default createAppContainer(MealsNavigator); /// Basic setup.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+--> CRIAMOS 1 STACK NAVIGATOR, ANTES...
+
+
+
+
+
+----> NÓS SEMPRE CRIAMOS 1 STACK NAVIGATOR 
+    QUANDO TEMOS 
+
+    SCREENS/PAGES NO NOSSO APP QUE SÃO CONECTADAS 
+
+    POR 1 FLOW DE FORWARDS/BACKWARDS..
+
+
+
+
+
+
+--> E É CLARO QUE AINDA VAMOS PRECISAR DISSO,
+    MESMO SE AGORA TIVERMOS 'TABS'...
+
+
+
+
+
+
+--> A BOA NOTÍCIA É QUE VC PODE TER MÚLTIPLOS NAVIGATORS NO SEU APP...
+
+
+
+
+--> E É EXATAMENTE ISSO QEU FAREMOS, AGORA...
+
+
+
+
+
+
+
+
+
+-> PARA ISSO, PRECISAMOS IMPORTAR OUTRO CREATOR,
+
+
+O 
+
+
+
+'createBottomTabNavigator',
+
+
+TIPO ASSIM:
+
+
+
+import { createStackNavigator, createBottomTabNavigator } from 'react-navigation';
+import { createAppContainer } from 'react-navigation';
+
+import CategoriesScreen from '@/app/CategoriesScreen';
+import CategoryMealsScreen from '@/app/CategoryMeals';
+import MealDetailScreen from '@/app/MealDetailScreen';
+import { Colors } from '@/constants/Colors';
+import { Platform } from 'react-native';
+
+const MealsNavigator = createStackNavigator(
+  {
+    Categories: CategoriesScreen,
+    CategoryMeals: {
+      screen: CategoryMealsScreen, // te deixa adicioar configurações extras.
+      navigationOptions: {
+        headerStyle: {
+          backgroundColor: Colors.dark,
+          borderBottomColor: Colors.dark,
+        },
+      },
+    },
+    MealDetail: MealDetailScreen,
+  },
+  {
+    // this is the stackConfig (things like header, headerTitle, etc.)
+    defaultNavigationOptions: {
+      headerStyle: {
+        backgroundColor: Platform.OS === 'android' ? '#3b3b3b' : '#2b2b2b',
+        borderBottomColor: Platform.OS === 'android' ? 'white' : 'black',
+      },
+    },
+  }
+);
+
+export default createAppContainer(MealsNavigator); /// Basic setup.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+--> certo...
+
+
+
+
+
+
+E ISSO REALMENTE NOS DEIXA CRIAR 1 NAVIGATOR QUE 
+
+NOS DEIXA TRABALHAR COM 'TABS',
+
+NA PARTE DE BAIXO...
+
+
+
+
+
+
+-> E PODEMOS CRIAR ESSE NAVIGATOR DO LADO DO NOSSO 'MealsNavigator',
+
+
+
+
+tipo assim:
+
+
+
+
+
+
+import {
+  createStackNavigator,
+  createBottomTabNavigator,
+} from 'react-navigation';
+import { createAppContainer } from 'react-navigation';
+
+import CategoriesScreen from '@/app/CategoriesScreen';
+import CategoryMealsScreen from '@/app/CategoryMeals';
+import MealDetailScreen from '@/app/MealDetailScreen';
+import { Colors } from '@/constants/Colors';
+import { Platform } from 'react-native';
+
+const MealsNavigator = createStackNavigator(
+  {
+    Categories: CategoriesScreen,
+    CategoryMeals: {
+      screen: CategoryMealsScreen, // te deixa adicioar configurações extras.
+      navigationOptions: {
+        headerStyle: {
+          backgroundColor: Colors.dark,
+          borderBottomColor: Colors.dark,
+        },
+      },
+    },
+    MealDetail: MealDetailScreen,
+  },
+  {
+    // this is the stackConfig (things like header, headerTitle, etc.)
+    defaultNavigationOptions: {
+      headerStyle: {
+        backgroundColor: Platform.OS === 'android' ? '#3b3b3b' : '#2b2b2b',
+        borderBottomColor: Platform.OS === 'android' ? 'white' : 'black',
+      },
+    },
+  }
+);
+
+const MealsFavTabNavigator = createBottomTabNavigator({});
+
+export default createAppContainer(MealsNavigator); /// Basic setup.
+
+
+
+
+
+
+
+
+
+O RESULTADO 
+
+DE 
+
+
+'createBottomTabNavigator',
+
+como antes,
+
+é um 
+
+
+REACT COMPONENT...
+
+
+LOGO USAREMOS ESSE 'MealsFavTabNavigator'...
+
+
+
+
+
+
+--> ESSE createBottomTabNavigator
+
+também exige 1 object...
+
+nesse object, devemos informar sobre as DIFERENTES
+
+
+TABS/SCREENS QUE QUEREMOS LOAD,
+
+SEMPRE QUE 
+
+FOREM CLICADAS AS TABS...
+
+
+
+
+
+--> QUERO TER:
+
+1) 1 STACK INTEIRO EM 1 TAB 
+
+
+2) UMA SCREEN DIFERENTE, NA OUTRA TAB...
+
+
+
+--> PODEMOS USAR AQUELE STACK INTEIRO DE 'MealsNavigator'
+
+    COMO SENDO 1 DAS TABS...
+
+
+
+
+
+
+
+TIPO ASSIM:
+
+
+
+
+// Tabs
+const MealsFavTabNavigator = createBottomTabNavigator({
+  Meals: MealsNavigator,
+  Favorites: FavoritesNavigator,
+});
+
+
+
+CERTO...
+
+
+
+
+
+
+
+A SEGUNDA TAB SERÁ OS 'FAVORITES',
+
+MAS AINDA NÃO TEMOS 1 STACK PARA OS FAVORITES...
+
+
+
+
+
+
+-> PODEMOS USAR, POR ENQUANTO, A TELA DE FAVORITESSCREEN,
+
+TIPO ASSIM:
+
+
+
+
+
+import {
+  createStackNavigator,
+  createBottomTabNavigator,
+} from 'react-navigation';
+import { createAppContainer } from 'react-navigation';
+
+import CategoriesScreen from '@/app/CategoriesScreen';
+import CategoryMealsScreen from '@/app/CategoryMeals';
+import MealDetailScreen from '@/app/MealDetailScreen';
+import { Colors } from '@/constants/Colors';
+import { Platform } from 'react-native';
+import FavoritesScreen from '@/app/FavoritesScreen';
+
+const MealsNavigator = createStackNavigator(
+  {
+    Categories: CategoriesScreen,
+    CategoryMeals: {
+      screen: CategoryMealsScreen, // te deixa adicioar configurações extras.
+      navigationOptions: {
+        headerStyle: {
+          backgroundColor: Colors.dark,
+          borderBottomColor: Colors.dark,
+        },
+      },
+    },
+    MealDetail: MealDetailScreen,
+  },
+  {
+    // this is the stackConfig (things like header, headerTitle, etc.)
+    defaultNavigationOptions: {
+      headerStyle: {
+        backgroundColor: Platform.OS === 'android' ? '#3b3b3b' : '#2b2b2b',
+        borderBottomColor: Platform.OS === 'android' ? 'white' : 'black',
+      },
+    },
+  }
+);
+
+// Tabs
+const MealsFavTabNavigator = createBottomTabNavigator({
+  Meals: MealsNavigator,
+  Favorites: FavoritesScreen,
+});
+
+export default createAppContainer(MealsNavigator); /// Basic setup.
+
+
+
+
+
+
+
+
+
+
+é assim que podemos facilmente definir 1 tab navigator...
+
+
+
+
+
+--> COMO RESULTADO DISSO,
+VAMOS QUERER USAR ESSE 'TAB NAVIGATOR'
+
+
+COMO O __ ROOT __ NAVIGATOR DO NOSSO APP,
+
+
+PQ ELE INCLUI:
+
+1) O STACK DOS MEALS 
+
+
+2) O STACK/SCREEN DOS FAVORITES... 
+
+
+
+
+
+É POR ISSO QUE FICA ASSIM:
+
+
+
+
+
+
+import {
+  createStackNavigator,
+  createBottomTabNavigator,
+} from 'react-navigation';
+import { createAppContainer } from 'react-navigation';
+
+import CategoriesScreen from '@/app/CategoriesScreen';
+import CategoryMealsScreen from '@/app/CategoryMeals';
+import MealDetailScreen from '@/app/MealDetailScreen';
+import { Colors } from '@/constants/Colors';
+import { Platform } from 'react-native';
+import FavoritesScreen from '@/app/FavoritesScreen';
+
+const MealsNavigator = createStackNavigator(
+  {
+    Categories: CategoriesScreen,
+    CategoryMeals: {
+      screen: CategoryMealsScreen, // te deixa adicioar configurações extras.
+      navigationOptions: {
+        headerStyle: {
+          backgroundColor: Colors.dark,
+          borderBottomColor: Colors.dark,
+        },
+      },
+    },
+    MealDetail: MealDetailScreen,
+  },
+  {
+    // this is the stackConfig (things like header, headerTitle, etc.)
+    defaultNavigationOptions: {
+      headerStyle: {
+        backgroundColor: Platform.OS === 'android' ? '#3b3b3b' : '#2b2b2b',
+        borderBottomColor: Platform.OS === 'android' ? 'white' : 'black',
+      },
+    },
+  }
+);
+
+// Tabs
+const MealsFavTabNavigator = createBottomTabNavigator({
+  Meals: MealsNavigator,
+  Favorites: FavoritesScreen,
+});
+
+// The tab navigator becomes the root navigator (contains the first stack, of meals, and the extra favorites screen).
+export default createAppContainer(MealsFavTabNavigator); /// Basic setup.
+
+
+
+
+É ASSIM QUE 
+
+PODEMOS 
+
+COMBINAR MÚLTIPLOS NAVIGATORS,
+
+
+EM 1 
+
+APP GERENCIADO PELO REACT-NAVIGATION...
+
+
+
+
+
+
+
+PQ O ROOT NAVIGATOR PODE TER NESTED NAVIGATOR,
+
+COMO PERCEBEMOS, AQUI...
+
+
+
+
+
+
+AGORA PODEMOS TROCAR ENTRE 'MEALS' E 'FAVORITES'...
+
+
+
+
+
+-> PODEMOS COLOCAR ICONS PARA ELES, TAMBÉM...

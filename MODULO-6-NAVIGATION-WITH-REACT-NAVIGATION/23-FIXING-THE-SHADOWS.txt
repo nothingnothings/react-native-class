@@ -1,0 +1,17 @@
+
+
+
+
+
+
+
+
+Platform.OS === 'android' && Platform.Version >= 21 ? 'hidden' : 'visible'
+
+
+
+
+
+
+
+vai funcionar tanto em ios como android...

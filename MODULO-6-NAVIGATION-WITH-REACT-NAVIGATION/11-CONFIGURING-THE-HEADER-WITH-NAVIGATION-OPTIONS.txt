@@ -1,0 +1,552 @@
+
+
+
+
+
+
+
+
+
+
+NA 'CategoriesScreen',
+
+
+
+temos este código:
+
+ 
+
+
+ import React from 'react';
+import { Button, StyleSheet, Text, View, FlatList } from 'react-native';
+
+import Colors from '@/constants/Colors';
+
+import CATEGORIES from '@/data/dummy-data';
+import Category from '@/models/category';
+
+type CategoriesScreenProps = {
+  onSelectCategory: () => void;
+  navigation: any;
+};
+
+const renderGridItem = (itemData: Category) => {
+  return (
+    <View style={styles.gridItem}>
+      <Text>{itemData.title}</Text>
+    </View>
+  );
+};
+
+const CategoriesScreen = (props: CategoriesScreenProps) => {
+  const { navigate } = props.navigation;
+
+  return (
+    // <View style={styles.screen}>
+    //   <Text>Categories Screen</Text>
+    //   <Button
+    //     title="Go to Meals!"
+    //     onPress={() => {
+    //       onSelectCategory('breakfast');
+    //     }}
+    //   />
+
+    //   <Button
+    //     title="Go to Meals!"
+    //     onPress={() => {
+    //       props.navigation.replace('MealDetail');
+    //     }}
+    //   />
+    // </View>
+
+    <FlatList
+      numColumns={2}
+      data={CATEGORIES}
+      renderItem={({ item }) => renderGridItem(item)}
+      keyExtractor={(item) => item.id}
+    />
+  );
+};
+
+const styles = StyleSheet.create({
+  gridItem: {
+    flex: 1,
+    margin: 15,
+    height: 150,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+});
+
+export default CategoriesScreen;
+
+
+
+
+
+
+
+
+QUEREMOS QUE CADA 1 DOS 
+
+ELEMENTOS DO GRID, DOS ITEM,
+
+SEJA 
+
+TOUCHABLE...
+
+
+
+
+
+
+--> POR ISSO ESCREVEMOS ASSIM:
+
+
+
+
+
+
+const CategoriesScreen = (props: CategoriesScreenProps) => {
+  const { navigate } = props.navigation;
+
+  const renderGridItem = (itemData: Category) => {
+    return (
+      <TouchableOpacity
+        onPress={() => {
+          navigate('CategoryMeals', { category: itemData });
+        }}
+      >
+        <View style={styles.gridItem}>
+          <Text>{itemData.title}</Text>
+        </View>
+      </TouchableOpacity>
+    );
+  };
+
+
+
+
+
+
+
+
+
+
+
+
+MAS PRECISAMOS PASSAR ALGUM ID,
+
+OU ALGO ASSIM,
+
+PARA 
+
+CONSEGUIR 
+
+PEGAR A DATA 
+
+DE ESSE ITEM ESPECÍFICO...
+
+
+
+
+
+EX:
+
+
+
+
+
+import React from 'react';
+import {
+  Button,
+  StyleSheet,
+  Text,
+  View,
+  FlatList,
+  TouchableOpacity,
+} from 'react-native';
+
+import Colors from '@/constants/Colors';
+
+import CATEGORIES from '@/data/dummy-data';
+import Category from '@/models/category';
+
+type CategoriesScreenProps = {
+  onSelectCategory: () => void;
+  navigation: any;
+};
+
+const CategoriesScreen = (props: CategoriesScreenProps) => {
+  const { navigate } = props.navigation;
+
+  const renderGridItem = (itemData: Category) => {
+    return (
+      <TouchableOpacity
+        style={styles.gridItem}
+        onPress={() => {
+          navigate('CategoryMeals', { category: itemData });
+        }}
+      >
+        <View>
+          <Text>{itemData.title}</Text>
+        </View>
+      </TouchableOpacity>
+    );
+  };
+
+  return (
+    // <View style={styles.screen}>
+    //   <Text>Categories Screen</Text>
+    //   <Button
+    //     title="Go to Meals!"
+    //     onPress={() => {
+    //       onSelectCategory('breakfast');
+    //     }}
+    //   />
+
+    //   <Button
+    //     title="Go to Meals!"
+    //     onPress={() => {
+    //       props.navigation.replace('MealDetail');
+    //     }}
+    //   />
+    // </View>
+
+    <FlatList
+      numColumns={2}
+      data={CATEGORIES}
+      renderItem={({ item }) => renderGridItem(item)}
+      keyExtractor={(item) => item.id}
+    />
+  );
+};
+
+const styles = StyleSheet.create({
+  gridItem: {
+    flex: 1,
+    margin: 15,
+    height: 150,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+});
+
+export default CategoriesScreen;
+
+
+
+
+
+
+
+
+
+
+
+MAS COMO PODEMOS DEFINIR O 'HEADER TITLE',
+
+COMO SENDO 
+
+
+
+O ITEM QUE RECÉM CARREGAMOS?
+
+
+
+
+
+
+
+''ON EVERY REACT COMPONENT THAT YOU LOAD, AS A SCREEN,
+YOU CAN ADD A PROPERTY...'''
+
+
+
+
+
+
+
+
+--> 'CategoriesScreen'
+
+É UM 
+
+ REACT COMPONENT,
+ SIM,
+
+ MAS TECNICAMENTE 
+
+
+ É  UMA JAVASCRIPT FUNCTION...
+
+
+
+ É UMA FUNCTION QUE RECEBE O ARGUMENT 'props',
+
+
+ E QUE 
+
+ RODA O BODY, QUE RETORNA UM JSX E ETC...
+
+
+
+
+
+ --> JAVASCRIPT FUNCTIONS SÃO APENAS OBJECTS....
+
+
+ FUNCTIONS SÃO OBJECTS... E, DENTRO DE OBJECTS,
+
+ PODEMOS 
+
+ RECEBER PROPERTIES...
+
+
+
+
+
+-> É POR ISSO QUE PODEMOS DEFINIR 1 PROPERTY DEPOIS DE CRIAR O OBJECT 
+
+'CategoriesScreen',
+
+
+TIPO ASSIM:
+
+
+
+
+
+
+CategoriesScreen.navigationOptions 
+
+
+
+
+
+
+
+EX:
+
+
+
+
+
+CategoriesScreen.navigationOptions = {
+  title: 'Categories',
+};
+
+
+
+
+
+
+
+--> com isso,
+
+
+PODEMOS DEFINIR O TITLE COMO SENDO 'categories'...
+
+
+
+
+
+
+no caso, o professor define como 
+
+
+'headerTitle: 'Meal Categories''...
+
+
+
+
+
+
+
+
+EX:
+
+
+
+
+import React from 'react';
+import {
+  Button,
+  StyleSheet,
+  Text,
+  View,
+  FlatList,
+  TouchableOpacity,
+} from 'react-native';
+
+import Colors from '@/constants/Colors';
+
+import CATEGORIES from '@/data/dummy-data';
+import Category from '@/models/category';
+
+type CategoriesScreenProps = {
+  onSelectCategory: () => void;
+  navigation: any;
+};
+
+const CategoriesScreen = (props: CategoriesScreenProps) => {
+  const { navigate } = props.navigation;
+
+  const renderGridItem = (itemData: Category) => {
+    return (
+      <TouchableOpacity
+        style={styles.gridItem}
+        onPress={() => {
+          navigate('CategoryMeals', { category: itemData });
+        }}
+      >
+        <View>
+          <Text>{itemData.title}</Text>
+        </View>
+      </TouchableOpacity>
+    );
+  };
+
+  return (
+    // <View style={styles.screen}>
+    //   <Text>Categories Screen</Text>
+    //   <Button
+    //     title="Go to Meals!"
+    //     onPress={() => {
+    //       onSelectCategory('breakfast');
+    //     }}
+    //   />
+
+    //   <Button
+    //     title="Go to Meals!"
+    //     onPress={() => {
+    //       props.navigation.replace('MealDetail');
+    //     }}
+    //   />
+    // </View>
+
+    <FlatList
+      numColumns={2}
+      data={CATEGORIES}
+      renderItem={({ item }) => renderGridItem(item)}
+      keyExtractor={(item) => item.id}
+    />
+  );
+};
+
+CategoriesScreen.navigationOptions = {
+  headerTitle: 'Categories',
+};
+
+
+
+
+
+
+-> também podemos estilizar o header,
+
+por meio da property 
+
+'headerStyle: {...}'...
+
+
+
+
+EX;
+
+
+
+CategoriesScreen.navigationOptions = {
+  headerTitle: 'Categories',
+  headerStyle: {
+    
+  }
+};
+
+
+
+
+
+
+EX:
+
+
+
+
+
+
+
+CategoriesScreen.navigationOptions = {
+  headerTitle: 'Categories',
+  headerStyle: {
+    backgroundColor: Colors.primary,
+  },
+};
+
+
+
+
+EX:
+
+
+
+
+CategoriesScreen.navigationOptions = {
+  headerTitle: 'Categories',
+  headerStyle: {
+    backgroundColor: Colors.primary,
+  },
+  headerTintColor: 'white'
+};
+
+
+
+
+
+
+
+
+
+PODEMOS USAR A PLATFORM API, TAMBÉM,
+
+TIPO ASSIM:
+
+
+
+
+
+
+CategoriesScreen.navigationOptions = {
+  headerTitle: 'Categories',
+  headerStyle: {
+    backgroundColor: Platform.OS === 'android' ? Colors.primaryColor : ''
+  },
+  headerTintColor:  Platform.OS === 'android' ? 'white' : Colors.primaryColor
+};
+
+
+
+
+
+
+CERTO...
+
+
+
+
+
+
+
+
+MAS NA PAGE DE DETAILS,
+
+SERIA 
+
+BOM SE PUDÉSSEMOS VER O NOME DO TIPO DE COMIDA,
+
+NO HEADER...
+
+
+
+
+VEREMOS ISSO NA PRÓXIMA AULA...

@@ -1,0 +1,562 @@
+
+
+
+
+
+
+
+
+
+
+
+
+OK... APRENDEMOS SOBRE A DIMENSIONS API...
+
+
+
+
+
+
+
+
+
+
+--> MAS TAMBÉM QUEREMOS REDUZIR O SPACING 
+
+    VERTICAL,
+
+    DEPENDENDO DO DEVICE... 
+
+
+
+
+
+
+
+--> ISSO É ALGO QUE PODEMOS FAZER NA 'GameScreen.js'...
+
+
+
+
+
+
+
+
+O PROBLEMA ESTÁ NESTE CONTAINER, 'buttonContainer':
+
+
+
+
+
+
+
+
+
+buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    marginTop: 20,
+    width: 400,
+    maxWidth: '90%'
+}
+
+
+
+
+
+
+
+--> O PRIMEIRO PROBLEMA É 
+    o 'marginTop',
+
+
+    A DISTANCIA entre os 2 elementos....
+
+
+
+
+
+
+
+
+
+-> PARA MUDAR ESSA DISTANCE, DEIXÁ-LA DINÂMICA,
+    O PROFESSOR DIZ QUE PODEMOS USAR 
+
+    A -'''DIMENSIONS API''...
+
+
+
+
+
+
+
+--> ESCREVEMOS ASSIM:
+
+
+
+
+
+import { Dimensions } from 'react-native'...
+
+
+
+
+
+
+
+
+
+--> COM ISSO, PODEMOS CALCULAR A DISTANCE DINAMICAMENTE,
+
+
+
+COM O 'height' da window,
+
+TIPO ASSIM:
+
+
+
+
+
+
+
+
+buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    marginTop: Dimensions.get('window').height,
+    width: 400,
+    maxWidth: '90%'
+}
+
+
+
+
+
+
+isso feito, pegamos a height,
+
+e aí DIVIDIMOS ISSO POR ALGUMA COISA...
+
+
+
+PODERÍAMOS DIVIDIR POR 20,
+
+
+
+MAS ISSO SERIA BEM CUMBERSOME... VIRA TIPO UM 
+GUESSING GAME...
+
+
+
+FICA BEM RUIM DE CODAR...
+
+
+
+
+--> ''EM VEZ DISSO, PODEMOS 
+    CHECAR QUANTO HEIGHT TEMOS DISPONÍVEL,
+    E AÍ 
+    USAR 1 SPACING DIFERENTE,
+     COM BASE NISSO...''
+
+
+
+
+
+
+
+
+-> OU SEJA, USAR UMA TERNARY EXPRESSION...
+
+
+
+
+
+
+
+
+TIPO ASSIM:
+
+
+
+
+
+
+
+buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    marginTop: Dimensions.get('window').height > 600 ? 20 : 5,
+    width: 400,
+    maxWidth: '90%'
+}
+
+
+
+
+
+
+
+
+OK... 
+
+
+
+
+ISSO É POSSÍVEL...
+
+
+
+
+
+E PODERÍAMOS TAMBÉM USAR ISSO 
+
+COM 
+
+
+IF-ELSE CONDITIONS COMUNS...
+
+
+
+
+
+É PARECIDO COM MEDIA QUERIES...
+
+
+
+
+
+
+
+
+
+
+
+
+
+-> VC TAMBÉM PODE USAR A DIMENSIONS API 
+
+EM QUALQUER 
+
+LOCAL EM QUE VC TEM JAVASCRIPT...
+
+
+
+
+
+
+
+
+
+--> VC TAMBÉM 
+
+PODE USAR 
+
+
+A DIMENSIONS API 
+
+PARA USAR DIFERENTES CONJUNTOS 
+
+DE STYLES,
+
+
+
+TIPO ASSIM:
+
+
+
+
+
+style={
+    Dimensions.get('window').height > 600 ? style1 : style2
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+--> VC TAMBÉM PODE FAZER ISSO PARA RENDERIZAR 
+
+DIFERENTES ELEMENTOS,
+
+SE OS DEVICES FOREM GRANDES DEMAIS,
+TIPO ASSIM:
+ 
+
+
+ if (Dimensions.get('window').height > 600 ? 20 : 5) {
+    return <View>...</View>;
+ }
+
+
+
+
+
+
+
+
+
+
+
+
+ VC DEVE USAR ESSA FLEXIBILIDADE PARA CONSTRUIR 
+
+ OS SEUS LAYOUTS DESEJADOS...
+
+
+
+
+
+
+
+
+ --> ESSE É O SPACING...
+
+
+
+
+
+
+
+
+ -> DEVEMOS MUDAR O COMPORTAMENTO DOS LISTITEMS,
+
+ TAMBÉM...
+
+
+
+
+
+ TEMOS ESTE CÓDIGO:
+
+
+
+
+
+
+
+ 
+
+listContainer: {
+        width: '60%',
+        flex: 1
+},
+
+list: {
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    flexGrow: 1, 
+},
+
+listItem: {
+    width: '100%',
+    borderColor: 'black',
+    padding: 15,
+    marginVertical: 10,
+    backgroundColor: 'white',
+    borderWidth: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-around'
+}
+
+
+
+<View style={styles.listContainer}>
+    <ScrollView contentContainerStyle={styles.list}>
+        {pastGuesses.map(guess => renderListItem(guess))}
+    </ScrollView>
+</View>
+
+
+
+
+
+
+WIDTH DE 100% NOS LIST ITEMS,
+
+PQ O CONTAINER DE LIST JÁ TEM 1 WIDTH 
+
+DE 60%...
+
+
+
+
+
+E ISSO É OK 
+
+
+EM DEVICES MAIORES,
+
+
+
+
+MAS EM DEVICES MENORES,
+
+PODEMOS 
+
+DEIXAR 
+
+
+A WIDTH DE ESSE LISTCONTAINER 1 POUCO MAIOR...
+
+
+
+
+
+
+
+
+--> PODEMOS FAZER ISSO COM 1 TERNARY EXPRESSION 
+
+
+E DIMENSIONS API,
+
+TIPO ASSIM:
+
+
+
+
+
+
+
+listContainer: {
+        width: Dimensions.get('window').width > 350 ? '60%' : '80%',
+        flex: 1
+},
+
+list: {
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    flexGrow: 1, 
+},
+
+listItem: {
+    width: '100%',
+    borderColor: 'black',
+    padding: 15,
+    marginVertical: 10,
+    backgroundColor: 'white',
+    borderWidth: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-around'
+}
+
+
+
+<View style={styles.listContainer}>
+    <ScrollView contentContainerStyle={styles.list}>
+        {pastGuesses.map(guess => renderListItem(guess))}
+    </ScrollView>
+</View>
+
+
+
+
+
+
+
+
+
+
+
+
+
+COM ISSO, FICAMOS COM BIGGER ITEMS,
+
+
+EM SCREENS MENORES...
+
+
+
+
+
+-> PODEMOS TER MÚLTIPLOS STYLE OBJECTS,
+
+CARREGADOS A PARTIR 
+
+DE DIFERENTES CONDITIONS..
+
+
+
+
+
+
+
+
+
+TIPO ALGO ASSIM:
+
+
+
+
+listContainer: {
+    flex: 1;
+    width: '60%';
+}
+
+
+listContainer: {
+    flex: 1;
+    width: '75%';
+}
+
+
+
+listContainerBig: {
+    flex: 1;
+    width: '80%';
+}
+
+
+
+
+
+let listContainerStyle = styles.listContainer;
+
+
+if (Dimensions.get('window').width < 400) {
+    listContainerStyle = styles.listContainerMedium
+}
+
+if (Dimensions.get('window').width < 350) {
+    listContainerStyle = styles.listContainerBig
+}
+
+
+
+<View style={listContainerStyle} >
+...
+</View>
+
+
+
+
+
+
+
+
+
+E ISSO REALMENTE FUNCIONA...
+
+
+
+é quase como media queries...
+
+
+
+
+
+E ISSO É MAIS READABLE DO QUE NESTED 
+TERNARY EXPRESSIONS,
+
+do que as Ternary que vimos antes...

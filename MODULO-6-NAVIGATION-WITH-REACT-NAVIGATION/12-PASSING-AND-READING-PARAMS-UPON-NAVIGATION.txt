@@ -1,0 +1,277 @@
+
+
+
+TEMOS ESTE CÓDIGO:
+
+
+
+
+
+
+import React from 'react';
+import {
+  Button,
+  StyleSheet,
+  Text,
+  View,
+  FlatList,
+  TouchableOpacity,
+} from 'react-native';
+
+import Colors from '@/constants/Colors';
+
+import CATEGORIES from '@/data/dummy-data';
+import Category from '@/models/category';
+
+type CategoriesScreenProps = {
+  onSelectCategory: () => void;
+  navigation: any;
+};
+
+const CategoriesScreen = (props: CategoriesScreenProps) => {
+  const { navigate } = props.navigation;
+
+  const renderGridItem = (itemData: Category) => {
+    return (
+      <TouchableOpacity
+        style={styles.gridItem}
+        onPress={() => {
+          navigate('CategoryMeals', { category: itemData });
+        }}
+      >
+        <View>
+          <Text>{itemData.title}</Text>
+        </View>
+      </TouchableOpacity>
+    );
+  };
+
+  return (
+    // <View style={styles.screen}>
+    //   <Text>Categories Screen</Text>
+    //   <Button
+    //     title="Go to Meals!"
+    //     onPress={() => {
+    //       onSelectCategory('breakfast');
+    //     }}
+    //   />
+
+    //   <Button
+    //     title="Go to Meals!"
+    //     onPress={() => {
+    //       props.navigation.replace('MealDetail');
+    //     }}
+    //   />
+    // </View>
+
+    <FlatList
+      numColumns={2}
+      data={CATEGORIES}
+      renderItem={({ item }) => renderGridItem(item)}
+      keyExtractor={(item) => item.id}
+    />
+  );
+};
+
+CategoriesScreen.navigationOptions = {
+  headerTitle: 'Categories',
+  headerStyle: {
+    backgroundColor: Colors.primary,
+  },
+  headerTintColor: 'white'
+};
+
+const styles = StyleSheet.create({
+  gridItem: {
+    flex: 1,
+    margin: 15,
+    height: 150,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+});
+
+export default CategoriesScreen;
+
+
+
+
+
+
+
+QUEREMOS OBTER 
+
+
+INFO SOBRE A CATEGORY EM QUE CLICAMOS..
+
+
+
+
+
+
+É POR ISSO QUE PODEMOS PASSAR ASSIM:
+
+
+
+
+
+
+      <TouchableOpacity
+        style={styles.gridItem}
+        onPress={() => {
+          navigate('CategoryMeals', { category: itemData });
+        }}
+      >
+
+
+
+
+
+
+outro formato de escrita 
+seria assim:
+
+
+
+
+
+props.navigation.navigate({
+    routeName: 'CategoryMeals',
+    params: {
+        categoryId: itemData.item.id
+    }
+})
+
+
+
+
+
+
+
+
+
+
+OK... AGORA ESTAMOS FORWARDANDO O 
+
+ID à SCREEN QUE ESTÁ SENDO CARREGADA...
+
+
+
+
+
+
+
+
+
+--> MAS PARA USAR ESSA DATA,
+
+TEMOS QUE IR ATÉ 
+'CategoryMealsScreen',
+
+ 
+
+ RETRIEVAR O ID,
+
+
+ E AÍ 
+
+
+ FAZER 1 FILTER NO ARRAY DE DATA
+
+
+ dummy data,
+
+ que 
+ contém 
+
+ esse item..
+
+
+
+ TIPO ASSIM:
+
+
+
+
+
+
+
+
+
+
+
+
+
+ import React from 'react';
+import { Button, StyleSheet, Text, View } from 'react-native';
+
+import Colors from '@/constants/Colors';
+
+import CATEGORIES from '@/data/dummy-data';
+
+type CategoriesScreenProps = {
+  onSelectCategory: () => void;
+  navigation: any;
+};
+
+const CategoryMealsScreen = (props: CategoriesScreenProps) => {
+  const categoryId = props.navigation.getParam('categoryId');
+
+  const categoryMealData = CATEGORIES.filter((item) => item.id === categoryId);
+
+  return (
+    // <View style={styles.screen}>
+    //   <Text>Category Meals Screen</Text>
+    //   <Button
+    //     title="Go to Meals!"
+    //     onPress={() => {
+    //       props.navigation.navigate('MealDetail');
+    //     }}
+    //   />
+    // </View>
+
+    <View>
+      <Text>{categoryMealData[0].title}</Text>
+      <Text>{categoryMealData[0].color}</Text>
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  screen: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  title: {
+    fontSize: 20,
+    marginVertical: 10,
+    fontFamily: 'open-sans-bold',
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    width: '100%',
+    marginTop: 20,
+    flex: 1,
+    paddingHorizontal: 15,
+  },
+});
+
+export default CategoryMealsScreen;
+
+
+
+
+
+E É CLARO QUE PODEMOS PASSAR QUAISQUER PARAMETERS QUE QUISERMOS...
+
+
+
+
+
+
+
+
+--> MAS QUEREMOS USAR ESSE PARAMETER/DATA 
+    NO HEADER, FAZER ELE APARECER NO HEADER, TAMBÉM...

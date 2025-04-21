@@ -26,7 +26,7 @@ const CategoriesScreen = (props: CategoriesScreenProps) => {
       <TouchableOpacity
         style={styles.gridItem}
         onPress={() => {
-          navigate('CategoryMeals', { category: itemData });
+          navigate('CategoryMeals', { categoryId: itemData.id });
         }}
       >
         <View>
@@ -68,7 +68,7 @@ CategoriesScreen.navigationOptions = {
   headerStyle: {
     backgroundColor: Colors.primary,
   },
-  headerTintColor: 'white'
+  headerTintColor: 'white',
 };
 
 const styles = StyleSheet.create({

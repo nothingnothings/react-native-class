@@ -24,6 +24,13 @@ const CategoriesScreen = (props: CategoriesScreenProps) => {
           onSelectCategory('breakfast');
         }}
       />
+
+      <Button
+        title="Go to Meals!"
+        onPress={() => {
+          props.navigation.replace('MealDetail');
+        }}
+      />
     </View>
   );
 };

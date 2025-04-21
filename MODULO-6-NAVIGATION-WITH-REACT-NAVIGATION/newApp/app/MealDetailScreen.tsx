@@ -2,13 +2,25 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
 import Colors from '@/constants/Colors';
+import { Button } from 'react-native';
 
 type CategoriesScreenProps = {
   onSelectCategory: (category: string) => void;
+  navigation: any;
 };
 
 const MealDetailScreen = (props: CategoriesScreenProps) => {
-  return <View style={styles.screen}></View>;
+  return (
+    <View style={styles.screen}>
+      <Button
+        title="Go to Categories"
+        onPress={() =>
+          // skip 2 screens, directly to the parent screen:
+          props.navigation.popToTop()
+        }
+      />
+    </View>
+  );
 };
 
 const styles = StyleSheet.create({

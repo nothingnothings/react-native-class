@@ -1,0 +1,397 @@
+
+
+
+
+
+
+
+
+vimos um pouco de BASIC NAVIGATION,
+
+COM 'props.navigation.navigate()'...
+
+
+
+
+
+
+
+
+
+--> MAS TAMBÉM TEMOS ALTERNATIVAS AO '.navigate()'...
+
+
+
+
+
+TEMOS:
+
+
+
+1) '.push()' 
+
+
+    --> EM VEZ DE NAVIGATE,
+        ISSO ACEITA 
+        APENAS A ROUTE NAME...
+
+        ROUTE NAME, COMO PRIMEIRO ARGUMENT... E 
+
+        AÍ VC GANHA O MESMO BEHAVIOR  DE ANTES,
+
+        1 NAVIGATE...
+
+
+    --> MAS É 1 POUCO DIFERENTE... 'PUSH' PODE SER 
+        ÚTIL SE VC  
+
+        '''WANT TO GO TO A PAGE __ WHERE _YOU ARE ALREADY ON''...
+
+
+    --> SE TENTAMOS IR ATÉ A MESMA TELA 
+    EM QUE ESTAMOS,
+    USANDO 'props.navigation.navigate()',
+
+
+    VEREMOS QUE __ 
+
+    NADA__ ACONTECE...
+
+
+
+--> POR OUTRO LADO, SE USAMOS '.push()'
+    em vez disso,
+
+
+    
+    TIPO ASSIM:
+
+
+    props.navigation.push('Categories');
+
+
+
+
+--> COM ISSO, PODEMOS IR ATÉ A MESMA TELA 
+    MÚLTIPLAS E MÚLTIPLAS VEZES...
+
+
+
+
+
+--> EM MTOS CASOS ISSO É INÚTIL,
+    FAZER PUSH DA MESMA TELA EM QUE ESTOU, 
+    MÚLTIPLAS E MÚLTIPLAS VEZES...
+
+
+
+
+
+--> MAS DIGAMOS QUE VC ESTÁ EM 1 APP COMO 'DROPBOX',
+
+    EM QUE VC _ TEM _ FOLDERS_,
+
+    PELOS QUAIS O USER FAZ NAVIGATE....
+
+    ''EACH FOLDER IS THE SAME FOLDER __SCREEN,
+    TECHNICALLY, JUST WITH DIFFERENT CONTENT 
+    LOADED INTO IT..''
+
+    ''YOU WILL WANT TO GO FROM FOLDER A TO B,
+    THAT USES THE SAME SCREEN, 
+    BUT WITH DIFFERENT CONTENT''' 
+
+    (aí pode ser útil,
+    re-carregar a mesma page, 
+    mas com conteúdo diferente... para cenários como esse...
+    )
+    
+
+
+
+
+
+CERTO...
+
+
+
+
+
+
+MAS VC TAMBÉM TEM OUTRAS NAVIGATION OPTIONS EXPLÍCITAS...
+
+
+
+
+
+
+DIGAMOS QUE VC 
+
+
+QUER SER CAPAZ DE 'GO BACK'... É CLARO QUE 
+
+
+
+TEMOS ESSA POSSIBILIDADE NATIVAMENTE...
+
+
+
+
+MAS EXISTEM APPS EM QUE NÃO É INCOMUM 
+
+'''HAVE SOME OTHER THING YOUR USERS CAN DO, 
+    WHERE YOU WILL WANT TO TAKE THEM BACK''...
+
+
+
+
+
+
+
+
+--> EX:
+
+
+''VOCE TEM 1 PAGE 
+    EM QUE VC PODE SALVAR UMA CONFIGURAÇÃO... QUANDO 
+    VC CLICAR NO BUTTON DE SAVE,
+    VC VAI QUERER ''SAVE THE CONFIG'' E TAMBÉM 
+
+    LEAVE THE SCREEN...'''
+
+
+
+
+
+
+
+--> PARA 1 CENÁRIO COMO ESSE, VC TALVEZ QUEIRA 
+    SER CAPAZ DE 
+    TRIGGAR 1 NAVIGATION BACK MANUALMENTE, 
+    E NAÕ ESPERAR O USER CLICAR NO BUTTON DE 'SAVE' 
+    e depois clicar em back (pq essa não é a melhor UX possível)...
+
+    
+
+
+
+-> PARA ISSO,
+
+
+O PROFESSOR ESCREVE ASSIM:
+
+
+
+
+
+<Button title="Go Back" onPress={
+    () => {
+        props.navigation.goBack();
+    }
+}>
+
+
+
+
+
+--> TECNICAMENTE, ISSO FAZ 'POP OFF' 
+
+    DA TELA EM QUE ESTAMOS, E AÍ VOLTA PARA A TELA ANTERIOR...
+
+
+
+
+
+-> ''COMO ALTERNATIVA A GOBACK,
+    VC TEM 'props.navigation.pop()',
+    
+    QUE FAZ PRATICAMENTE A MESMA COISA...''
+
+
+    --> A diferença entre '.pop()' 
+
+    e 'goBack()' é 
+
+    QUE 'goBack()' FUNCIONA EM OUTROS NAVIGATORS,
+
+    ao passo que 
+    '.pop()' 
+
+    SÓ PODE SER USADO SE VC ESTÁ EM 1 STACK NAVIGATOR...
+
+
+
+
+
+
+
+--> MAS EXISTEM CASOS EM QUE VC VAI QUERER VOLTAR 'ALL THE WAY'
+
+    AO SEU PARENT COMPONENT...
+
+
+
+
+
+
+
+POR EXEMPLO, ASSIM:
+
+
+
+
+
+
+import React from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+
+import Colors from '@/constants/Colors';
+import { Button } from 'react-native';
+
+type CategoriesScreenProps = {
+  onSelectCategory: (category: string) => void;
+  navigation: any;
+};
+
+const MealDetailScreen = (props: CategoriesScreenProps) => {
+  return (
+    <View style={styles.screen}>
+      <Button
+        title="Go to Categories"
+        onPress={() =>
+          // skip 2 screens, directly to the parent screen:
+          props.navigation.popToTop()
+        }
+      />
+    </View>
+  );
+};
+
+
+
+
+
+
+
+
+
+ou seja,
+
+podemos usar esse '.popToTop()',
+
+
+QUE VAI 
+
+
+TE LEVAR A SUA ROOTSCREEN...
+
+
+
+
+
+NO CASO ,
+
+
+A SCREEN DE 'CATEGORIES'...
+
+
+
+
+
+
+
+
+SÓ EXISTE MAIS 1 NAVIGATION ACTION QUE VC TALVEZ PRECISE...
+
+
+
+
+
+
+
+
+-> DIGAMOS QUE, NA TELA DE 'CategoriesScreen',
+
+
+    VC QUEIRA IR ATÉ 'CategoryMeals',
+
+
+    MAS NÃO QUER 
+
+    ''ADD IT TO THE STACK'',
+
+    E SIM QUER 
+
+    ''REPLACE THE CURRENT COMPONENT, WITH IT''...
+
+
+
+    --> com isso, 
+        seu stack ficaria '''vazio''' antes 
+        de esse elemento... se o user tentar voltar,
+        seu app fecha... esse é o efeito...
+
+-> para isso, vc pode usar 
+
+'props.navigation.replace()'...
+
+
+
+
+EX:
+
+
+
+
+
+
+      <Button
+        title="Go to Meals!"
+        onPress={() => {
+          props.navigation.replace('MealDetail');
+        }}
+      />
+
+
+
+
+
+
+
+    ISSO NÃO TE DÁ 
+
+    ANIMATION,
+
+
+
+    MAS PODE SER ÚTIL...
+
+
+
+
+
+
+
+
+    PODE SER USADO NA 
+
+    TELA DE LOGIN, POR EXEMPLO...
+
+
+    (
+        pq uma vez que o user fez login,
+        ele não pode ser capaz de VOLTAR NA TELA DE LOGIN...
+
+        por isso é uma boa ideia fazer replace...
+
+        o user não será capaz de 
+        GO BACK,
+
+        pq não terá mais a que 'go back'...
+    )
+
+
+
+
+
+OK.... FICAMOS COM 1 OVERVIEW DOS BASIC METHODS...

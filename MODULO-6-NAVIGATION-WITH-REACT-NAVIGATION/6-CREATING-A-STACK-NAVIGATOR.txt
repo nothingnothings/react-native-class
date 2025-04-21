@@ -1,0 +1,545 @@
+
+
+
+
+
+
+-> O PROFESSOR QUER COMEÇAR COM A FORMA MAIS BÁSICA DE NAVIGATION,
+
+
+QUE É IR BACK EM FORTH POR SCREENS...
+
+
+
+
+
+
+
+
+-->  ISSO PQ PAGES/SCREENS 
+
+
+SÃO BASICAMENTE MANAGED EM 1 STACK DE PAGES...
+
+
+
+
+
+
+--> SEMPRE QUE VC VAI PARA 1 NOVA TELA,
+    ELA É 'PUSHED' NO TOPO DO STACK... E A 
+
+    TOPMOST SCREEN DO STACK É SEMPRE A SCREEN QUE FICA VISÍVEL...
+
+
+    QUANDO VC CLICA NO 'BACK' BUTTON,
+    A TOPMOST SCREEN É 'POPPED OFF',
+
+
+    E AÍ VC VÊ A SCREEN QUE ESTAVA EMBAIXO...
+
+
+
+
+
+
+
+
+--> PARA CRIAR 1 NAVIGATOR, O PROFESSOR ESCREVE ASSIM:
+
+
+
+import { createStackNavigator } from 'react-navigation';
+
+
+
+
+
+
+
+VC VAI CRIAR NAVIGATORS, QUE VAO 
+
+
+GERENCIAR TODA A CONFIGURATION,
+
+E QUE VAO CARREGAR 
+
+AS DIFERENTES SCREENS, COM TRANSITIONS LEGAIS...
+
+
+
+EX;
+
+
+
+
+
+
+
+
+import { createStackNavigator } from 'react-navigation';
+
+
+
+createStackNavigator({
+
+});
+
+
+
+
+
+
+
+VC DEVE DEFINIR, NESSE OBJECT, AS DIFERENTES TELAS DE SEU APP...
+
+
+
+
+
+
+
+NESSE APP, QUEREMOS COMEÇAR NA TELA DE 'CATEGORIES'...
+
+
+
+---> ''IF I TAP ON A CATEGORY, I WANT TO GO TO THE CATEGORY MEALS 
+    SCREEN... IF I TAP ON ONE OF THE MEALS, I WANT TO GO TO THE 
+    MEAL DETAILS SCREEN''...
+
+
+
+
+
+--> BASICAMENTE, PRECISAREMOS DESSAS 3 SCREENS NO NOSSO STACK NAVIGATOR...
+
+--> PRECISAMOS DEFINIR ESSAS PAGES EM 1 STACK NAVIGATOR...
+
+    FILTERS E FAVORITES SERÃO 
+
+    OUTRO STACK,
+
+    NÃO ESTARÃO DIRETAMENTE VINCULADOS...
+
+
+    -> FAVORITES --> SERÁ ACESSADO COM TABS..
+
+
+    -> FILTERS --> TAMBÉM... MESMA COISA...
+
+
+
+
+
+--> DEVEMOS INFORMAR O NAVIGATOR DE ESSAS TELAS,
+    USANDO KEY-VALUE PAIRS...
+
+
+
+
+    TIPO ASSIM:
+
+
+
+
+
+import { createStackNavigator } from 'react-navigation';
+
+createStackNavigator({
+
+    Categories: 
+});
+
+
+
+
+
+
+
+
+
+
+O VALUE, NA FORMA MAIS SIMPLES, SERÁ 1 POINTER AO REACT COMPONENT 
+QUE VC QUER CARREGAR, COMO TELA, PARA ESSA SCREEN...
+
+
+
+
+
+--> ESCREVEMOS ASSIM:
+
+
+
+
+
+
+import { createStackNavigator } from 'react-navigation';
+
+import CategoriesScreen from '@/app/CategoriesScreen';
+import CategoryMealsScreen from '@/app/CategoryMeals';
+import MealDetailScreen from '@/app/MealDetailScreen';
+
+createStackNavigator({
+  Categories: CategoriesScreen,
+  CategoryMeals: CategoryMealsScreen,
+  MealDetail: MealDetailScreen,
+});
+
+
+
+
+
+
+
+
+
+
+CERTO...
+
+
+
+
+
+
+MAS TAMBÉM PODEMOS PASSAR 1 OBJECT,
+
+E AÍ 
+
+USAR A KEY DE 'screen', TIPO ASSIM:
+
+
+import { createStackNavigator } from 'react-navigation';
+
+import CategoriesScreen from '@/app/CategoriesScreen';
+import CategoryMealsScreen from '@/app/CategoryMeals';
+import MealDetailScreen from '@/app/MealDetailScreen';
+
+createStackNavigator({
+  Categories: CategoriesScreen,
+  CategoryMeals: {
+    screen: CategoryMealsScreen, // te deixa adicioar configurações extras.
+  },
+  MealDetail: MealDetailScreen,
+});
+
+
+
+
+
+
+
+
+ISSO TE DEIXA 
+
+
+ADICIONAR CONFIGURATIONS EXTRAS PARA ESSA SCREEN ESPECÍFICA...
+
+TALVEZ PARAMS, OU ALGO DO GÊNERO...
+
+
+
+
+
+-> PRECISAMOS DE UM TERCEIRO IDENTIFIER, QUE DEVERÁ CARREGAR 
+
+O MEALDETAIL SCREEN...
+
+
+
+
+EX:
+
+
+
+
+
+
+import { createStackNavigator } from 'react-navigation';
+
+import CategoriesScreen from '@/app/CategoriesScreen';
+import CategoryMealsScreen from '@/app/CategoryMeals';
+import MealDetailScreen from '@/app/MealDetailScreen';
+
+createStackNavigator({
+  Categories: CategoriesScreen,
+  CategoryMeals: {
+    screen: CategoryMealsScreen, // te deixa adicioar configurações extras.
+  },
+  MealDetail: MealDetailScreen,
+});
+
+
+
+
+
+
+
+
+
+
+
+
+COM ISSO, BASICAMENTE DEFINIMOS QUE ESSAS SERÃO AS DIFERENTES PAGES A QUE 
+PODEREMOS 
+'MOVE BETWEEN'...
+
+
+
+
+ENTRETANTO, ISSO, POR ENQUANTO,
+
+NÃO FARÁ MT COISA....
+
+
+
+
+
+
+
+
+
+--> CRIAMOS ESSE STACK NAVIGATOR,
+
+MAS AINDA NÃO EXPORTAMOS E UTILIZAMOS ELE...
+
+
+
+
+
+--> POR ISSO ESCREVEMOS ASSIM:
+
+
+
+
+
+import { createStackNavigator } from 'react-navigation';
+
+import CategoriesScreen from '@/app/CategoriesScreen';
+import CategoryMealsScreen from '@/app/CategoryMeals';
+import MealDetailScreen from '@/app/MealDetailScreen';
+
+const MealsNavigator = createStackNavigator({
+  Categories: CategoriesScreen,
+  CategoryMeals: {
+    screen: CategoryMealsScreen, // te deixa adicioar configurações extras.
+  },
+  MealDetail: MealDetailScreen,
+});
+
+export default MealsNavigator;
+
+
+
+
+
+
+
+
+
+
+
+-> PODERÍAMOS EXPORTÁ-LO 
+AQUI,
+
+
+E ENTÃO TENTAR RENDERIZAR ISSO 
+
+EM 'App.js'.... MAS NÃO É ISSO QUE FAREMOS...
+
+
+
+O REACT-NAVIGATION FUNCIONA DE FORMA DIFERENTE....
+
+
+
+
+
+
+
+--> VC ACTUALLY PRECISA CRIAR UM 
+
+''AppContainer''...
+
+
+
+--> NESSE APPCONTAINER, VC PRECISA WRAPPAR 
+
+SUA ROOT, SEU ROOT NAVIGATOR...
+
+
+
+
+
+
+TIPO ASSIM:
+
+
+
+
+
+import { createStackNavigator } from 'react-navigation';
+import { createAppContainer } from 'react-navigation';
+
+import CategoriesScreen from '@/app/CategoriesScreen';
+import CategoryMealsScreen from '@/app/CategoryMeals';
+import MealDetailScreen from '@/app/MealDetailScreen';
+
+const MealsNavigator = createStackNavigator({
+  Categories: CategoriesScreen,
+  CategoryMeals: {
+    screen: CategoryMealsScreen, // te deixa adicioar configurações extras.
+  },
+  MealDetail: MealDetailScreen,
+});
+
+export default createAppContainer(MealsNavigator);
+
+
+
+
+
+
+
+
+
+
+
+
+O 'createAppContainer'
+
+também cria 1 NAVIGATION CONTAINER,
+
+
+1 REACT COMPONNET,
+
+
+
+MAS É O  ACTUAL REACT COMPONENT QUE VC 
+
+DEVE USAR NO SEU JSX CODE... PQ 
+
+
+ELE TEM  TODA A METADATA SOBRE A NAVIGATION EM GENERAL,
+
+NAVIGATION E ETC...
+
+
+
+
+--> OK...
+
+
+
+
+
+
+--> mais tarde, veremos como usar múltiplos navigators em 
+1 único app...
+
+
+
+
+
+
+
+
+
+--> EM 'App.js',
+
+    PODEREMOS USAR ESSE COMPONENT, PARA VISUALIZARMOS ALGO NA TELA..
+
+
+
+
+TIPO ASSIM:
+
+
+
+
+
+import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
+import { useFonts } from 'expo-font';
+// import { Stack } from 'expo-router';
+import * as SplashScreen from 'expo-splash-screen';
+// import { StatusBar } from 'expo-status-bar';
+import { useEffect } from 'react';
+import 'react-native-reanimated';
+
+import { useColorScheme } from '@/hooks/useColorScheme';
+import { MealsNavigator } from '@/navigation/MealsNavigator';
+
+// Prevent the splash screen from auto-hiding before asset loading is complete.
+SplashScreen.preventAutoHideAsync();
+
+export default function RootLayout() {
+  const colorScheme = useColorScheme();
+  const [loaded] = useFonts({
+    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
+  });
+
+  useEffect(() => {
+    if (loaded) {
+      SplashScreen.hideAsync();
+    }
+  }, [loaded]);
+
+  if (!loaded) {
+    return null;
+  }
+
+  return (
+    <MealsNavigator />
+  );
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+BASICAMENTE RETORNAMOS O NAVIGATOR INTEIRO...
+
+
+
+
+
+
+--> CONSEGUIREMOS VER A SCREEN DE 'CATEGORIES',
+DEPOIS QUE ELA CARREGA...
+
+
+
+
+
+
+--> POR DEFAULT,
+    FICAMOS COM 1 HEADER (tanto no android como no IoS)...
+
+    ISSO VEM OUT OF THE BOX...
+
+
+
+--> e isso já vem com o SAFEAREAVIEW... basicamente...
+    JÁ RESPEITA NOTCHES, A STATUS BAR,
+
+    JÁ USA TUDO ISSO...
+
+
+
+
+--> E O REACT-NAVIGATION JÁ FAZ COM QUE SEU HEADER PAREÇA LEGAL 
+    EM TODOS DEVICES, O QUE JÁ TE ECONOMIZA BASTANTE TRABALHO...
+
+
+
+
+
+--> A PERGUNTA, AGORA, É 'HOW CAN WE REACH OUT OUR OTHER SCREENS?''
+

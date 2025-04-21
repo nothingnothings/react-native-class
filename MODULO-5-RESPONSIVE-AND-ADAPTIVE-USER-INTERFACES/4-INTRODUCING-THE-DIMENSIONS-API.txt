@@ -1,0 +1,377 @@
+
+
+
+
+
+
+
+CERTO... MAS OCASIONALMENTE VC NÃO VAI CONSEGUIR 
+
+CONSERTAR O LAYOUT COM HARD-CODED VALUES,
+
+COMO FIZEMOS ANTES:
+
+
+
+inputContainer: {
+
+    width: '80%',
+    maxWidth: '95%',
+    minWidth: 300,
+    alignItems: 'center'
+}
+
+
+
+
+
+nesses casos, vc vai precisar saber 
+
+
+''the exact number of pixels we have available, in our device''...
+
+
+
+
+
+
+
+
+
+--> NÓS QUEREMOS QUE NOSSOS 2 BUTTONS 
+FIQUEM A 1 CERTA DISTANCE, 1 DO OUTRO...
+
+
+
+
+
+
+
+--> QUEREMOS ''A BUTTON WIDTH THAT ALWAYS FITS 
+                THE SCREEN, NO MATTER 
+                HOW SMALL IT IS''...
+
+
+
+
+
+
+
+
+
+
+--> PARA ISSO, PRECISAMOS DESCOBRIR ''HOW MANY 
+                                    WIDTH PIXELS WE HAVE 
+                                    AVAILABLE''..
+
+
+
+
+
+
+--> E ISSO É ALGO QUE PODEMOS CONSEGUIR POR MEIO 
+    DA API  DE ''Dimensions'', 
+
+    DO REACT-NATIVE...
+
+
+
+
+
+
+
+TIPO ASSIM:
+
+
+
+
+
+import { Dimensions } from 'react-native';
+
+
+
+
+
+
+
+
+
+
+
+ISSO NÃO É UM COMPONENT, E SIM 1 OBJECT
+ 
+ QUE 
+ TE DEIXA 
+
+ DESCOBRIR 
+
+
+ 'HOW MANY WIDTH IS AVAILABLE'...
+
+
+
+
+
+
+
+
+--> no caso, nossos buttons estão com este código:
+
+
+button: {
+    width: 100
+}
+
+
+
+
+
+
+--> QUEREMOS QUE ESSA WIDTH SEJA FLEXÍVEL...
+
+
+
+
+
+
+em vez de settar assim,
+
+
+
+PODEMOS SETTAR 
+
+O VALUE COMO SENDO
+ 
+
+
+
+ 'width: Dimensions.get('')'''....
+
+
+
+
+
+
+
+
+ --> COMO PARAMETROS, PODEMOS COLOCAR 
+
+ 'screen' ou 'window'...
+
+
+
+
+ WINDOW VS SCREEN 
+
+
+
+
+ A DIFERENÇA ENTRE ESSES 2 ELEMENTOS SÓ IMPORTA 
+ NO ANDROID, PQ LÁ EXISTE A 'STATUS BAR'...
+
+
+
+
+
+
+ COM 'WINDOW',
+
+ A STATUS BAR __ _É EXCLUÍDA DO CÁLCULO DA ALTURA...
+
+
+
+ 
+
+
+-> É POR ISSO QUE TIPICAMENTE USAMOS 'window',
+    em vez de 'screen', 
+
+    PQ NO __ ANDROID É GARANTIDO QUE 
+    ESSA SERÁ A PARTE DA TELA EM QUE 
+    SUA 
+
+    UI REALMENTE EXISTE, SEM CONSIDERAR A STATUS BAR (no topo)...
+
+
+
+
+
+
+
+--> É POR ISSO QUE ESCREVEMOS ASSIM:
+
+
+
+button: {
+    width: Dimensions.get('window')
+}
+
+
+
+
+
+
+
+
+
+
+
+--> ISSO VAI TE DAR 1 OBJECT...
+
+
+    NESSE OBJECT, VC PODE CONSEGUIR VÁRIAS 
+    PROPERTIES,
+
+
+    COMo 
+
+    'fontScale' 
+    'height'
+    'scale'
+    'width'
+
+
+
+
+
+
+
+
+OS MAIS IMPORTANTES SÃO A WIDTH E A HEIGHT...
+
+
+
+
+
+
+com isso, pegamos a overall width do device em que 
+
+seu app está rodando...
+
+
+
+SABEMOS QUE QUEREMOS ENFIAR 2 BUTTONS NA WIDTH DESSE DEVICE...
+
+
+
+
+
+
+
+PODEMOS DIVIDIR COMO '2',
+
+MAS ISSO É GRANDE DEMAIS...
+
+
+
+-> O IDEAL É '4'...
+
+
+
+
+--> com 4, ficamos com bastante espaço sobrando...
+
+
+FICA ASSIM:
+
+
+
+
+            RESET       CONFIRM   
+
+EX:
+
+
+
+
+
+button: {
+    width: Dimensions.get('window').width / 4
+}
+
+
+
+
+
+
+
+
+COM ISSO, GARANTIMOS QUE NOSSOS BUTTONS FICAM COM 1 BOM ESPAÇO 
+AO REDOR,
+
+E QUE RESPEITAM O TAMANHO DO APARELHO...
+
+
+
+
+
+
+
+
+--> PODERÍAMOS CONSEGUIR 1 RESULTADO PARECIDO COM 
+
+'40%' na width,
+
+ 
+MAS O PROFESSOR QUERIA NOS MOSTRAR A DIMENSIONS API...
+
+
+
+
+
+
+''THE DIMENSIONS API LETS YOU FIND 
+HOW MANY PIXELS ARE AVAILABLE ON THE WIDTH AND HEIGHT 
+OF YOUR DEVICE''...
+
+
+
+
+
+JÁ PORCENTAGENS __ SEMPRE _ SE 
+REFEREM ''AO PARENT VIEW/COMPONENT 
+            DO COMPONENT QUE VC 
+            ESTÁ ESTILIZANDO'''...
+
+
+
+
+
+
+    EX:
+
+
+
+
+    
+inputContainer: {
+
+    width: '80%', /// REFERE-SE AO PARENT COMPONENT, DIVIDE DENTRO DO PARENT COMPONENT
+    maxWidth: '95%',
+    minWidth: 300,
+    alignItems: 'center'
+}
+
+
+
+
+
+
+
+button: {
+    width: Dimensions.get('window').width / 4 /// REFERE-SE À WIDTH DO APARELHO INTEIRO...
+}
+
+
+
+
+
+
+
+
+
+
+E NÃO IMPORTA O LOCAL EM QUE VC USA ISSO,
+VAI SEMPRE SE REFERIR AO OVERALL WIDTH 
+
+DO SEU DEVICE... por isso pode ser especialmente útil...

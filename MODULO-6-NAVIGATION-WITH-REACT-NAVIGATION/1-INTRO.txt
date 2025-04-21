@@ -1,0 +1,53 @@
+
+
+
+
+AINDA NÃO APRENDEMOS SOBRE APPS COM MÚLTIPLAS TELAS,
+
+EM QUE PODEMOS NAVIGATE FORWARD AND BACK...
+
+
+
+
+
+
+
+
+
+--> ATÉ AGORA SÓ RENDERIZAMOS 1 ÚNICA TELA...
+
+
+
+
+
+
+
+--> 1 TELA COM 'MINI-TELAS',
+
+    SEM NAVEGAÇÃO... ISSO FIZEMOS ANTES...
+
+
+
+
+
+--> PRECISAMOS DE TABS,
+    SIDE DRAWERS, ETC...
+
+
+
+
+
+    É ISSO QUE VEREMOS:
+
+
+    1) TABS 
+
+    2) DRAWERS
+
+    3) BACK AND FORTH..
+
+
+
+
+
+    

@@ -1,0 +1,315 @@
+
+
+
+
+
+
+COMEÇAMOS COM A TELA DE STARTGAME...
+
+
+
+ESTÁ ASSIM:
+
+
+
+import { useState } from 'react';
+import { TextInput, View, StyleSheet, Alert } from 'react-native';
+
+import PrimaryButton from '../components/ui/PrimaryButton';
+import Title from '../components/ui/Title';
+import Colors from '../constants/colors';
+import Card from '../components/ui/Card';
+import InstructionText from '../components/ui/InstructionText';
+
+function StartGameScreen({ onPickNumber }) {
+  const [enteredNumber, setEnteredNumber] = useState('');
+
+  function numberInputHandler(enteredText) {
+    setEnteredNumber(enteredText);
+  }
+
+  function resetInputHandler() {
+    setEnteredNumber('');
+  }
+
+  function confirmInputHandler() {
+    const chosenNumber = parseInt(enteredNumber);
+
+    if (isNaN(chosenNumber) || chosenNumber <= 0 || chosenNumber > 99) {
+      Alert.alert(
+        'Invalid number!',
+        'Number has to be a number between 1 and 99.',
+        [{ text: 'Okay', style: 'destructive', onPress: resetInputHandler }]
+      );
+      return;
+    }
+
+    onPickNumber(chosenNumber);
+  }
+
+  return (
+    <View style={styles.rootContainer}>
+      <Title>Guess My Number</Title>
+      <Card>
+        <InstructionText>
+          Enter a Number
+        </InstructionText>
+        <TextInput
+          style={styles.numberInput}
+          maxLength={2}
+          keyboardType="number-pad"
+          autoCapitalize="none"
+          autoCorrect={false}
+          onChangeText={numberInputHandler}
+          value={enteredNumber}
+        />
+        <View style={styles.buttonsContainer}>
+          <View style={styles.buttonContainer}>
+            <PrimaryButton onPress={resetInputHandler}>Reset</PrimaryButton>
+          </View>
+          <View style={styles.buttonContainer}>
+            <PrimaryButton onPress={confirmInputHandler}>Confirm</PrimaryButton>
+          </View>
+        </View>
+      </Card>
+    </View>
+  );
+}
+
+export default StartGameScreen;
+
+const styles = StyleSheet.create({
+  rootContainer: {
+    flex: 1,
+    marginTop: 100,
+    alignItems: 'center',
+  },
+  numberInput: {
+    height: 50,
+    width: 50,
+    fontSize: 32,
+    borderBottomColor: Colors.accent500,
+    borderBottomWidth: 2,
+    color: Colors.accent500,
+    marginVertical: 8,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  buttonsContainer: {
+    flexDirection: 'row',
+  },
+  buttonContainer: {
+    flex: 1,
+  },
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+--> É A PRIMEIRA TELA QUE ENXERGAMOS..
+
+
+
+
+
+
+
+
+
+
+--> TEMOS 'RESET' E 'CONFIRM'..
+
+
+
+
+
+--> OS 2 NÃO FORAM POSICIONADOS CORRETAMENTE..
+
+
+
+
+
+
+
+
+
+--> O BUTTON CONTAINER 
+
+
+ESTÁ SETTADO COMO '100%'...
+
+
+
+
+
+
+100% se refere 
+
+
+ao surrounding component,
+
+ao card
+
+
+
+
+--> E O CARD ESTÁ COM 1 SIZE PEQUENO DEMAIS, 300:
+
+
+
+
+''inputContainer: {
+
+    width: 300,
+    maxWidth: '80%',
+    alignItems: 'center'
+}
+
+
+
+
+
+
+
+
+
+
+
+
+ISSO É PEQUENO DEMAIS...
+
+
+
+
+
+
+
+
+
+--> NÃO DEVEMOS USAR PIXELS,
+
+
+
+PIXELS SÃO UMA MÁ IDEIA....
+
+
+
+
+
+
+
+--> QUEREMOS UMA PORCENTAGEM...
+
+
+
+
+
+
+
+
+TIPO '80%'...
+
+
+
+--> devemos deixar a width padrão como '80%',
+
+
+
+MAS DEIXAR A 'minWidth' como sendo 300,
+
+PARA QUE 
+
+CONSIGAMOS GARANTIR QUE 
+
+
+
+A WIDTH MÍNIMA __ SEMPRE __ SEJA 
+300...
+
+
+
+
+
+
+EX:
+
+
+
+inputContainer: {
+
+    width: '80%',
+    minWidth: 300,
+    alignItems: 'center'
+}
+
+
+
+
+
+
+OU SEJA, TIRAMOS O 'maxWidth', que estava ESTRAGANDO 
+NOSSO LAYOUT...
+
+
+
+
+
+
+
+
+
+MAS É CLARO QUE, SE VC TIVER 1 DISPOSITIVO MENOR DO QUE 
+300 pixels,
+
+
+ISSO VAI FICAR RUIM...
+
+
+
+
+
+
+--> e vai ficar ruim em dispositivos maiores...
+ 
+    por isso colocamos uma maxWidth de 95%...
+
+
+
+    COM ISSO, NOSSO CONTAINER NUNCA SAIRÁ DA TELA,
+
+    sempre ficará dentro da tela...
+
+
+
+
+FICOU ASSIM:
+
+
+
+inputContainer: {
+
+    width: '80%',
+    maxWidth: '95%',
+    minWidth: 300,
+    alignItems: 'center'
+}
+
+
+
+
+
+
+QUER DIZER QUE SETTAMOS REGRAS AQUI,
+QUE DEIXAM ESSE LAYOUT FUNCIONAR EM MAIS DEVICES...

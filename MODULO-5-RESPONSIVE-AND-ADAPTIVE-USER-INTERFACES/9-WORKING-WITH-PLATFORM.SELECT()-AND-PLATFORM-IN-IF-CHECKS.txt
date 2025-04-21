@@ -1,0 +1,952 @@
+
+
+NOSSO CÓDIGO FOI FICANDO ASSIM:
+
+
+
+
+const styles = StyleSheet.create({
+  header: {
+    width: '100%',
+    height: 90,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingTop: 36,
+    backgroundColor: Platform.OS === 'android' ? Colors.primary : 'white',
+    borderBottomColor: Platform.OS === 'ios' ? '#ccc' : 'transparent',
+    borderBottomWidth: Platform.OS === 'ios' ? 1 : 0
+  },
+  headerTitle: {
+    fontSize: 18,
+    color: 'black',
+    fontWeight: 'bold',
+  },
+  title: {
+    color: Platform.OS === 'ios' ? Colors.primary : 'white'
+  }
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+É CLARO QUE PODE FICAR CUMBERSOME  
+
+CONTINUAR ESCREVENDO ESSES CHECKS... AQUI TEMOS 3 CHECKS,
+
+SÓ NESSE 'header'...
+
+
+
+
+
+
+
+ISSO É POSSÍVEL, MAS NÃO É OPTIMAL...
+
+
+
+
+
+
+
+--> PARA DEIXAR NOSSOS STYLE OBJECTS MAIS CLEAN,
+
+
+SERIA MELHOR DEIXAR 1 STYLE COMO 'BASE HEADER',
+
+
+E AÍ 
+
+
+
+UNS STYLES DE HEADER SEPARADOS,
+
+COMO 'headerIOS' 
+
+e 
+
+'headerAndroid'..
+
+
+
+
+TIPO ASSIM:
+
+
+
+
+
+
+const styles = StyleSheet.create({
+  header: {
+    width: '100%',
+    height: 90,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingTop: 36,
+    
+  },
+  headerIOS: {
+    backgroundColor: Colors.primary,
+    borderBottomColor: 'transparent',
+    borderBottomWidth: 0
+  },
+  headerAndroid: {
+    backgroundColor: 'white',
+    borderBottomColor: '#ccc',
+    borderBottomWidth:  1
+  }
+});
+
+
+
+
+
+
+
+
+TIPO ALGO ASSIM...
+
+
+
+
+
+
+
+
+AÍ BASTA MERGEAR ISSO,
+
+
+LÁ NO STYLE....
+
+
+
+
+
+TIPO ASSIM:
+
+
+
+
+
+const styles = StyleSheet.create({
+  header: {
+    width: '100%',
+    height: 90,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingTop: 36,
+    
+  },
+  headerIOS: {
+    backgroundColor: Colors.primary,
+    borderBottomColor: 'transparent',
+  },
+  headerAndroid: {
+    backgroundColor: 'white',
+    borderBottomColor: '#ccc',
+    borderBottomWidth:  1
+  }
+});
+
+
+
+
+
+
+E ASSIM:
+
+
+
+
+
+import Colors from '@/constants/Colors';
+import React from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+
+type HeaderProps = {
+  title: string;
+};
+
+const Header = (props: HeaderProps) => {
+  return (
+    <View style={{
+        ...styles.headerBase, ...Platform.select()
+    }}>
+      <TitleText style={styles.title}>{props.title}</TitleText>
+    </View>
+  );
+};
+
+
+
+
+
+
+
+
+
+
+
+EX:
+
+
+    <View style={{
+        ...styles.headerBase, ...Platform.select()
+    }}>
+
+
+
+
+
+
+VAMOS MERGEAR ESSE STYLE DE 'headerBase'
+
+
+com o negócio retrievado por 'Platform.select()'...
+
+
+
+
+
+
+--> ESSE É UM METHOD QUE:
+
+1) EXIGE 1 OBJECT 
+
+
+2) ESSE OBJECT PEDE QUE VC COLOQUE UMA KEY DE NOME 'ios',
+
+    e outra de nome 'android'...
+
+
+
+
+
+--> AÍ, COMO VALUE DA KEY,
+VC COLOCA O STYLE PROPERTY A SER APLICADO...
+
+
+
+
+TIPO ASSIM:
+
+
+
+
+
+    <View style={{
+        ...styles.headerBase, ...Platform.select(
+            ios: styles.headerIOS,
+            android: styles.headerAndroid
+        )
+    }}>
+
+
+
+
+TIPO ASSIM:
+
+
+
+
+import Colors from '@/constants/Colors';
+import React from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+
+type HeaderProps = {
+  title: string;
+};
+
+const Header = (props: HeaderProps) => {
+  return (
+    <View style={{
+        ...styles.headerBase, 
+        ...Platform.select(
+            ios: styles.headerIOS,
+            android: styles.headerAndroid
+        )
+    }}>
+      <TitleText style={styles.title}>{props.title}</TitleText>
+    </View>
+  );
+};
+
+
+
+
+
+const styles = StyleSheet.create({
+  header: {
+    width: '100%',
+    height: 90,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingTop: 36,
+    
+  },
+  headerIOS: {
+    backgroundColor: Colors.primary,
+    borderBottomColor: 'transparent',
+  },
+  headerAndroid: {
+    backgroundColor: 'white',
+    borderBottomColor: '#ccc',
+    borderBottomWidth:  1
+  }
+});
+
+
+
+
+
+
+
+
+
+
+CERTO...
+
+
+
+
+
+
+-> COM ISSO,
+
+ESTAMOS DIZENDO PARA O  REACT NATIVE 
+
+
+''PLEASE MERGE 
+
+    THE BASE PROPERTIES WITH THE PROPERTIES 
+
+    OF IOS/ANDROID''...
+
+
+
+
+
+
+
+
+
+
+
+COM ISSO, FICAMOS COM LEANER CODE, LEANER STYLES...
+
+
+
+
+
+TEMOS CODE COM 1 BASE STYLE E AÍ STYLES COMPLEMENTARES,
+
+CÓDIGO MAIS ELEGANTE...
+
+
+
+
+
+
+
+
+
+--> OUTRO LOCAL DO APP EM QUE PODEMOS USAR ISSO É 
+
+O 
+
+'MainButton.tsx'...
+
+
+
+
+
+
+
+
+--> NELE, SEMPRE ESTAMOS USANDO 'TouchableOpacity' (
+    coisa padrão, de todos os dispositivos...
+)
+
+
+
+
+
+
+
+--> MAS DIGAMOS QUE, NO ANDROID,
+
+NÓS QUEREMOS USAR O 'Ripple effect'...
+
+
+
+
+''<TouchableNativeFeedback>''... 
+
+
+esse é o component do react native que 
+
+faz com que esse efeito seja ativado,
+
+NO ANDROID...
+
+
+
+
+
+
+
+
+
+O 'MainButton',
+
+ATUALMENTE, ESTÁ ASSIM:
+
+
+
+
+
+
+import Colors from '@/constants/Colors';
+import React from 'react';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+
+type MainButtonProps = {
+  onPress: () => void;
+  children: string;
+};
+
+const MainButton = (props: MainButtonProps) => {
+  return (
+    <TouchableOpacity activeOpacity={0.6} onPress={() => props.onPress()}>
+      <View style={styles.button}>
+        <Text style={styles.buttonText}>{props.children}</Text>
+      </View>
+    </TouchableOpacity>
+  );
+};
+
+const styles = StyleSheet.create({
+  button: {
+    backgroundColor: Colors.primary,
+    borderRadius: 25,
+    paddingVertical: 12,
+    paddingHorizontal: 30,
+  },
+  buttonText: {
+    fontSize: 18,
+    color: 'white',
+    fontFamily: 'open-sans',
+  },
+});
+
+export default MainButton;
+
+
+
+
+
+
+
+VAMOS ALTERAR ISSO,
+
+PQ AGORA VAMOS USAR O 'TouchableNativeFeedback'...
+
+
+
+
+
+
+tipo assim:
+
+
+
+
+
+
+
+
+
+import Colors from '@/constants/Colors';
+import React from 'react';
+import { StyleSheet, Text, TouchableOpacity, TouchableNativeFeedback, View } from 'react-native';
+
+type MainButtonProps = {
+  onPress: () => void;
+  children: string;
+};
+
+const MainButton = (props: MainButtonProps) => {
+  return (
+    <TouchableOpacity activeOpacity={0.6} onPress={() => props.onPress()}>
+      <View style={styles.button}>
+        <Text style={styles.buttonText}>{props.children}</Text>
+      </View>
+    </TouchableOpacity>
+  );
+};
+
+const styles = StyleSheet.create({
+  button: {
+    backgroundColor: Colors.primary,
+    borderRadius: 25,
+    paddingVertical: 12,
+    paddingHorizontal: 30,
+  },
+  buttonText: {
+    fontSize: 18,
+    color: 'white',
+    fontFamily: 'open-sans',
+  },
+});
+
+export default MainButton;
+
+
+
+
+
+
+
+
+
+
+
+
+--> MAS QUEREMOS CONTINUAR USANDO O 'TouchableOpacity',
+
+lá no IOS...
+
+
+
+
+
+
+
+
+--> PARA ISSO,
+
+DEVEMOS USAR O 'Platform',
+
+PARA USAR COMPONENTS 
+
+DIFERENTES,
+
+A PARTIR DA PLATFORM...
+
+
+
+
+
+
+
+
+--> PARA ISSO,
+
+PODEMOS USAR 1 FEATURE LEGAL DO REACT,
+
+
+
+
+
+
+QUE É 'define a variable as a capital character 
+variable, so we can use it as a COMPONENT'...
+
+
+
+
+
+QUE É ASSIM:
+
+
+
+
+
+
+
+
+import Colors from '@/constants/Colors';
+import React from 'react';
+import { StyleSheet, Text, TouchableOpacity, TouchableNativeFeedback, View } from 'react-native';
+
+type MainButtonProps = {
+  onPress: () => void;
+  children: string;
+};
+
+const MainButton = (props: MainButtonProps) => {
+
+    let ButtonComponent = TouchableOpacity; // AQUI
+
+
+  return (
+    <TouchableOpacity activeOpacity={0.6} onPress={() => props.onPress()}>
+      <View style={styles.button}>
+        <Text style={styles.buttonText}>{props.children}</Text>
+      </View>
+    </TouchableOpacity>
+  );
+};
+
+const styles = StyleSheet.create({
+  button: {
+    backgroundColor: Colors.primary,
+    borderRadius: 25,
+    paddingVertical: 12,
+    paddingHorizontal: 30,
+  },
+  buttonText: {
+    fontSize: 18,
+    color: 'white',
+    fontFamily: 'open-sans',
+  },
+});
+
+export default MainButton;
+
+
+
+
+
+
+
+
+
+
+COM ISSO, DEFINIMOS O OBJECT DE 'TouchableOpacity'
+
+
+
+COMO O ELEMENTO DEFAULT...
+
+
+
+
+
+
+AÍ ADICIONAMOS O CHECK,
+
+TIPO ASSIM:
+
+
+
+
+
+
+import Colors from '@/constants/Colors';
+import React from 'react';
+import { StyleSheet, Text, TouchableOpacity, TouchableNativeFeedback, View } from 'react-native';
+
+type MainButtonProps = {
+  onPress: () => void;
+  children: string;
+};
+
+const MainButton = (props: MainButtonProps) => {
+
+let ButtonComponent = TouchableOpacity; // AQUI
+
+if (Platform.OS === 'android' && Platform.version >= 21) {
+
+}
+
+
+  return (
+    <TouchableOpacity activeOpacity={0.6} onPress={() => props.onPress()}>
+      <View style={styles.button}>
+        <Text style={styles.buttonText}>{props.children}</Text>
+      </View>
+    </TouchableOpacity>
+  );
+};
+
+const styles = StyleSheet.create({
+  button: {
+    backgroundColor: Colors.primary,
+    borderRadius: 25,
+    paddingVertical: 12,
+    paddingHorizontal: 30,
+  },
+  buttonText: {
+    fontSize: 18,
+    color: 'white',
+    fontFamily: 'open-sans',
+  },
+});
+
+export default MainButton;
+
+
+
+
+
+
+
+
+
+CHECAMOS TAMBÉM SE A API DO ANDROID É 21 OU MAIOR,
+PQ APENAS ELA SUPORTA ESSA API...
+
+
+
+
+
+AÍ DEFINIMOS O NEGÓCIO COMO SENDO 'TouchableNativeFeedback'...
+
+
+ex:
+
+
+
+
+
+
+import Colors from '@/constants/Colors';
+import React from 'react';
+import { StyleSheet, Text, TouchableOpacity, TouchableNativeFeedback, View } from 'react-native';
+
+type MainButtonProps = {
+  onPress: () => void;
+  children: string;
+};
+
+const MainButton = (props: MainButtonProps) => {
+
+let ButtonComponent = TouchableOpacity; // AQUI
+
+if (Platform.OS === 'android' && Platform.Version >= 21) {
+    ButtonComponent = TouchableNativeFeedback;
+}
+
+
+  return (
+    <ButtonComponent activeOpacity={0.6} onPress={() => props.onPress()}>
+      <View style={styles.button}>
+        <Text style={styles.buttonText}>{props.children}</Text>
+      </View>
+    </ButtonComponent>
+  );
+};
+
+const styles = StyleSheet.create({
+  button: {
+    backgroundColor: Colors.primary,
+    borderRadius: 25,
+    paddingVertical: 12,
+    paddingHorizontal: 30,
+  },
+  buttonText: {
+    fontSize: 18,
+    color: 'white',
+    fontFamily: 'open-sans',
+  },
+});
+
+export default MainButton;
+
+
+
+
+
+
+
+
+
+
+EX:
+
+
+
+
+
+
+
+import Colors from '@/constants/Colors';
+import React from 'react';
+import {
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  TouchableNativeFeedback,
+  View,
+  Platform,
+} from 'react-native';
+
+type MainButtonProps = {
+  onPress: () => void;
+  children: string;
+};
+
+const MainButton = (props: MainButtonProps) => {
+  let ButtonComponent: any = TouchableOpacity;
+
+  if (Platform.OS === 'android' && Platform.Version >= 21) {
+    ButtonComponent = TouchableNativeFeedback;
+  }
+
+  return (
+    <ButtonComponent activeOpacity={0.6} onPress={() => props.onPress()}>
+      <View style={styles.button}>
+        <Text style={styles.buttonText}>{props.children}</Text>
+      </View>
+    </ButtonComponent>
+  );
+};
+
+const styles = StyleSheet.create({
+  button: {
+    backgroundColor: Colors.primary,
+    borderRadius: 25,
+    paddingVertical: 12,
+    paddingHorizontal: 30,
+  },
+  buttonText: {
+    fontSize: 18,
+    color: 'white',
+    fontFamily: 'open-sans',
+  },
+});
+
+export default MainButton;
+
+
+
+
+
+
+
+
+
+OK... E ISSO REALMENTE FUNCIONA...
+
+
+
+
+
+
+
+
+mas o style ainda não está perfeito,
+
+pq o ripple effect não está respeitando o border radius...
+
+
+
+
+
+
+
+--> PODEMOS CONSERTAR ISSO COM 
+
+
+O WRAP DO 'ButtonComponent'
+
+com 1 outra view,
+
+
+TIPO ASSIM:
+
+
+
+
+
+
+
+
+
+import Colors from '@/constants/Colors';
+import React from 'react';
+import {
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  TouchableNativeFeedback,
+  View,
+  Platform,
+} from 'react-native';
+
+type MainButtonProps = {
+  onPress: () => void;
+  children: string;
+};
+
+const MainButton = (props: MainButtonProps) => {
+  let ButtonComponent: any = TouchableOpacity;
+
+  if (Platform.OS === 'android' && Platform.Version >= 21) {
+    ButtonComponent = TouchableNativeFeedback;
+  }
+
+  return (
+    <View style={styles.buttonContainer}>
+      <ButtonComponent activeOpacity={0.6} onPress={() => props.onPress()}>
+        <View style={styles.button}>
+          <Text style={styles.buttonText}>{props.children}</Text>
+        </View>
+      </ButtonComponent>
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  buttonContainer: {
+    borderRadius: 25,
+    overflow: 'hidden',
+  },
+  button: {
+    backgroundColor: Colors.primary,
+    borderRadius: 25,
+    paddingVertical: 12,
+    paddingHorizontal: 30,
+  },
+  buttonText: {
+    fontSize: 18,
+    color: 'white',
+    fontFamily: 'open-sans',
+  },
+});
+
+export default MainButton;
+
+
+
+
+
+
+
+
+
+
+ISSO VAI CLIPPAR O RIPPLE EFFECT,
+
+
+
+POR CONTA DESSA VIEW..
+
+
+
+
+que é o que desejamos...
+
+
+
+
+
+
+-> É ASSIM QUE PODEMOS 
+
+ USAR O 'Platform.OS' em if checks, PARA RODAR 
+ 
+ COMPONENTS TOTALMENTE DIFERENTES,
+
+ A DEPENDER DO APARELHO EM QUE ESTAMOS RODANDO...

@@ -1,0 +1,486 @@
+
+
+
+
+CERTO...
+
+
+
+
+
+
+MAS COMO PODEMOS ASSIGNAR ICONS 
+
+A NOSSAS TABS?
+
+
+
+
+
+
+
+
+-> VAMOS COMEÇAR PELAS COLORS DAS TABS,
+
+
+ANTES 
+
+
+DOS ICONS...
+
+
+
+
+
+
+---> PRECISAMOS DO SEGUNDO PARAMETER 
+
+DE createBottomTabNavigator...
+
+
+TIPO ASSIM:
+
+
+
+
+// Tabs
+const MealsFavTabNavigator = createBottomTabNavigator(
+  {
+    Meals: MealsNavigator,
+    Favorites: FavoritesScreen,
+  },
+  {
+    tabBarOptions: {
+      activeTintColor: Colors.primary,
+      inactiveTintColor: Colors.dark,
+      style: {
+        backgroundColor: Colors.dark,
+        borderTopColor: Colors.dark,
+      },
+    },
+  }
+);
+
+
+
+
+
+podemos deixar um 'activeTintColor',
+
+
+'inactiveTintColor',
+
+etc... 
+
+
+
+1 monte de options, para configurar de acordo com nossos requisitos...
+
+
+
+
+
+
+-> 'activeTintColor'..
+
+
+
+
+
+--> definimos como sendo 'Colors.accentColor'...
+
+
+
+
+
+
+
+EX:
+
+
+// Tabs
+const MealsFavTabNavigator = createBottomTabNavigator(
+  {
+    Meals: MealsNavigator,
+    Favorites: FavoritesScreen,
+  },
+  {
+    tabBarOptions: {
+      activeTintColor: Colors.accentColor,
+      inactiveTintColor: Colors.dark,
+      style: {
+        backgroundColor: Colors.dark,
+        borderTopColor: Colors.dark,
+      },
+    },
+  }
+);
+
+
+
+
+
+
+
+
+
+--> PRECISAMOS DEFINIR os icons das tabs...
+
+
+
+
+
+COMO FAZEMOS ISSO?
+
+
+
+
+
+devemos fazer isso dentro de cada 'stack Navigator'/screen,
+
+dentro do 'MealsFavTabNavigator'...
+
+
+
+TIPO ASSIM:
+
+
+
+
+
+// Tabs
+const MealsFavTabNavigator = createBottomTabNavigator(
+  {
+    Meals: {
+        screen: MealsNavigator,
+        navigationOptions: {
+            tabBarIcon: () => {}
+        }
+    }
+    Favorites: FavoritesScreen,
+  },
+  {
+    tabBarOptions: {
+      activeTintColor: Colors.accentColor,
+      inactiveTintColor: Colors.dark,
+      style: {
+        backgroundColor: Colors.dark,
+        borderTopColor: Colors.dark,
+      },
+    },
+  }
+);
+
+
+
+
+
+
+
+
+
+
+
+OU SEJA,
+
+
+VC VAI DEFINIR 
+
+'navigationOptions',
+
+
+
+como sendo um object,
+
+
+com 1 key de 'tabBarIcon',
+
+
+QUE VAI SER 1 FUNCTION...
+
+
+DENTRO DE ESSA FUNCTION,
+
+VC VAI RETORNAR 
+
+O ICON A SER UTILIZADO...
+
+
+
+
+--> ESSA FUNCTION VAI RECEBER 1 DATA,
+
+QUE SERÁ 'tabInfo'...
+
+
+EX:
+
+
+
+// Tabs
+const MealsFavTabNavigator = createBottomTabNavigator(
+  {
+    Meals: {
+        screen: MealsNavigator,
+        navigationOptions: {
+            tabBarIcon: (tabInfo) => {
+                return <Icon />
+            }
+        }
+    }
+    Favorites: FavoritesScreen,
+  },
+  {
+    tabBarOptions: {
+      activeTintColor: Colors.accentColor,
+      inactiveTintColor: Colors.dark,
+      style: {
+        backgroundColor: Colors.dark,
+        borderTopColor: Colors.dark,
+      },
+    },
+  }
+);
+
+
+
+
+
+
+
+
+
+
+
+CERTO...
+
+
+
+
+
+
+PRECISAMOS IMPORTAR 'IonIcons' 
+
+para USAR 1 ICON, AQUI...
+
+
+
+
+
+
+
+
+
+
+--> TIPO ASSIM:
+
+
+
+import { Ionicons } from '@expo/vector-icons';
+
+
+// Tabs
+const MealsFavTabNavigator = createBottomTabNavigator(
+  {
+    Meals: {
+        screen: MealsNavigator,
+        navigationOptions: {
+            tabBarIcon: (tabInfo) => {
+                return <Ionicons name="ios-restaurant" />;
+            }
+        }
+    }
+    Favorites: FavoritesScreen,
+  },
+  {
+    tabBarOptions: {
+      activeTintColor: Colors.accentColor,
+      inactiveTintColor: Colors.dark,
+      style: {
+        backgroundColor: Colors.dark,
+        borderTopColor: Colors.dark,
+      },
+    },
+  }
+);
+
+
+
+
+
+
+
+CERTO...
+
+
+
+
+
+EX:
+
+
+
+
+
+
+// Tabs
+const MealsFavTabNavigator = createBottomTabNavigator(
+  {
+    Meals: {
+      screen: MealsNavigator,
+      navigationOptions: {
+        tabBarIcon: (tabInfo) => {
+          return (
+            <Ionicons name="restaurant" size={25} color={Colors.accentColor} />
+          );
+        },
+      },
+    },
+    Favorites: FavoritesScreen,
+  },
+  {
+    tabBarOptions: {
+      activeTintColor: Colors.accentColor,
+      inactiveTintColor: Colors.dark,
+      style: {
+        backgroundColor: Colors.dark,
+        borderTopColor: Colors.dark,
+      },
+    },
+  }
+);
+
+
+
+
+
+
+
+
+PODEMOS PASSAR A 'tintColor' 
+
+da tab 
+
+dinamicamente,
+
+usando 'tabInfo',
+
+TIPO ASSIM:
+
+
+
+
+
+
+// Tabs
+const MealsFavTabNavigator = createBottomTabNavigator(
+  {
+    Meals: {
+      screen: MealsNavigator,
+      navigationOptions: {
+        tabBarIcon: (tabInfo: any) => {
+          return (
+            <Ionicons name="restaurant" size={25} color={tabInfo.accentColor} />
+          );
+        },
+      },
+    },
+    Favorites: FavoritesScreen,
+  },
+  {
+    tabBarOptions: {
+      activeTintColor: Colors.accentColor,
+      inactiveTintColor: Colors.dark,
+      style: {
+        backgroundColor: Colors.dark,
+        borderTopColor: Colors.dark,
+      },
+    },
+  }
+);
+
+
+
+
+
+
+
+PODEMOS FAZER A MESMA COISA COM O FAVORITES,
+
+TIPO ASSIM:
+
+
+
+
+
+// Tabs
+const MealsFavTabNavigator = createBottomTabNavigator(
+  {
+    Meals: {
+      screen: MealsNavigator,
+      navigationOptions: {
+        tabBarIcon: (tabInfo: any) => {
+          return (
+            <Ionicons name="restaurant" size={25} color={tabInfo.accentColor} />
+          );
+        },
+      },
+    },
+    Favorites: {
+      screen: FavoritesScreen,
+      navigationOptions: {
+        tabBarIcon: (tabInfo: any) => {
+          return <Ionicons name="star" size={25} color={tabInfo.accentColor} />;
+        },
+      },
+    },
+  },
+  {
+    tabBarOptions: {
+      activeTintColor: Colors.accentColor,
+      inactiveTintColor: Colors.dark,
+      style: {
+        backgroundColor: Colors.dark,
+        borderTopColor: Colors.dark,
+      },
+    },
+  }
+
+
+
+
+
+
+
+CERTO...
+
+
+
+
+
+
+
+
+agora ficamos com icons 
+
+
+que possuem nossa tintColor...
+
+
+
+
+
+--> PODEMOS QUERER DEFINIR OS LABELS,
+TAMBÉM....
+
+
+
+--> SE VC QUER 1 LABEL DIFERENTE, ESCREVA 
+
+a key de 'tabBarLabel: 'sadasdasasd'
+''
+
+
+
+
+

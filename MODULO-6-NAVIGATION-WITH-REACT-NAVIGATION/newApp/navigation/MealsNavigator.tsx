@@ -10,6 +10,7 @@ import MealDetailScreen from '@/app/MealDetailScreen';
 import { Colors } from '@/constants/Colors';
 import { Platform } from 'react-native';
 import FavoritesScreen from '@/app/FavoritesScreen';
+import { Ionicons } from '@expo/vector-icons';
 
 const MealsNavigator = createStackNavigator(
   {
@@ -37,10 +38,38 @@ const MealsNavigator = createStackNavigator(
 );
 
 // Tabs
-const MealsFavTabNavigator = createBottomTabNavigator({
-  Meals: MealsNavigator,
-  Favorites: FavoritesScreen,
-});
+const MealsFavTabNavigator = createBottomTabNavigator(
+  {
+    Meals: {
+      screen: MealsNavigator,
+      navigationOptions: {
+        tabBarIcon: (tabInfo: any) => {
+          return (
+            <Ionicons name="restaurant" size={25} color={tabInfo.accentColor} />
+          );
+        },
+      },
+    },
+    Favorites: {
+      screen: FavoritesScreen,
+      navigationOptions: {
+        tabBarIcon: (tabInfo: any) => {
+          return <Ionicons name="star" size={25} color={tabInfo.accentColor} />;
+        },
+      },
+    },
+  },
+  {
+    tabBarOptions: {
+      activeTintColor: Colors.accentColor,
+      inactiveTintColor: Colors.dark,
+      style: {
+        backgroundColor: Colors.dark,
+        borderTopColor: Colors.dark,
+      },
+    },
+  }
+);
 
 // The tab navigator becomes the root navigator (contains the first stack, of meals, and the extra favorites screen).
 export default createAppContainer(MealsFavTabNavigator); /// Basic setup.

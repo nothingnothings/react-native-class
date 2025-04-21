@@ -362,3 +362,4 @@ export default CategoriesScreen;
 
 ok... queremos definir 1 title para o header, também, para que o user 
 tenha 1 melhor ideia de onde ele está
+

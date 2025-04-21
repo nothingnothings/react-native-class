@@ -1,0 +1,395 @@
+
+
+
+
+
+
+
+o professor mostrou orientation changes 
+
+e layout, etc...
+
+
+
+
+--> MAS AGORA DEVEMOS VER COMO PODEMOS 
+RENDERIZAR DIFERENTES STYLES/LAYOUTS, 
+
+
+A DEPENDER DA PLATFORM EM QUE VC ESTÁ EXECUTANDO SEU APP...
+
+
+
+
+
+
+
+
+
+--> NOSSO APP ATUALMENTE 
+
+TEM A MESMA APPEARANCE NO IOS E ANDROID...
+
+
+
+
+
+
+
+
+-> OS BUTTONS ESTÃO COM APARÊNCIAS DISTINTAS 
+
+    JUSTAMENTE POR CONTA DO BUTTON COMPONENT QUE ESTAMOS 
+
+    USANDO...
+
+
+
+
+
+
+--> É POR CONTA DO COMPONENT 
+
+
+'import { Button } from 'react-native';'
+
+
+
+
+
+
+
+
+
+ISSO ACONTECE PQ 
+
+ESSE COMPONENT, QUE ESTAMOS USANDO,
+ 
+ É BAKED-IN NO 
+
+
+REACT NATIVE,
+
+
+E É ACTUALLY 
+
+
+
+O ÚNICO COMPONENT DO REACT NATIVE QUE 
+
+ 
+
+
+ '''ADJUSTS, BASED ON THE PLATFORM THAT IT 
+ IS BEING EXECUTED ON...''
+
+
+
+NENHUM OUTRO COMPONENT FAZ ISSO...
+
+
+
+
+
+
+
+
+--> MAS VC PODE ESCREVER 
+
+    COMPONENTS 
+    QUE SE ADAPTAM AOS DIFERENTES DEVICES...
+
+
+
+
+
+PARA TER 1 EXEMPLO,
+
+
+TEMOS O COMPONENT 'HEADER':
+
+
+
+
+
+
+
+import Colors from '@/constants/Colors';
+import React from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+
+type HeaderProps = {
+  title: string;
+};
+
+const Header = (props: HeaderProps) => {
+  return (
+    <View style={styles.header}>
+      <Text style={styles.headerTitle}>{props.title}</Text>
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  header: {
+    width: '100%',
+    height: 90,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingTop: 36,
+    backgroundColor: Colors.primary,
+  },
+  headerTitle: {
+    fontSize: 18,
+    color: 'black',
+    fontWeight: 'bold',
+  },
+});
+
+export default Header;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+--> VAMOS ALTERAR ESSE HEADER...
+
+
+
+
+
+
+--> ''ON ANDROID,
+    WE WILL HAVE THIS BACKGROUND COLOR, AND THE 
+    TEXT ON THE FRONT''..
+
+
+
+
+
+
+
+--> BASICAMENTE,
+VAMOS ALTERAR O STYLE DE ACORDO COM A 
+PLATFORM...
+
+
+
+
+
+
+
+
+
+PARA ISSO, PRECISAMOS DA 'Platform' API....
+
+
+
+
+
+
+
+
+--> COM ELA, PODEMOS ESCREVER TIPO ASSIM:
+
+
+
+
+const styles = StyleSheet.create({
+  header: {
+    width: '100%',
+    height: 90,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingTop: 36,
+    backgroundColor: Platform.OS 
+  },
+  headerTitle: {
+    fontSize: 18,
+    color: 'black',
+    fontWeight: 'bold',
+  },
+});
+
+
+
+
+
+
+
+'Platform.OS' --> É A PLATFORM EM QUE VC ESTÁ RODANDO...
+
+
+                    PODEMOS RODAR COMPARISONS COM 
+                    ELE,
+
+                    TIPO ASSIM:
+
+
+
+
+
+
+
+const styles = StyleSheet.create({
+  header: {
+    width: '100%',
+    height: 90,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingTop: 36,
+    backgroundColor: Platform.OS === 'android' ? Colors.primary : 'white'
+  },
+  headerTitle: {
+    fontSize: 18,
+    color: 'black',
+    fontWeight: 'bold',
+  },
+});
+
+
+
+
+
+É CLARO QUE 
+
+
+
+VC NAO PRECISA DE LISTENERS
+
+
+NESSE OBJECT,
+
+
+
+JUSTAMENTE PQ ''THE PLATFORM CANNOT CHANGE WHILE THE 
+                APP IS RUNNING''...
+
+
+
+
+
+
+-. PODEMOS FAZER A MESMA COISA COM A BORDER, TIPO ASSIM:
+
+
+
+
+const styles = StyleSheet.create({
+  header: {
+    width: '100%',
+    height: 90,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingTop: 36,
+    backgroundColor: Platform.OS === 'android' ? Colors.primary : 'white',
+    borderBottomColor: Platform.OS === 'ios' ? '#ccc' : 'transparent'
+  },
+  headerTitle: {
+    fontSize: 18,
+    color: 'black',
+    fontWeight: 'bold',
+  },
+});
+
+
+
+
+
+MESMA COISA COM 'borderBottomWidth':
+
+
+
+
+
+
+const styles = StyleSheet.create({
+  header: {
+    width: '100%',
+    height: 90,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingTop: 36,
+    backgroundColor: Platform.OS === 'android' ? Colors.primary : 'white',
+    borderBottomColor: Platform.OS === 'ios' ? '#ccc' : 'transparent',
+    borderBottomWidth: Platform.OS === 'ios' ? 1 : 0
+  },
+  headerTitle: {
+    fontSize: 18,
+    color: 'black',
+    fontWeight: 'bold',
+  },
+});
+
+
+
+
+
+
+
+AÍ DEIXAMOS TIPO ASSIM:
+
+
+
+
+
+
+import Colors from '@/constants/Colors';
+import React from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+
+type HeaderProps = {
+  title: string;
+};
+
+const Header = (props: HeaderProps) => {
+  return (
+    <View style={styles.header}>
+      <TitleText style={styles.title}>{props.title}</TitleText>
+    </View>
+  );
+};
+
+
+
+const styles = StyleSheet.create({
+  header: {
+    width: '100%',
+    height: 90,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingTop: 36,
+    backgroundColor: Platform.OS === 'android' ? Colors.primary : 'white',
+    borderBottomColor: Platform.OS === 'ios' ? '#ccc' : 'transparent',
+    borderBottomWidth: Platform.OS === 'ios' ? 1 : 0
+  },
+  headerTitle: {
+    fontSize: 18,
+    color: 'black',
+    fontWeight: 'bold',
+  },
+  title: {
+    color: Platform.OS === 'ios' ? Colors.primary : 'white'
+  }
+});
+
+
+
+
+CERTO... ENTENDI...

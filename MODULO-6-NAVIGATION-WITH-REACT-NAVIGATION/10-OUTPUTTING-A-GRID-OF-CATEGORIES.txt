@@ -1,0 +1,364 @@
+
+
+
+
+
+
+
+--> AGORA VAMOS ESCREVER 1 GRID OF CATEGORIES...
+
+
+
+
+VAMOS USAR 1 FLATLIST...
+
+
+
+
+
+---> TIPO ASSIM:
+
+
+
+
+
+
+import React from 'react';
+import { Button, StyleSheet, Text, View, FlatList } from 'react-native';
+
+import Colors from '@/constants/Colors';
+
+type CategoriesScreenProps = {
+  onSelectCategory: () => void;
+  navigation: any;
+};
+
+const CategoriesScreen = (props: CategoriesScreenProps) => {
+  const { navigate } = props.navigation;
+
+  const onSelectCategory = () => {
+    navigate('CategoryMeals');
+  };
+
+  return (
+    // <View style={styles.screen}>
+    //   <Text>Categories Screen</Text>
+    //   <Button
+    //     title="Go to Meals!"
+    //     onPress={() => {
+    //       onSelectCategory('breakfast');
+    //     }}
+    //   />
+
+    //   <Button
+    //     title="Go to Meals!"
+    //     onPress={() => {
+    //       props.navigation.replace('MealDetail');
+    //     }}
+    //   />
+    // </View>
+
+    <FlatList numColumns={2} data={[]} />
+  );
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+AGORA PRECISAMOS DA DATA..
+
+
+-> CRIAMOS 1 FOLDER, DE NOME 'data'...
+
+
+
+
+
+
+
+
+dummy-data.ts ...
+
+
+
+
+
+
+
+
+
+
+-> AÍ ESCREVEMOS ASSIM:
+
+
+
+
+import Category from '@/models/category';
+
+const categories: Category[] = [
+  new Category('c1', 'Italian', 'red'),
+  new Category('c2', 'Mexican', 'blue'),
+  new Category('c3', 'French', 'green'),
+  new Category('c4', 'Japanese', 'yellow'),
+  new Category('c5', 'Spanish', 'orange'),
+  new Category('c6', 'German', 'purple'),
+  new Category('c7', 'Chinese', 'pink'),
+  new Category('c8', 'Turkish', 'brown'),
+  new Category('c9', 'Greek', 'gray'),
+  new Category('c10', 'Indian', 'black'),
+];
+
+export default categories;
+
+
+
+
+
+
+
+
+
+
+
+
+E ASSIM:
+
+
+
+class Category {
+  constructor(public id: string, public title: string, public color: string) {}
+}
+
+export default Category;
+
+
+
+
+
+
+
+
+
+E ASSIM:
+
+
+
+
+
+
+import React from 'react';
+import { Button, StyleSheet, Text, View, FlatList } from 'react-native';
+
+import Colors from '@/constants/Colors';
+
+import CATEGORIES from '@/data/dummy-data';
+import Category from '@/models/category';
+
+type CategoriesScreenProps = {
+  onSelectCategory: () => void;
+  navigation: any;
+};
+
+const renderGridItem = (itemData: Category) => {
+  return (
+    <View style={styles.gridItem}>
+      <Text>{itemData.title}</Text>
+    </View>
+  );
+};
+
+const CategoriesScreen = (props: CategoriesScreenProps) => {
+  const { navigate } = props.navigation;
+
+  const onSelectCategory = () => {
+    navigate('CategoryMeals');
+  };
+
+  return (
+    // <View style={styles.screen}>
+    //   <Text>Categories Screen</Text>
+    //   <Button
+    //     title="Go to Meals!"
+    //     onPress={() => {
+    //       onSelectCategory('breakfast');
+    //     }}
+    //   />
+
+    //   <Button
+    //     title="Go to Meals!"
+    //     onPress={() => {
+    //       props.navigation.replace('MealDetail');
+    //     }}
+    //   />
+    // </View>
+
+    <FlatList
+      numColumns={2}
+      data={CATEGORIES}
+      renderItem={({ item }) => renderGridItem(item)}
+      keyExtractor={(item) => item.id}
+    />
+  );
+};
+
+
+
+
+
+
+
+
+
+basicamente isso...
+
+
+
+
+
+
+---> MAS MUDO 1 POUCO O FORMATO DE CADA LIST ITEM:
+
+
+
+
+
+import React from 'react';
+import { Button, StyleSheet, Text, View, FlatList } from 'react-native';
+
+import Colors from '@/constants/Colors';
+
+import CATEGORIES from '@/data/dummy-data';
+import Category from '@/models/category';
+
+type CategoriesScreenProps = {
+  onSelectCategory: () => void;
+  navigation: any;
+};
+
+const renderGridItem = (itemData: Category) => {
+  return (
+    <View style={styles.gridItem}>
+      <Text>{itemData.title}</Text>
+    </View>
+  );
+};
+
+
+
+
+
+
+
+
+
+
+
+--> PARA FAZER PARECER COM 1 GRID,
+
+PRECISAMOS MUDAR 1 POUCO O STYLING...
+
+
+
+
+
+
+
+
+
+-> ESCREVEMOS TIPO ASSIM:
+
+
+
+
+
+import React from 'react';
+import { Button, StyleSheet, Text, View, FlatList } from 'react-native';
+
+import Colors from '@/constants/Colors';
+
+import CATEGORIES from '@/data/dummy-data';
+import Category from '@/models/category';
+
+type CategoriesScreenProps = {
+  onSelectCategory: () => void;
+  navigation: any;
+};
+
+const renderGridItem = (itemData: Category) => {
+  return (
+    <View style={styles.gridItem}>
+      <Text>{itemData.title}</Text>
+    </View>
+  );
+};
+
+const CategoriesScreen = (props: CategoriesScreenProps) => {
+  const { navigate } = props.navigation;
+
+  return (
+    // <View style={styles.screen}>
+    //   <Text>Categories Screen</Text>
+    //   <Button
+    //     title="Go to Meals!"
+    //     onPress={() => {
+    //       onSelectCategory('breakfast');
+    //     }}
+    //   />
+
+    //   <Button
+    //     title="Go to Meals!"
+    //     onPress={() => {
+    //       props.navigation.replace('MealDetail');
+    //     }}
+    //   />
+    // </View>
+
+    <FlatList
+      numColumns={2}
+      data={CATEGORIES}
+      renderItem={({ item }) => renderGridItem(item)}
+      keyExtractor={(item) => item.id}
+    />
+  );
+};
+
+const styles = StyleSheet.create({
+  gridItem: {
+    flex: 1,
+    margin: 15,
+    height: 150,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+});
+
+export default CategoriesScreen;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ok... queremos definir 1 title para o header, também, para que o user 
+tenha 1 melhor ideia de onde ele está

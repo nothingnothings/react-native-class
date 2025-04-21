@@ -1,58 +1,61 @@
 import React from 'react';
-import { Button, StyleSheet, Text, View } from 'react-native';
+import { Button, StyleSheet, Text, View, FlatList } from 'react-native';
 
 import Colors from '@/constants/Colors';
+
+import CATEGORIES from '@/data/dummy-data';
+import Category from '@/models/category';
 
 type CategoriesScreenProps = {
   onSelectCategory: () => void;
   navigation: any;
 };
 
-const CategoriesScreen = (props: CategoriesScreenProps) => {
-  const { navigate } = props.navigation;
-
-  const onSelectCategory = () => {
-    navigate('CategoryMeals');
-  };
-
+const renderGridItem = (itemData: Category) => {
   return (
-    <View style={styles.screen}>
-      <Text>Categories Screen</Text>
-      <Button
-        title="Go to Meals!"
-        onPress={() => {
-          onSelectCategory('breakfast');
-        }}
-      />
-
-      <Button
-        title="Go to Meals!"
-        onPress={() => {
-          props.navigation.replace('MealDetail');
-        }}
-      />
+    <View style={styles.gridItem}>
+      <Text>{itemData.title}</Text>
     </View>
   );
 };
 
+const CategoriesScreen = (props: CategoriesScreenProps) => {
+  const { navigate } = props.navigation;
+
+  return (
+    // <View style={styles.screen}>
+    //   <Text>Categories Screen</Text>
+    //   <Button
+    //     title="Go to Meals!"
+    //     onPress={() => {
+    //       onSelectCategory('breakfast');
+    //     }}
+    //   />
+
+    //   <Button
+    //     title="Go to Meals!"
+    //     onPress={() => {
+    //       props.navigation.replace('MealDetail');
+    //     }}
+    //   />
+    // </View>
+
+    <FlatList
+      numColumns={2}
+      data={CATEGORIES}
+      renderItem={({ item }) => renderGridItem(item)}
+      keyExtractor={(item) => item.id}
+    />
+  );
+};
+
 const styles = StyleSheet.create({
-  screen: {
+  gridItem: {
     flex: 1,
+    margin: 15,
+    height: 150,
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  title: {
-    fontSize: 20,
-    marginVertical: 10,
-    fontFamily: 'open-sans-bold',
-  },
-  buttonContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    width: '100%',
-    marginTop: 20,
-    flex: 1,
-    paddingHorizontal: 15,
   },
 });
 

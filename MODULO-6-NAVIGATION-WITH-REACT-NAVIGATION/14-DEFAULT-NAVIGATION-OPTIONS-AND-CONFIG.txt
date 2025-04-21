@@ -1,0 +1,463 @@
+
+
+
+
+
+
+FAZER O D.R.Y 
+
+
+MUITAS E MUITAS VEZES NÃO É NADA OPTIMAL...
+
+
+
+
+
+QUEREMOS QUE O HEADER SEJA DEFINIDO 1 ÚNICA VEZ,
+
+E ENTÃO 
+
+
+PASSADO PARA TODAS AS PARTES DE NOSSO APP...
+
+
+
+
+
+
+--> LÁ EM CategoryMealsScreen,
+
+
+REMOVEMOS A PARTE DUPLICADA  AQUI:
+
+
+
+
+
+  const headerTitle = CATEGORIES.filter(
+    (item) => item.id === navigationData.categoryId
+  )[0].title;
+
+  return {
+    headerTitle,
+    // backgroundColor: Colors.primary,
+    // headerTintColor: Platform.OS === 'android' ? 'white' : 'black',
+  };
+};
+
+
+
+
+
+
+
+
+
+
+DEIXAMOS APENAS O 'headerTitle',
+
+
+QUE É ÚNICO E DINÂMICO,
+NESSA PAGE...
+
+
+
+
+
+
+
+
+
+
+
+
+
+--> CERTO...
+
+
+
+
+
+MAS ONDE PODEMOS DEFINIR ESSES STYLES COMO DEFAULT DO HEADER?
+
+
+
+
+
+
+
+
+
+
+
+--> VAMOS ATÉ 'MealsNavigator',
+
+
+
+    EM QUE PODEMOS DEFINIR OPTIONS DIRETAMENTE,
+
+    NO NAVIGATOR...
+
+
+
+
+
+
+
+--> PODEMOS DEFINIR ASSIM:
+
+
+
+
+
+import { createStackNavigator } from 'react-navigation';
+import { createAppContainer } from 'react-navigation';
+
+import CategoriesScreen from '@/app/CategoriesScreen';
+import CategoryMealsScreen from '@/app/CategoryMeals';
+import MealDetailScreen from '@/app/MealDetailScreen';
+
+const MealsNavigator = createStackNavigator({
+  Categories: CategoriesScreen,
+  CategoryMeals: {
+    screen: CategoryMealsScreen, // te deixa adicioar configurações extras.
+    navigationOptions: {
+      headerTitle: 'Category Meals',
+    }
+  },
+  MealDetail: MealDetailScreen,
+});
+
+export default createAppContainer(MealsNavigator); /// Basic setup.
+
+
+
+
+
+
+
+
+
+EX:
+
+
+
+
+
+
+
+import { createStackNavigator } from 'react-navigation';
+import { createAppContainer } from 'react-navigation';
+
+import CategoriesScreen from '@/app/CategoriesScreen';
+import CategoryMealsScreen from '@/app/CategoryMeals';
+import MealDetailScreen from '@/app/MealDetailScreen';
+import { Colors } from '@/constants/Colors';
+
+const MealsNavigator = createStackNavigator({
+  Categories: CategoriesScreen,
+  CategoryMeals: {
+    screen: CategoryMealsScreen, // te deixa adicioar configurações extras.
+    navigationOptions: {
+      headerStyle: {
+        backgroundColor: Colors.dark,
+        borderBottomColor: Colors.dark,
+      },
+    },
+  },
+  MealDetail: MealDetailScreen,
+});
+
+export default createAppContainer(MealsNavigator); /// Basic setup.
+
+
+
+
+
+
+
+
+
+
+PODERÍAMOS FAZER ISSO COM 
+
+
+TODAS AS SCREENS,
+
+MAS ISSO TAMBÉM SERIA REPETIÇÃO DE CÓDIGO...
+
+
+
+
+
+
+
+--> A PEQUENA VANTAGEM, EM RELAÇÃO AO PROBLEMA ANTERIOR,
+
+É QUE 
+
+TEMOS 
+
+TODAS AS CONFIGS EM APENAS 1 ÚNICO LOCAL...
+
+
+
+
+
+
+--> É POR ISSO QUE, EM VEZ DISSO,
+    PODEMOS TIRAR VANTAGEM 
+
+    _ dE OUTRO _ ARGUMENT, SEGUNDO ARGUMENTO,
+
+
+    QUE PODEMOS PASSAR AO 'createStackNavigator'....
+
+
+
+
+
+--> O SEGUNDO ARGUMENTO TE DEIXA '''CONFIG YOUR 
+
+                                NAVIGATOR''...
+
+
+
+
+
+
+--> PODEMOS ESCREVER ASSIM:
+
+
+
+
+
+import { createStackNavigator } from 'react-navigation';
+import { createAppContainer } from 'react-navigation';
+
+import CategoriesScreen from '@/app/CategoriesScreen';
+import CategoryMealsScreen from '@/app/CategoryMeals';
+import MealDetailScreen from '@/app/MealDetailScreen';
+import { Colors } from '@/constants/Colors';
+
+const MealsNavigator = createStackNavigator(
+  {
+    Categories: CategoriesScreen,
+    CategoryMeals: {
+      screen: CategoryMealsScreen, // te deixa adicioar configurações extras.
+      navigationOptions: {
+        headerStyle: {
+          backgroundColor: Colors.dark,
+          borderBottomColor: Colors.dark,
+        },
+      },
+    },
+    MealDetail: MealDetailScreen,
+  },
+  {
+    // this is the stackConfig (things like header, headerTitle, etc.)
+    defaultNavigationOptions: {
+      headerStyle: {
+        backgroundColor: 'white',
+        borderBottomColor: 'white',
+      },
+    },
+  }
+);
+
+export default createAppContainer(MealsNavigator); /// Basic setup.
+
+
+
+
+
+
+
+
+É ASSIM QUE PODEMOS DEFINIR CONFIGURATIONS QUE 
+VÃO SEMPRE 
+SER AS MESMAS, COMO A CONFIG DO HEADER...
+
+
+
+EX:
+
+
+
+
+
+import { createStackNavigator } from 'react-navigation';
+import { createAppContainer } from 'react-navigation';
+
+import CategoriesScreen from '@/app/CategoriesScreen';
+import CategoryMealsScreen from '@/app/CategoryMeals';
+import MealDetailScreen from '@/app/MealDetailScreen';
+import { Colors } from '@/constants/Colors';
+import { Platform } from 'react-native';
+
+const MealsNavigator = createStackNavigator(
+  {
+    Categories: CategoriesScreen,
+    CategoryMeals: {
+      screen: CategoryMealsScreen, // te deixa adicioar configurações extras.
+      navigationOptions: {
+        headerStyle: {
+          backgroundColor: Colors.dark,
+          borderBottomColor: Colors.dark,
+        },
+      },
+    },
+    MealDetail: MealDetailScreen,
+  },
+  {
+    // this is the stackConfig (things like header, headerTitle, etc.)
+    defaultNavigationOptions: {
+      headerStyle: {
+        backgroundColor: Platform.OS === 'android' ? '#3b3b3b' : '#2b2b2b',
+        borderBottomColor: Platform.OS === 'android' ? 'white' : 'black',
+      },
+    },
+  }
+);
+
+export default createAppContainer(MealsNavigator); /// Basic setup.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+OK... MAS ISSO NOS LEVA A OUTRA PERGUNTA:
+
+
+
+
+'''COMO AS SETTINGS 
+
+    DE DENTRO 
+
+    DO 'MealsNavigator'
+
+
+    ACABAM MERGEADA COM AS NAVIGATION OPTIONS MAIS ESPECÍFICAS?
+    '''
+
+
+
+
+--> as navigation options mais específicas 
+
+SEMPRE __ VENCEM_ em relação às menos específicas (
+    como as defaultNavigationOptions,
+    que frequentemente são overriden...
+)
+
+
+
+
+-> TAMBÉM PODEMOS DEFINIR OUTRAS COISAS.....
+
+
+
+
+COMO 
+
+'mode: 'modal',
+
+
+
+
+que muda a default animation do seu app...
+
+
+
+
+
+
+'initialRouteName' -> vc também pode mudar isso...
+
+
+
+
+
+
+
+
+
+
+
+MAS HÁ MAIS UMA COISA QUE VC VAI QUERER FAZER,
+
+QUANDO ESTIVER TRABALHANDO COM REACT NAVIGATION...
+
+
+
+
+
+
+--> É INSTALAR A PACKAGE 'react-native-screens'...
+
+
+
+
+
+O QUE ISSO FAZ?
+
+
+
+
+ISSO TE DEIXA 
+
+'ENSURE THAT, UNDER THE HOOD,
+
+REACT NATIVE WILL USE NATIVE 
+OPTIMIZED SCREEN COMPONENTS,
+PROVIDED BY ANDROID/IOS... 
+
+
+FRAGMENT AND UI VIEW CONTROLLER''...
+
+
+
+
+-> E ISSO AÍ MELHORA 1 POUCO A PERFORMANCE...
+
+
+
+
+--> PARA USAR ESSAS SCREENS ESPECIAIS,
+
+
+
+    VC DEVE IR ATÉ 'App.js',
+
+
+
+    e aí 
+
+
+    usar o hook 'useScreens',
+
+
+
+    import { useScreens } from 'react-native-screens';
+
+
+
+
+
+
+
+-> ISSO TAMBÉM É CHAMADO DE 'enableScreens()'...
+
+
+

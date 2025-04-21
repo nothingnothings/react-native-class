@@ -1,0 +1,550 @@
+
+
+
+
+
+
+
+
+--> AGORA TEMOS TABS...
+
+
+
+
+
+
+
+--> ANTES DE CONTINUARMOS COM OS FAVORITES,
+
+    TEMOS QUE 
+
+    FAZER COM QUE 
+
+    AS TABS 
+
+
+
+    DO ANDROID 
+
+    TENHAM 1 APARENCIA MELHOR..
+
+
+
+
+-> QUEREMOS QUE ELAS TENHAM 1 LOOK MAIS ANDROID...
+
+
+
+
+
+--> PARA ISSO, PRECISAMOS CRIAR 1 OUTRO NAVIGATOR...
+
+
+
+
+--> MAS, PARA ISSO, PRECISAMOS INSTALAR 
+OUTRA PACKAGE,
+
+DE NOME 
+
+
+
+
+react-navigation-material-bottom-tabs 
+
+
+
+
+
+npm install --save react-navigation-material-bottom-tabs 
+
+
+
+
+
+
+
+--> depois disso,
+instalamos 
+
+
+react-native-paper 
+
+
+
+
+
+
+
+--> PRECISAMOS DESSAS 2 DEPENDENCIES....
+
+
+
+
+
+
+--> ISSO FEITO,
+
+    TEMOS PACKAGES QUE NOS DEIXAM 
+    INSTALAR
+
+    UMA 'ALTERNATIVE TAB NAVIGATOR'...
+
+
+
+
+
+
+
+-> E ELA É SUPER FÁCIL DE USAR,
+
+E É SUPER PARECIDA COM A 
+
+createBottomTabNavigator 
+
+
+COMUM....
+
+
+
+
+
+
+
+-> PARA USAR ISSO,
+
+ESCREVEMOS ASSIM:
+
+
+
+
+
+
+
+import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
+
+
+
+
+
+
+
+VAI FICANDO TIPO ASSIM:
+
+
+
+
+
+import {
+  createStackNavigator,
+  createBottomTabNavigator,
+} from 'react-navigation';
+import { createAppContainer } from 'react-navigation';
+
+import CategoriesScreen from '@/app/CategoriesScreen';
+import CategoryMealsScreen from '@/app/CategoryMeals';
+import MealDetailScreen from '@/app/MealDetailScreen';
+import { Colors } from '@/constants/Colors';
+import { Platform } from 'react-native';
+import FavoritesScreen from '@/app/FavoritesScreen';
+import { Ionicons } from '@expo/vector-icons';
+
+// Android-specific
+import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
+
+
+const MealsNavigator = createStackNavigator(
+  {
+    Categories: CategoriesScreen,
+    CategoryMeals: {
+      screen: CategoryMealsScreen, // te deixa adicioar configurações extras.
+      navigationOptions: {
+        headerStyle: {
+          backgroundColor: Colors.dark,
+          borderBottomColor: Colors.dark,
+        },
+      },
+    },
+    MealDetail: MealDetailScreen,
+  },
+  {
+    // this is the stackConfig (things like header, headerTitle, etc.)
+    defaultNavigationOptions: {
+      headerStyle: {
+        backgroundColor: Platform.OS === 'android' ? '#3b3b3b' : '#2b2b2b',
+        borderBottomColor: Platform.OS === 'android' ? 'white' : 'black',
+      },
+    },
+  }
+);
+
+// Tabs
+const MealsFavTabNavigator = createBottomTabNavigator(
+  {
+    Meals: {
+      screen: MealsNavigator,
+      navigationOptions: {
+        tabBarIcon: (tabInfo: any) => {
+          return (
+            <Ionicons name="restaurant" size={25} color={tabInfo.accentColor} />
+          );
+        },
+      },
+    },
+    Favorites: {
+      screen: FavoritesScreen,
+      navigationOptions: {
+        tabBarIcon: (tabInfo: any) => {
+          return <Ionicons name="star" size={25} color={tabInfo.accentColor} />;
+        },
+      },
+    },
+  },
+  {
+    tabBarOptions: {
+      activeTintColor: Colors.accentColor,
+      inactiveTintColor: Colors.dark,
+      style: {
+        backgroundColor: Colors.dark,
+        borderTopColor: Colors.dark,
+      },
+    },
+  }
+);
+
+// The tab navigator becomes the root navigator (contains the first stack, of meals, and the extra favorites screen).
+export default createAppContainer(MealsFavTabNavigator); /// Basic setup.
+
+
+
+
+
+
+
+
+
+
+
+CERTO...
+
+
+
+
+
+
+
+
+
+--> PRECISAMOS DE 'Platform.OS',
+
+para 
+
+DETECTAR 
+
+SE A PLATFORM É ANDROID OU NÃO...
+
+
+
+
+
+
+
+--> POR ISSO ESCREVEMOS ASSIM:
+
+
+
+
+
+
+// Tabs
+const MealsFavTabNavigator =
+  Platform.OS === 'android'
+    ? createMaterialBottomTabNavigator()
+    : createBottomTabNavigator(
+        {
+          Meals: {
+            screen: MealsNavigator,
+            navigationOptions: {
+              tabBarIcon: (tabInfo: any) => {
+                return (
+                  <Ionicons
+                    name="restaurant"
+                    size={25}
+                    color={tabInfo.accentColor}
+                  />
+                );
+              },
+            },
+          },
+          Favorites: {
+            screen: FavoritesScreen,
+            navigationOptions: {
+              tabBarIcon: (tabInfo: any) => {
+                return (
+                  <Ionicons name="star" size={25} color={tabInfo.accentColor} />
+                );
+              },
+            },
+          },
+        },
+        {
+          tabBarOptions: {
+            activeTintColor: Colors.accentColor,
+            inactiveTintColor: Colors.dark,
+            style: {
+              backgroundColor: Colors.dark,
+              borderTopColor: Colors.dark,
+            },
+          },
+        }
+      );
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+OK... MAS AÍ RESTA A PERGUNTA:
+
+
+''COMO CONFIGURAMOS ISSO AÍ???'''
+
+
+
+
+
+
+
+---> basicamente configuramos da mesma maneira que 
+o 'createBottomTabNavigator'...
+
+
+
+
+
+--> A ÚNICA PARTE DIFERNTE 
+
+É OS DETAILS DE STYLE,
+
+
+MAS A PARTE MECANICA É A MESMA...
+
+
+
+
+
+
+--> É POR ISSO QUE PODEMOS 
+
+
+
+
+COLOCAR A CONFIG EM 1 VARIABLE DE 
+'tabScreenConfig',
+
+
+E AÍ 
+
+
+PASSAR AS 2 
+
+COMO PRIMEIRO PARAMETER DE 'createMaterialBottomTabNavigator'
+
+e 'createBottomTabNavigator'...
+
+
+TIPO ASSIM:
+
+
+
+
+
+
+
+const tabScreenConfig = {
+  Meals: {
+    screen: MealsNavigator,
+    navigationOptions: {
+      tabBarIcon: (tabInfo: any) => {
+        return (
+          <Ionicons name="restaurant" size={25} color={tabInfo.accentColor} />
+        );
+      },
+    },
+  },
+  Favorites: {
+    screen: FavoritesScreen,
+    navigationOptions: {
+      tabBarIcon: (tabInfo: any) => {
+        return <Ionicons name="star" size={25} color={tabInfo.accentColor} />;
+      },
+    },
+  },
+};
+
+// Tabs
+const MealsFavTabNavigator =
+  Platform.OS === 'android'
+    ? createMaterialBottomTabNavigator(tabScreenConfig, {})
+    : createBottomTabNavigator(tabScreenConfig, {
+        tabBarOptions: {
+          activeTintColor: Colors.primary,
+        },
+      });
+
+
+
+
+
+
+
+CERTO...
+
+
+
+
+
+
+
+
+O SEGUNDO PARAMETER,
+
+NO CASO,
+
+
+É O QUE REALMENTE VAI MUDAR...
+
+
+
+
+
+
+--> PQ, NO SEGUNDO PARAMETER DE 
+
+'createMaterialBottomTabNavigator',
+
+
+devemos definir 'activeColor',
+
+
+
+E NÃO 'activeTintColor'...
+
+
+
+
+
+TIPO ASSIM:
+
+
+
+// Tabs
+const MealsFavTabNavigator =
+  Platform.OS === 'android'
+    ? createMaterialBottomTabNavigator(tabScreenConfig, {
+        activeColor: Colors.primary,
+        shifting: true,
+      })
+    : createBottomTabNavigator(tabScreenConfig, {
+        tabBarOptions: {
+          activeTintColor: Colors.primary,
+        },
+      });
+
+
+
+
+
+
+
+
+
+COM O ANDROID,
+
+AGORA TEMOS 1 LOOK MAIS MATERIAL,
+
+E COM 1 SHIFT 
+
+ENTRE AS PAGES,
+
+
+BEM MAIS LEGAL...
+
+
+
+
+
+
+
+DIGAMOS QUE QUEREMOS MUDAR A COR 
+
+DA TAB BAR,
+
+
+E TER 1 
+
+NICE RIPPLE EFFECT,
+
+QUE MUDA AO LONGO DO CAMINHO...
+
+
+
+
+
+
+---> PARA ISSO, BASTA ESCREVER ASSIM:
+
+
+
+
+
+
+const tabScreenConfig = {
+  Meals: {
+    screen: MealsNavigator,
+    navigationOptions: {
+      tabBarIcon: (tabInfo: any) => {
+        return (
+          <Ionicons name="restaurant" size={25} color={tabInfo.accentColor} />
+        );
+      },
+      tabBarColor: Colors.primary,
+    },
+  },
+  Favorites: {
+    screen: FavoritesScreen,
+    navigationOptions: {
+      tabBarIcon: (tabInfo: any) => {
+        return <Ionicons name="star" size={25} color={tabInfo.accentColor} />;
+      },
+      tabBarColor: Colors.accentColor
+    },
+  },
+};
+
+
+
+
+
+COM ISSO, 
+
+AGORA NOSSA TAB MUDA DE COR, QUANDO TROCAMOS 
+
+DE TAB...
+
+
+
+
+
+
+--> ESSE RIPPLE EFFECT É ATIVADO COM 'shifting: true'...
+

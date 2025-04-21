@@ -12,6 +12,9 @@ import { Platform } from 'react-native';
 import FavoritesScreen from '@/app/FavoritesScreen';
 import { Ionicons } from '@expo/vector-icons';
 
+// Android-specific
+import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
+
 const MealsNavigator = createStackNavigator(
   {
     Categories: CategoriesScreen,
@@ -37,39 +40,41 @@ const MealsNavigator = createStackNavigator(
   }
 );
 
-// Tabs
-const MealsFavTabNavigator = createBottomTabNavigator(
-  {
-    Meals: {
-      screen: MealsNavigator,
-      navigationOptions: {
-        tabBarIcon: (tabInfo: any) => {
-          return (
-            <Ionicons name="restaurant" size={25} color={tabInfo.accentColor} />
-          );
-        },
+const tabScreenConfig = {
+  Meals: {
+    screen: MealsNavigator,
+    navigationOptions: {
+      tabBarIcon: (tabInfo: any) => {
+        return (
+          <Ionicons name="restaurant" size={25} color={tabInfo.accentColor} />
+        );
       },
-    },
-    Favorites: {
-      screen: FavoritesScreen,
-      navigationOptions: {
-        tabBarIcon: (tabInfo: any) => {
-          return <Ionicons name="star" size={25} color={tabInfo.accentColor} />;
-        },
-      },
+      tabBarColor: Colors.primary,
     },
   },
-  {
-    tabBarOptions: {
-      activeTintColor: Colors.accentColor,
-      inactiveTintColor: Colors.dark,
-      style: {
-        backgroundColor: Colors.dark,
-        borderTopColor: Colors.dark,
+  Favorites: {
+    screen: FavoritesScreen,
+    navigationOptions: {
+      tabBarIcon: (tabInfo: any) => {
+        return <Ionicons name="star" size={25} color={tabInfo.accentColor} />;
       },
+      tabBarColor: Colors.accentColor,
     },
-  }
-);
+  },
+};
+
+// Tabs
+const MealsFavTabNavigator =
+  Platform.OS === 'android'
+    ? createMaterialBottomTabNavigator(tabScreenConfig, {
+        activeColor: 'white',
+        shifting: true,
+      })
+    : createBottomTabNavigator(tabScreenConfig, {
+        tabBarOptions: {
+          activeTintColor: 'white',
+        },
+      });
 
 // The tab navigator becomes the root navigator (contains the first stack, of meals, and the extra favorites screen).
 export default createAppContainer(MealsFavTabNavigator); /// Basic setup.

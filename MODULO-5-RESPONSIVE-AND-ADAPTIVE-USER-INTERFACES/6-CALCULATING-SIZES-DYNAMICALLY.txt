@@ -1,0 +1,431 @@
+
+
+
+
+
+
+
+
+
+MAS TEMOS OUTRO PROBLEMA COM ESSE APP...
+
+
+
+
+
+
+
+
+
+
+
+--> A IMAGE ESTÁ IMENSA....
+
+
+
+
+
+--> O OUTRO PROBLEMA É QUE A SCREEN NÃO ESTÁ 
+SCROLLABLE (PQ A IMAGE ESTÁ IMENSA)... ELA 
+NÃO ESTÁ SCROLLABLE TAMBÉM PQ 
+
+NÓS NÃO ESTAMOS USANDO 'SCROLLVIEW'...
+
+
+
+
+
+
+
+
+
+--> PARA GARANTIR QUE 
+    NOSSO CONTEÚDO TODO CONSIGA CABER NA TELA,
+
+
+    
+    VAMOS ATÉ O 'GameOverScreen'
+
+
+
+    E PASSAMOS 
+
+    A CALCULAR NOSSA HEIGHT E WIDTH DINAMICAMENTE...
+
+
+
+
+
+
+
+ISSO PQ, ATÉ AGORA,
+
+ELAS SÃO DEFINIDAS ASSIM:
+
+
+
+
+
+  imageContainer: {
+    width: 300,
+    height: 300,
+    borderRadius: 150,
+    borderWidth: 3,
+    borderColor: 'black',
+    overflow: 'hidden',
+    marginVertical: 20,
+  },
+
+
+
+
+
+
+
+
+--> DEVEMOS TROCAR ISSO, TIRAR OS 
+HARD-CODED DE '300'...
+
+
+
+
+
+
+
+--> MAS COMO PODEMOS FAZER ISSO?
+
+
+
+
+
+-> TALVEZ USAR A DIMENSIONS API...
+
+
+
+
+
+
+
+--> USAMOS A DIMENSIONS API,
+
+TIPO ASSIM:
+
+
+
+ imageContainer: {
+    width: Dimensions.get('window').width * 0.7,
+    height: Dimensions.get('window').height * 0.7,
+    borderRadius: 150,
+    borderWidth: 3,
+    borderColor: 'black',
+    overflow: 'hidden',
+    marginVertical: 20,
+  },
+
+
+
+
+
+--> COM ISSO, QUEREMOS QUE A IMAGE TENHA 
+
+''THE WIDTH OF 70% OF THE SCREEN''...
+
+
+
+
+
+--> deixamos a height como ''
+    height: Dimensions.get('window').height * 0.7,
+''',
+
+
+
+MAS SE QUISERMOS QUE A IMAGE TENHA O MESMO TAMANHO 
+NOS 2 ASPECT RATIOS,
+
+DEVEMOS DEFINIR A HEIGHT TAMBÉM COMO SENDO 
+
+''   width: Dimensions.get('window').width * 0.7 '',
+
+
+
+mas é claro que isso NÃO VAI GARANTIR QUE 
+
+TUDO VAI CABER NA TELA (vai ficar mais bonito,
+mas não vai garantir que tudo caberá na tela...)
+
+
+
+
+--> SE VC QUISER QUE TUDO CAIBA NA TELA,
+    MANTENDO O ASPECT RATIO,
+
+
+    VC DEVE FAZER ASSIM:
+
+
+
+
+imageContainer: {
+    width: Dimensions.get('window').height * <factor_x>,
+    height: Dimensions.get('window').height * <factor_x>
+    borderRadius: 150,
+    borderWidth: 3,
+    borderColor: 'black',
+    overflow: 'hidden',
+    marginVertical: 20,
+  },
+
+
+
+
+SENDO 'factor_x' 
+
+A PORCENTAGEM QUE VC DESEJA USAR...
+
+
+
+
+
+-> TAMBÉM USE ESSE VALUE NA BORDER RADIUS,
+
+QUE DEVE SER METADE DISSO,
+
+TIPO ASSIM:
+
+
+
+
+
+
+ imageContainer: {
+    width: Dimensions.get('window').height * 0.7,
+    height: Dimensions.get('window').height * 0.7,
+    borderRadius: Dimensions.get('window').height * 0.7 / 2,
+    borderWidth: 3,
+    borderColor: 'black',
+    overflow: 'hidden',
+    marginVertical: 30,
+  },
+
+
+
+
+
+
+
+
+CERTO... MAS TEMOS OUTRAS COISAS A SEREM AJUSTADAS,
+
+
+COMO O 'marginVertical',
+
+
+
+QUE ESTÁ HARDCODED COMO '30'...
+
+
+
+
+
+
+mesma coisa com o  
+
+'resultContainer'...
+
+
+
+
+FAZEMOS TIPO ASSIM:
+
+
+
+
+
+
+
+
+ imageContainer: {
+    width: Dimensions.get('window').height * 0.7,
+    height: Dimensions.get('window').height * 0.7,
+    borderRadius: Dimensions.get('window').height * 0.7 / 2,
+    borderWidth: 3,
+    borderColor: 'black',
+    overflow: 'hidden',
+    marginVertical: Dimensions.get('window').height / 20
+  },
+
+
+
+
+
+
+
+
+
+O QUE ISSO FAZ, NO CASO,
+
+É ESSENCIALMENTE DEFINIR A VERTICAL MARGIN COMO 
+SENDO '5%' DO DEVICE HEIGHT TOTAL...
+
+
+
+SE VC  COLOCASSE '/ 40',
+
+vc ficaria com '2.5%' da total height,
+e assim por diante...
+
+
+
+
+
+
+FAZEMOS ISSO LÁ NO RESULTCONTAINER,
+
+TIPO ASSIM:
+
+
+
+
+
+ imageContainer: {
+    width: Dimensions.get('window').height * 0.7,
+    height: Dimensions.get('window').height * 0.7,
+    borderRadius: Dimensions.get('window').height * 0.7 / 2,
+    borderWidth: 3,
+    borderColor: 'black',
+    overflow: 'hidden',
+    marginVertical: Dimensions.get('window').height / 30
+  },
+
+
+
+resultContainer {
+    marginHorizontal: 30,
+    marginVertical: Dimensions.get('window').height / 60
+}
+
+
+
+
+
+
+
+
+
+
+ainda não está perfeito... o professor ajusta também 
+
+
+a fontSize, faz com que ela seja resized,
+de acordo com as dimensiions,
+
+
+DEIXA TIPO ASSIM:
+
+
+
+resultText: {
+    textAlign: 'center',
+    fontSize: Dimensions.get('window').height < 400 ? 16 : 20
+}
+
+
+
+
+
+
+
+
+
+
+ok... ainda assim, o professor quer que sejamos 
+capazes de SCROLL... mesmo com todo esse tweaking...
+
+
+
+
+
+--> pq mtas vezes as coisas não cabem totalmente na tela,
+
+mesmo com todo esse tweaking,
+
+
+por isso escrevemos assim:
+
+
+
+
+
+
+
+
+ANTES:
+
+
+
+<View style={styles.screen}>
+    ...
+</View>
+
+
+
+
+
+
+
+DEPOIS:
+
+
+
+
+<ScrollView>
+<View style={styles.screen}>
+    ...
+</View>
+</ScrollView>
+
+
+
+
+
+
+
+
+
+BASICAMENTE WRAPPAMOS NOSSA VIEW, COM ESSE SCROLLVIEW...
+
+
+
+
+
+
+
+agora tudo cabe na tela,
+
+e agora somos capazes de scroll, caso necessário...
+
+
+
+
+
+
+
+
+
+
+OK... ESSA FOI A DIMENSIONS API...
+
+
+TE AJUDA A CONSTRUIR USER INTERFACES EM DIFERENTES 
+
+DEVICE SIZES...
+
+
+
+
+OK... AGORA DEVEMOS VER COMO PODEMOS TROCAR 
+OS LAYOUTS, DE ACORDO COM DEVICE ORIENTATIONS...
+
+
+

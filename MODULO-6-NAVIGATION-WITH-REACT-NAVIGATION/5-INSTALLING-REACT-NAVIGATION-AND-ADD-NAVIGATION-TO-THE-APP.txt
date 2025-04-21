@@ -1,0 +1,193 @@
+
+
+
+
+
+
+
+
+
+
+A NAVIGATION É DIFERENTE EM REACT NATIVE APPS...
+
+
+
+
+
+
+NA WEB:
+
+
+
+
+
+
+-> VC DIGITA UMA URL,
+
+    E AÍ VC USA UMA FERRAMENTA COMO O REACT ROUTER,
+
+    PARA CARREGAR ALGO COMO O COMPONENT 
+
+    '<Users />'...
+
+
+
+
+
+
+É O REACT ROUTER QUE FAZ TUDO...
+
+
+
+
+
+
+
+--> QUER DIZER QUE A 'url'
+
+É SUA __ SOURCE OF TRUTH...
+
+
+
+ESSA SOURCE OF TRUTH É 
+
+CAPTADA POR LIBRARIES COMO O REACT-ROUTER,
+
+
+E ENTÃO FAZ COM QUE DIFERENTES COMPONENTS SEJAM CARREGADOS...
+
+
+
+
+
+
+
+
+
+
+-> MAS EM NATIVE APPS, TEMOS 1 PROBLEMA:
+
+
+
+
+
+
+--> NÃO TEMOS URL ALGUMA... EM VEZ DISSO,
+    ESTAMOS APERTANDO BOTÕES, INDO PARA FRENTE E PARA TRÁS....
+
+
+
+
+
+
+
+--> TEMOS TABS... --> É UM COMMON PATTERN...
+
+
+
+--> STACK OF PAGES --> OUTRO COMMON PATTERN...
+
+
+                --> QUER DIEZR QUE VC CLICA EM 1 PAGE,
+                    AÍ 
+
+                    VC TEM 1 BACK BUTTON, EM CIMA OU EMBAIXO,
+                        E AÍ 
+
+                        VC 
+                        NAVEGA PARA A PAGE ANTERIOR, ETC ETC...
+
+
+
+                E É ISSO QUE CARREGA 
+                O COMPONENT...
+
+
+
+
+
+---> É CLARO QUE APPS SE PARECEM 1 POUCO DIFERENTES AOS USERS,
+    DO QUE WEB APPS...
+
+
+
+
+
+
+--> QUEREMOS DAR ESSE FEEDBACK AO USER...
+
+
+
+
+
+
+
+
+
+--> PARA PROPORCIONAR ESSA EXPERIENCIA AOS USERS,
+
+
+USAMOS 
+
+'react-navigation',
+
+
+ESSA LIBRARY...
+
+
+
+
+
+
+--> É UMA NAVIGATION LIBRARY USADA PARA NATIVE APPS...
+
+APESAR DE SER POSSÍVEL DE SER UTILIZADA PARA REACT APPS 
+WEB...
+
+
+
+
+
+
+--> o expo usa REACT NAVIGATION...
+
+
+
+
+
+
+react-native-gesture-handler 
+
+react-native-reanimated
+
+
+react-native-screens 
+
+
+
+
+
+
+
+
+
+PROFESSOR CRIA FOLDER DE NOME 
+
+'navigation'....
+
+
+
+
+
+
+-> DENTRO DELA, ELE CRIA 1 ARUQIVO DE NOME 
+
+'MealsNavigation.js'...
+
+
+
+
+
+-> O PROFESSOR VAI DEFINIR A 'NAVIGATION CONFIGURATION' 
+
+DENTRO DE ESSE ARQUIVO...

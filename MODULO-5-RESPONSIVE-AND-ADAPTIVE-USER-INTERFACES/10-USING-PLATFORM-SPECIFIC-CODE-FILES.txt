@@ -1,0 +1,172 @@
+
+
+
+
+
+
+
+EM RAROS CASOS,
+
+VC VAI QUERER TAMBÉM 
+
+
+''SWITCH WAY MORE THAN JUST STYLES,
+
+IN YOUR COMPONENTS''...
+
+
+
+
+
+
+
+
+
+
+--> NOS SEUS ARQUIVOS COMPONENT,
+
+VC TERIA 1 MONTE DE IF CHECKS 
+
+E 'Platform.select()'...
+
+
+
+
+
+
+
+
+--> EM CASES EXTREMOS,
+
+
+VC PODE TRABALHAR TAMBÉM COM MÚLTIPLAS FILES,
+
+
+E NOMEÁ-LAS COMO 
+
+
+
+
+'MainButtton.android.js'
+
+
+e 
+
+
+'MainButton.ios.js' ...
+
+
+
+
+
+
+--> SE VC FIZER ISSO,
+
+SE TIVER 2 VERSOES DE 1 MESMO COMPONENT,
+
+
+
+NOS LOCAIS EM QUE VC IMPORTA 
+ESSES COMPONENTS,
+
+
+__ VC _ NÃO DEVE AJUSTAR OS IMPORTS...
+
+
+ELES DEVEM CONTINUAR EXATAMENTE COMO ANTES,
+
+
+TIPO ASSIM:
+
+
+
+
+
+
+import MainButton from '../components/MainButton';
+
+
+
+
+
+
+
+
+
+SE VC FIZER ISSO,
+
+
+VAI FUNCIONAR COMO VC QUER...
+
+
+
+
+
+O REACT NATIVE VAI RENAME ISSO, POR TRÁS DAS CENAS,
+
+PARA AJUSTAR TUDO...
+
+
+
+
+
+
+
+
+-> COM ISSO, PODEMOS NOS LIVRAR DAQUELE HACK DE 
+
+
+'ButtonComponent',
+
+
+PARA TER 2 COMPONENTS TOTALMENTE DIFERENTES...
+
+
+
+
+
+
+
+--> NO NOSSO CASO,
+
+DO 'MainButton',
+
+
+
+
+
+não tínhamos 1 component tão complexo,
+
+por isso 
+
+não era necessário fazer isso...
+
+
+
+
+
+
+--> MAS SE VC TIVER COMPONENTS COMPLEXOS,
+    COM 1 MONTE DE DIFERENTES STYLES E LAYOUTS 
+
+    PARA AS DIFERENTES PLATAFORMAS,
+
+    DIVIDIR ISSO EM DIFERENTES COMPONENTS 
+
+    É A MELHOR COISA A SE FAZER...
+
+
+
+
+
+
+    LEMBRE-SE:
+
+
+    MainButton.android.js 
+
+    MainButton.ios.js
+
+
+
+    
